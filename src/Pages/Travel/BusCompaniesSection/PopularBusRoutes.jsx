@@ -5,11 +5,13 @@ import useTravelContext from "../../../Hooks/TrevalHook/useTravelContext";
 import useAuth from "../../../Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const PopularBusRoutes = () => {
-  const { allBusData, setSearchData } = useTravelContext()
+  const { allBusData, setSearchData, setFilterBus } = useTravelContext()
   const { darkMode } = useAuth()
   const navigate = useNavigate()
+  const axiosSecure = useAxiosSecure()
 
 
   const cardVariants = {
@@ -30,17 +32,38 @@ const PopularBusRoutes = () => {
       } 
 
 
-      if(!fromDistrict || !toDistrict || !date || !placeTimeData){
+      if(!fromDistrict || !toDistrict ){
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: "Something went wrong!",
           confirmButtonColor: "#53b17a"
         });
-       }else {
-         setSearchData(placeTimeData)
-         navigate("/travel/bus-ticket-book")
        }
+      //  else {
+        //  setSearchData(placeTimeData)
+      //    navigate("/travel/bus-ticket-book")
+      //  }
+
+
+      try {
+        axiosSecure.get("/api/stand", {
+            params: placeTimeData,
+        })
+            .then(data => {
+              setSearchData(placeTimeData)
+                setFilterBus(data.data)
+                if (location.pathname === "/travel") {
+                    navigate("/travel/bus-ticket-book")
+                }
+            })
+            .catch(err => {console.log(err)
+              setFilterBus([])
+            })
+    } catch (err) {
+        console.error("Search error:", err);
+        alert('Failed to search. Please try again.');
+    }
       
    }
 

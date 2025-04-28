@@ -7,6 +7,7 @@ import BusFilter from "./BusFilter";
 import SelectPlaceTime from "./SelectPlaceTime"
 import { useEffect } from "react";
 import { fetchBus } from "../../../features/allBus/allBusSlice";
+import BusUnavailable from "./BusUnavailable";
 const TravelBusTicketPage = () => {
 
 
@@ -20,6 +21,10 @@ const TravelBusTicketPage = () => {
 
   const { allBusData, filterBus, } = useTravelContext()
   const { darkMode } = useAuth()
+
+  console.log("filter------------------", filterBus)
+
+
 
   return (
     <div className="my-20">
@@ -48,10 +53,11 @@ const TravelBusTicketPage = () => {
 
         <div className="col-span-12 lg:col-span-9 flex flex-col gap-10 ">
           {
-            !filterBus ?
-              allBus.map((bus, idx) => <BusCard key={idx} bus={bus} />)
+            filterBus ?
+              filterBus?.length < 1 ? <BusUnavailable/> :
+                filterBus.map((bus, idx) => <BusCard key={idx} bus={bus} />)
               :
-              filterBus.map((bus, idx) => <BusCard key={idx} bus={bus} />)
+              allBus.map((bus, idx) => <BusCard key={idx} bus={bus} />)
           }
         </div>
       </section>

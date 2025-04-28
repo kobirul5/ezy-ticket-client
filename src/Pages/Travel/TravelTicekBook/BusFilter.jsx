@@ -44,7 +44,7 @@ const BusFilter = () => {
       return matchAC && matchOperator;
     });
 
-    setFilterBus(result);
+    // setFilterBus(result);
   }, [filters, allBusData, setFilterBus]);
 
   return (
