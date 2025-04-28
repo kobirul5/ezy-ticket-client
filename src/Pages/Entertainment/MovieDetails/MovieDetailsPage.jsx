@@ -70,7 +70,7 @@ const MovieDetailsPage = () => {
         <div
           className={`absolute inset-0 bg-gradient-to-t ${
             darkMode
-              ? " text-white from-neutral-950/95  via-black/80   to-black/50"
+              ? "  from-neutral-950/95  via-black/80   to-black/50"
               : " text-black from-white  /95  via-white/80   to-white/50"
           } `}
         />
@@ -175,7 +175,7 @@ const MovieDetailsPage = () => {
                         <p>{movie?.releaseDate || movie?.release_date}</p>
                       </div>
                       <div className="flex gap-3">
-                        {movie.genre ||
+                        {movie?.genre ||
                           movieInfo?.genres.map((g) => (
                             <div className="border-2 px-2 ">{g.name}</div>
                           ))}

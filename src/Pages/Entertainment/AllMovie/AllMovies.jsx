@@ -60,17 +60,29 @@ console.log(showingHanll);
 
   return (
     <section
-      className={`py-24 px-4 md:px-10 bg-gradient-to-br ${
+      className={`md:py-24 px-4 flex justify-center flex-col md:px-10 bg-gradient-to-br ${
         darkMode
           ? "text-white"
           : ""
       } `}
     >
-      <h2 className="text-3xl underline flex items-center justify-center md:text-4xl font-bold  mb-10 ">
-        <MdLocalMovies />
-        Movies
-      </h2>
+      {/* <h2 className="text-3xl underline flex items-center justify-center md:text-4xl font-bold  mb-10 ">
+    
+        Top Films
+      </h2> */}
 
+      <div className="mt-10">
+      <h1 className="text-xl md:text-4xl text-center font-semibold">
+      
+        <span className="text-main uppercase border-b-2 border-t-2 "> Top Flims</span>
+      </h1>
+      {/* <p className="md:mt-4 text-sm text-center md:text-lg max-w-3xl mx-auto">
+        Organize events with unlimited possibilities.
+      </p> */}
+      </div>
+
+     
+{/* 
       <div className="my-5  flex flex-col md:flex-row gap-6 md:gap-32">
         <div className="flex gap-4 font-semibold md:text-3xl">
           <button
@@ -106,12 +118,12 @@ console.log(showingHanll);
             className="text-black"
           />
         </div>
-      </div>
+      </div> */}
 
-      <div className="flex flex-col-reverse md:flex-row-reverse md:justify-between">
+      <div className="">
        
 
-        <div className="grid grid-cols-2 sm:grid-cols-3  md:grid-cols-3 lg:grid-cols-4 md:gap-10 overflow-x-auto no-scrollbar md:overflow-visible ">
+        <div className="flex flex-wrap justify-center md:gap-10 w-11/12 md:w-10/12 mx-auto">
           {movies.map((movie) => (
           <MovieCard movie={movie}></MovieCard>
           ))}
@@ -119,7 +131,7 @@ console.log(showingHanll);
 
 
         
-        <div className="w-64  overflow-auto">
+        {/* <div className="w-64  overflow-auto">
           <label className="block text-xl ml-1 mt-2 mb-2">
             Select Cineplex
           </label>
@@ -141,7 +153,7 @@ console.log(showingHanll);
               </label>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

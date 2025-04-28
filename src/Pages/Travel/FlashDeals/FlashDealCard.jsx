@@ -20,7 +20,7 @@ const FlashDealCard = ({ deal }) => {
             <div className="p-6 space-y-4">
                 <div>
                     <h2 className="text-xl font-bold leading-tight">{title}</h2>
-                    <p className="text-sm text-dark-secondary dark:text-gray-300 mt-1">Celebrate Eid with savings! Enjoy exclusive deals using the code below.</p>
+                    <p className={`text-sm ${darkMode ?  "text-dark-secondary" : "text-black" } mt-1`}>Celebrate Eid with savings! Enjoy exclusive deals using the code below.</p>
                 </div>
 
                 {/* Code Box + CTA */}

@@ -17,7 +17,10 @@ const TicketBooking = () => {
 
   const timeSlots = ["11:00 AM", "01:30 PM", "5:30 PM", "8:00 PM"];
 
-  const cinemaHalls = movies.filter((m) => m._id == id)[0]?.cinemaHalls;
+
+
+
+  // const cinemaHalls = movies.filter((m) => m._id == id)[0]?.cinemaHalls;
 
   const movie = movies.filter((movie) => movie._id == id)[0];
 
@@ -36,6 +39,7 @@ const TicketBooking = () => {
   });
 
   useEffect(() => {
+    getNextNDays(7);
     const selectedHall = halls.filter((h) => h.name == formData.cineplex)[0];
     console.log(selectedHall?.price);
 
@@ -106,10 +110,77 @@ const TicketBooking = () => {
   };
 
   const myDate = new Date;
-  console.log(myDate,"my date");
+  // console.log(myDate,"my date");
+
+  const [selected, setSelected] = useState(new Date());
+  const [days, setDays] = useState(["Today", "Tomorrow"]);
+  const [calerndar, setCalendar] = useState(false);
+  const [dayName, setDayName] = useState("Today");
+  // console.log(dayName);
+
+  function getNextNDays(n = 7) {
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const today = new Date();
+    const nextDays = ["Today", "Tomorrow"];
+
+    for (let i = 2; i < n; i++) {
+      const nextDate = new Date();
+      nextDate.setDate(today.getDate() + i);
+
+      const dayName = days[nextDate.getDay()];
+      // If you want to include formatted date, uncomment:
+      const formattedDate = nextDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+
+      nextDays.push(`${dayName}`);
+    }
+    setDays(nextDays);
+    // console.log(nextDays);
+  }
 
   return (
     <div id="booksection">
+       <div>
+        {days.length > 0 && (
+          <div className="mt-4 flex gap-3">
+            <div className="flex gap-2 flex-wrap ">
+              {days.map((day, index) => (
+                <div
+                  onClick={() => setDayName(day)}
+                  key={index}
+                  className={`px-3 py-1 text-sm rounded-full cursor-pointer transition-all duration-300 ${
+                    dayName === day
+                      ? "bg-green-700 text-white"
+                      : "bg-blue-100 text-green-800 hover:bg-green-700 hover:text-white"
+                  }`}
+                >
+                  {day}
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => setCalendar(!calerndar)}
+              className="px-3 cursor-pointer transition-all duration-600 hover:bg-green-700 bg-main text-white rounded-full text-sm"
+            >
+              Choose Date
+            </button>
+          </div>
+        )}
+      </div>
+
+
+
       <div className="pb-6 flex flex-col md:flex-row justify-around">
         {/* Selection Zone */}
 
@@ -125,18 +196,7 @@ const TicketBooking = () => {
               🎬 Pick Your One
             </h1>
 
-            {/* Pick Date Section */}
-            <div className="mb-4">
-              <h2 className="text-lg font-semibold  mb-2">📅 Pick Date:</h2>
-              <input
-                type="date"
-                name="date"
-                value={formData.date}
-                onChange={handleChange}
-                className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-              />
-            </div>
-
+        
             {/* Pick Time Slot */}
             <div className="mb-6">
               <h2 className="text-xl font-semiboldmb-4 flex items-center gap-2">
@@ -161,24 +221,25 @@ const TicketBooking = () => {
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm ml-1 mt-2  mb-1">
-                Select Cineplex
-              </label>
-              <select
-                name="cineplex"
-                value={formData.cineplex}
-                onChange={handleChange}
-                className="w-full p-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
-                required
-              >
-                {cinemaHalls?.map((num) => (
-                  <option key={num} value={num}>
-                    {num}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <div className="w-full md:w-1/2 flex flex-col gap-2">
+        {/* <label className="text-lg font-semibold text-gray-700">
+          Select Cineplex
+        </label> */}
+        <select
+          name="cineplex"
+          value={formData.cineplex}
+          onChange={handleChange}
+          className="w-full p-3 rounded-xl text-center bg-green-100 text-green-900 placeholder-green-400 focus:outline-none focus:ring-2 focus:ring-green-400 transition-all duration-300"
+          required
+        >
+          <option disabled>Select Cineplex</option>
+          {halls?.map((hall) => (
+            <option key={hall.id || hall.name} value={hall.name}>
+              {hall.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
             <div>
               <label className="block text-sm ml-1 mt-2  mb-1">

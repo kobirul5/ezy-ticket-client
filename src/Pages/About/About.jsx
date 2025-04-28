@@ -48,9 +48,12 @@ const About = () => {
 
   
   const leaders =[
-    { name: "Rohim Khan", role: "Manager",description:"Rohim Khan is a seasoned manager with over 10 years of experience in the transportation industry. He is known for his strategic thinking and leadership skills.",social:"https://www.linkedin.com/in/rohim-khan" },
-    { name: "Md.Abdullah", role: "Director",description:"Md.Abdullah is the visionary director behind our platform, with a passion for innovation and a commitment to excellence in customer service.",social:"https://www.linkedin.com/in/md-abdullah" },
-    { name: "Mehedi Hossain", role: "Employee",description:"Mehedi Hossain is a dedicated employee who ensures smooth operations and exceptional customer experiences. His attention to detail and problem-solving skills are invaluable.",social:"https://www.linkedin.com/in/mehedi-hossain" },
+    { name: "Mazharul Islam  Sourav", role: "Team Lead",description:"Mazharul is a seasoned manager with over 10 years of experience in the transportation industry. He is known for his strategic thinking and leadership skills.",social:"https://www.linkedin.com/in/rohim-khan" },
+    { name: "Apu Roy", image:"/apuroy.jpg", role: "Team Member",description:"Apu is the visionary director behind our platform, with a passion for innovation and a commitment to excellence in customer service.",social:"https://www.linkedin.com/in/md-abdullah" },
+    { name: "Mahdi Asif",image:"/asif.jpg", role: "Team Member",description:"Mahdi  is a dedicated employee who ensures smooth operations and exceptional customer experiences. His attention to detail and problem-solving skills are invaluable.",social:"https://www.linkedin.com/in/mehedi-hossain" },
+    { name: "Kobirul islam",image:"", role: "Team Member",description:"Mahdi  is a dedicated employee who ensures smooth operations and exceptional customer experiences. His attention to detail and problem-solving skills are invaluable.",social:"https://www.linkedin.com/in/mehedi-hossain" },
+    { name: "Tanmoy",image:"", role: "Team Member",description:"Mahdi  is a dedicated employee who ensures smooth operations and exceptional customer experiences. His attention to detail and problem-solving skills are invaluable.",social:"https://www.linkedin.com/in/mehedi-hossain" },
+    { name: "Susanto",image:"", role: "Team Member",description:"Mahdi  is a dedicated employee who ensures smooth operations and exceptional customer experiences. His attention to detail and problem-solving skills are invaluable.",social:"https://www.linkedin.com/in/mehedi-hossain" },
   ]
 
   return (
@@ -173,7 +176,9 @@ const About = () => {
             >
               <div
                 className={`w-36 h-36 mx-auto mb-4 rounded-full bg-green-200 `}
-              />
+              >
+                <img src={member.image} alt="" className="w-36 h-36 mx-auto mb-4 rounded-full object-cover" />
+                </div>
               <div className="mb-5">
               <h3 className="text-lg text-main font-bold ">
                 {member.name}
