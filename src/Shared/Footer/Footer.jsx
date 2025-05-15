@@ -2,81 +2,157 @@ import { Link } from "react-router-dom";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
 import { FaPhone, FaLocationDot } from "react-icons/fa6";
+import { motion } from "framer-motion";
 import useAuth from "../../Hooks/useAuth";
 
 const Footer = () => {
   const { darkMode } = useAuth();
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 }
+  };
+
   return (
-    <footer className={`w-full bg-[#1b1b1b] text-white pt-10`}>
-      {/* Subscription Section */}
-      <div className="w-full flex justify-center px-4">
-        <div className="w-full max-w-5xl bg-white rounded-lg p-6 shadow-lg flex flex-col md:flex-row items-center gap-4">
-          <h2 className="text-lg font-semibold text-gray-800">Subscribe to our news</h2>
-          <div className="flex flex-1 w-full md:w-auto gap-2">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 text-gray-700 px-4 py-2 rounded-md border border-gray-300 focus:outline-none"
-            />
-            <button className="ezy-button-primary-sm">Subscribe</button>
-          </div>
-        </div>
+    <footer className="w-full bg-[#0a0a0a] text-white relative overflow-hidden">
+      {/* Decorative Elements */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute -top-32 -left-32 w-64 h-64 bg-main/20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-48 -right-48 w-96 h-96 bg-main/2 rounded-full blur-3xl"></div>
       </div>
 
-      {/* Navigation Section */}
-      <div className="w-full flex justify-center px-4 mt-12">
-        <div className="w-full max-w-6xl flex flex-wrap justify-between gap-10 text-sm">
-          {/* Brand & Social */}
-          <div className="flex flex-col gap-4 min-w-[220px]">
-            <h4 className="text-xl font-bold">EZY Ticket</h4>
-            <p className="t0">
-              Book smarter, travel easier, and explore unforgettable experiences.
-            </p>
-            <div className="flex gap-4 text-xl">
-              <Link className="text-main hover:scale-110 transition-transform"><FaFacebookF /></Link>
-              <Link className="text-main hover:scale-110 transition-transform"><FaTwitter /></Link>
-              <Link className="text-main hover:scale-110 transition-transform"><FaInstagram /></Link>
-              <Link className="text-main hover:scale-110 transition-transform"><FaLinkedinIn /></Link>
+      {/* Subscription Section */}
+      <motion.div 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="relative z-10 container mx-auto px-4 py-16"
+      >
+        <div className="bg-gradient-to-r from-[#1a1a1a] to-[#2a2a2a] border border-white/10 rounded-2xl p-8 shadow-2xl">
+          <div className="flex flex-col lg:flex-row items-center gap-8">
+            <div className="flex-1 text-center lg:text-left">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-main to-emerald-400 bg-clip-text text-transparent">
+                Never Miss an Update
+              </h2>
+              <p className="mt-2 text-gray-400 max-w-md">
+                Join our newsletter for exclusive offers and early access to events
+              </p>
+            </div>
+            <div className="flex-1 w-full max-w-xl">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-main transition-all"
+                />
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  className="px-8 py-4 bg-main hover:bg-main/90 text-white rounded-xl font-semibold shadow-lg hover:shadow-main/30 transition-all"
+                >
+                  Subscribe
+                </motion.button>
+              </div>
             </div>
           </div>
-
-          {/* Resources */}
-          <div className="flex flex-col gap-2 min-w-[150px]">
-            <h4 className="font-semibold text-white mb-2">RESOURCES</h4>
-            <Link to="/application">Application</Link>
-            <Link to="/documentation">Documentation</Link>
-            <Link to="/systems">Systems</Link>
-            <Link to="/faq">FAQ</Link>
-          </div>
-
-          {/* Pricing */}
-          
-
-          {/* Company */}
-          <div className="flex flex-col gap-2 min-w-[150px]">
-            <h4 className="font-semibold text-white mb-2">COMPANY</h4>
-            <Link to="/about">About Us</Link>
-            <Link to="/blog">Blog</Link>
-            <Link to="/partnerships">Partnerships</Link>
-            <Link to="/careers">Careers</Link>
-            <Link to="/press">Press</Link>
-          </div>
-
-          {/* Contact */}
-          <div className="flex flex-col gap-3 min-w-[200px]">
-            <h4 className="font-semibold text-white mb-2">CONTACT</h4>
-            <div className="flex items-center gap-2"><FaLocationDot className="text-main" /> Dhaka, Bangladesh</div>
-            <div className="flex items-center gap-2"><IoMdMail className="text-main" /> support@ezyticket.com</div>
-            <div className="flex items-center gap-2"><FaPhone className="text-main" /> +880 19856 458656</div>
-          </div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Bottom */}
-      <div className="w-full text-center text-sm text-gray-400 mt-12 py-6 border-t border-gray-700">
-        &copy; {new Date().getFullYear()} EZY Ticket. All rights reserved.
-      </div>
+      {/* Main Content */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="relative z-10 container mx-auto px-4 pb-16 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-12"
+      >
+        {/* Brand Section */}
+        <motion.div variants={itemVariants} className="lg:col-span-2">
+          <h3 className="text-2xl font-bold text-main mb-6">EZY Ticket</h3>
+          <p className="text-gray-400 mb-6 max-w-sm">
+            Transforming your event experience with seamless ticketing solutions
+          </p>
+          <div className="flex gap-4">
+            {[FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn].map((Icon, idx) => (
+              <motion.a
+                key={idx}
+                whileHover={{ y: -5 }}
+                className="p-3 bg-white/5 rounded-xl hover:bg-main/20 transition-colors cursor-pointer"
+              >
+                <Icon className="text-xl text-gray-300 hover:text-main transition-colors" />
+              </motion.a>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Navigation Sections */}
+        <motion.div variants={itemVariants} className="space-y-6">
+          <h4 className="text-lg font-semibold text-white">Resources</h4>
+          <div className="flex flex-col gap-4 text-gray-400">
+            {['Application', 'Documentation', 'Systems', 'FAQ'].map((item) => (
+              <Link
+                key={item}
+                to={`/${item.toLowerCase()}`}
+                className="hover:text-main transition-colors flex items-center gap-2 group"
+              >
+                <span className="w-2 h-2 bg-main rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                {item}
+              </Link>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div variants={itemVariants} className="space-y-6">
+          <h4 className="text-lg font-semibold text-white">Company</h4>
+          <div className="flex flex-col gap-4 text-gray-400">
+            {['About Us', 'Blog', 'Partnerships', 'Careers', 'Press'].map((item) => (
+              <Link
+                key={item}
+                to={`/${item.toLowerCase().replace(' ', '-')}`}
+                className="hover:text-main transition-colors flex items-center gap-2 group"
+              >
+                <span className="w-2 h-2 bg-main rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                {item}
+              </Link>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Contact Section */}
+        <motion.div variants={itemVariants} className="space-y-6">
+          <h4 className="text-lg font-semibold text-white">Contact</h4>
+          <div className="flex flex-col gap-5 text-gray-400">
+            <div className="flex items-start gap-3 hover:text-main transition-colors">
+              <FaLocationDot className="text-main mt-1 flex-shrink-0" />
+              <span>Level 8, Tech Hub Tower<br/>Dhaka 1212, Bangladesh</span>
+            </div>
+            <div className="flex items-center gap-3 hover:text-main transition-colors">
+              <IoMdMail className="text-main flex-shrink-0" />
+              <span>support@ezyticket.com</span>
+            </div>
+            <div className="flex items-center gap-3 hover:text-main transition-colors">
+              <FaPhone className="text-main flex-shrink-0" />
+              <span>+880 19856 458656</span>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      {/* Copyright */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        className="relative z-10 border-t border-white/10 py-8 text-center text-gray-400"
+      >
+        <div className="max-w-7xl mx-auto px-4">
+          &copy; {new Date().getFullYear()} EZY Ticket. All rights reserved.
+          <div className="mt-2 text-sm">Powered by EZY Ticketing Solutions</div>
+        </div>
+      </motion.div>
     </footer>
   );
 };

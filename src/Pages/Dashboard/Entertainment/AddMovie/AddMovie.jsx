@@ -68,7 +68,7 @@ const hallNames = halls.map(hall => hall.name);
       <div className="absolute inset-0 bg-black/40 bg-opacity-50"></div>
 
       <div className=" absolute top-0  mx-auto p-6 text-white shadow-md rounded-lg ">
-        <h2 className="text-3xl font-semibold mb-6  text-purple-700">
+        <h2 className="text-4xl font-bold mb-6  text-white">
           Add New Movie
         </h2>
         <div className="flex gap-5">
@@ -154,7 +154,7 @@ const hallNames = halls.map(hall => hall.name);
               required
             />
 
-            <button type="submit" className="btn w-full btn-primary mt-4">
+            <button type="submit" className="p-3 rounded-lg w-full bg-green-700 mt-4">
               Add Movie
             </button>
           </form>
@@ -180,7 +180,7 @@ const hallNames = halls.map(hall => hall.name);
                             : prev.cinemaHalls.filter((h) => h !== value),
                         }));
                       }}
-                    className="checkbox checkbox-primary"
+                    className="checkbox bg-main text-main"
                   />
                   <span className="text-sm">{hall}</span>
                 </label>

@@ -14,7 +14,7 @@ const EntertainmentProvider = ({ children }) => {
   // const [movieInfo, setmovieInfo] = useState([]);
   // const [id,setId]=useState([])
 
-  console.log(movies);
+  // console.log(movies);
 
  const axiosSecure= useAxiosSecure();
 

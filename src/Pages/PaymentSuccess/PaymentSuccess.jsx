@@ -79,6 +79,14 @@ const PaymentSuccess = () => {
                             </h3>
                             <div className="bg-gray-50 rounded-lg p-4">
                                 <div className="flex justify-between py-2">
+                                    <p className="text-gray-600">Name</p>
+                                    <p className="font-medium">{order.name}</p>
+                                </div>
+                                <div className="flex justify-between py-2">
+                                    <p className="text-gray-600">Contact</p>
+                                    <p className="font-medium">{order.phone}</p>
+                                </div>
+                                <div className="flex justify-between py-2">
                                     <p className="text-gray-600">Product</p>
                                     <p className="font-medium">{order.product}</p>
                                 </div>
@@ -86,6 +94,45 @@ const PaymentSuccess = () => {
                                     <p className="text-gray-600">Quantity</p>
                                     <p className="font-medium">{order.quantity}</p>
                                 </div>
+
+                          {  order?.ticketType=="entertainment" && (<>
+                           
+                          
+                           
+                            <div className="flex justify-between py-2">
+                                <p className="text-gray-600">Seats Number</p>
+                                <p className="font-medium">{order?.selectedSeats}</p>
+                            </div>
+
+                            <div className="flex justify-between py-2">
+                                <p className="text-gray-600">Show Date</p>
+                                <p className="font-medium">{order?.date.split("T")[0]}</p>
+                            </div>
+                           
+                            <div className="flex justify-between py-2">
+                                <p className="text-gray-600">Show Time</p>
+                                <p className="font-medium">{order.time}</p>
+                            </div>
+                           
+                           
+                            <div className="flex justify-between py-2">
+                                <p className="text-gray-600">Hall Name</p>
+                                <p className="font-medium">{order?.cineplex}</p>
+                            </div>
+                           
+                            
+
+                            <div className="flex justify-between py-2">
+                            <p className="text-gray-600">Show Day</p>
+                                <p className="font-medium">{order?.day}</p>
+          
+                            </div></>)
+                          }
+                             
+
+
+
+
                                 <div className="flex justify-between py-2">
                                     <p className="text-gray-600">Unit Price</p>
                                     <p className="font-medium">Tk {order.unitPrice}</p>

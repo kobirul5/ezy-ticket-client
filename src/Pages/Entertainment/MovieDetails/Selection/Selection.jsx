@@ -27,6 +27,7 @@ export function Selection() {
 
   const timeSlots = ["11:00 AM", "01:30 PM", "5:30 PM", "8:00 PM"];
   const movie = movies.find((movie) => movie._id == id || movie.id == id);
+  console.log(movie);
 
   const [formData, setFormData] = useState({
     name: userInfo?.name || "user",
@@ -35,7 +36,7 @@ export function Selection() {
     cineplex: "",
     priceperticket: 0,
     address: userInfo?.address || "",
-    movieName: movie?.original_title || "",
+    movieName: movie?.original_title || movie?.name || movie?.title || "",
 
     // totalPrice: (formData?.priceperticket * Number(formData?.seats) * 1.05)
   });
@@ -45,7 +46,7 @@ export function Selection() {
   };
 
   const handleDaySelect = (selectedDay) => {
-    console.log("Her id mu", selectedDay);
+   
     setDayName(selectedDay.label || selectedDay);
     setFormData((prev) => ({
       ...prev,
@@ -133,10 +134,12 @@ export function Selection() {
   const handleCheckout = async () => {
     console.log("checkoutData");
     const checkoutData = {
+      ...formData,
       name: userInfo?.name,
       email: userInfo?.email,
       phone: userInfo?.phone,
       address: userInfo?.address,
+      ticketType:"entertainment",
       price: parseFloat(
         (formData?.priceperticket * Number(formData.seats) * 1.05).toFixed(2)
       ),
@@ -267,7 +270,8 @@ export function Selection() {
           className="w-full p-3 rounded-xl text-center bg-green-100 text-green-900 placeholder-green-400 focus:outline-none focus:ring-2 focus:ring-green-400 transition-all duration-300"
           required
         >
-          <option disabled>Select Cineplex</option>
+          <option value="" disabled>Select Cineplex</option>
+
           {halls?.map((hall) => (
             <option key={hall.id || hall.name} value={hall.name}>
               {hall.name}
@@ -283,7 +287,7 @@ export function Selection() {
               key={index}
               whileTap={{ scale: 0.95 }}
               whileHover={{ scale: 1.02 }}
-              className={`p-4 rounded-2xl  transition-all duration-300 font-medium text-sm shadow-sm `}
+              className={`p-4 rounded-2xl  transition-all duration-300 font-medium text-sm `}
               onClick={() => handleTimeSelection(time)}
             >
               <div
@@ -315,7 +319,7 @@ export function Selection() {
                     <button
                       key={seat}
                       onClick={() => handleSelectSeat(seat)}
-                      className={`w-5 h-5 md:w-10 md:h-10 rounded-md text-xs md:text-sm ${
+                      className={`w-5 h-5 md:w-10 md:h-10 text-white  rounded-md text-xs md:text-sm ${
                         isSelected ? "bg-green-500" : "bg-gray-700"
                       } hover:bg-gray-500`}
                     >

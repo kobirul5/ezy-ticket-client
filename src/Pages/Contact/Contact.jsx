@@ -2,16 +2,19 @@ import React, { useState } from "react";
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import useAuth from "../../Hooks/useAuth";
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone:"",
+    subject:"",
     message: "",
   });
 
   const { darkMode } = useAuth();
-  console.log(darkMode);
+  
   const option = [
     {
       way: "Our Email",
@@ -42,11 +45,30 @@ const Contact = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
+  
+    const data = {
+      ...formData,
+      to_email: 'game0play24@gmail.com', // Email goes to user + you
+    };
+  
+    emailjs.send(
+      'service_a5b9hp8',
+      'template_0bala3l',
+      data,
+      '_zYfso5aD1icXWoC-'
+    ).then(
+      (result) => {
+        console.log('Email sent successfully:', result.text);
+      },
+      (error) => {
+        console.error('Error sending email:', error);
+      }
+    );
   };
-
+  
   return (
     <div className={`  ${darkMode ? "text-white" : ""} `}>
       <div className={`relative  ${darkMode ? "text-white" : ""} pb-44 md:pb-1`}>
@@ -159,14 +181,14 @@ const Contact = () => {
 
 
           <div className="flex gap-3">
-          <div className="mb-6 w-full">
+          <                                                                                                                                                                                                                                                                                                                                                                                                                                                   div className="mb-6 w-full">
          
             <input
               type="text"
               name="phone"
-              value={formData.name}
+              value={formData.phone}
               onChange={handleChange}
-              className="w-full p-3 border border-gray-300 mt-2 focus:ring-2 focus:ring-green-600 focus:outline-none"
+              className="w-full p-3 border border-gray-300 mt-2  focus:ring-2 focus:ring-green-600 focus:outline-none"
               placeholder="Phone"
               required
             />
@@ -175,9 +197,9 @@ const Contact = () => {
          
             <input
               type="text"
-              name="topic"
+              name="subject"
               placeholder="Subject"
-              value={formData.email}
+              value={formData.subject}
               onChange={handleChange}
               className="w-full p-3 border  border-gray-300  mt-2 focus:ring-2 focus:ring-green-600 focus:outline-none"
               required

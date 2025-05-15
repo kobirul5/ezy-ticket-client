@@ -159,7 +159,7 @@ const Dashboard = () => {
 
                                 {/* <li onClick={closeMenu}><NavLink to="/dashboard/wishlist" className={getNavLinkClass}><FaCalendarAlt /> Wishlist</NavLink></li> */}
 
-                                <li onClick={closeMenu}><NavLink to="/dashboard/propertyBought" className={getNavLinkClass}><FaWallet /> Ticket Bought</NavLink></li>
+                                <li onClick={closeMenu}><NavLink to="/dashboard/ticket-bought" className={getNavLinkClass}><FaWallet /> Ticket Bought</NavLink></li>
 
                                 {/* <li onClick={closeMenu}><NavLink to="/dashboard/myReview" className={getNavLinkClass}><FaShoppingCart /> My Review</NavLink></li> */}
                             </>

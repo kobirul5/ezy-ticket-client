@@ -77,7 +77,7 @@ const AddCineplex = () => {
         <div className="absolute inset-0 bg-black/40 bg-opacity-50"></div>
 
         <div className="max-w-3xl min-w-xs absolute top-80 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white md:p-6  text-center mx-auto   shadow-2xl rounded-xl mt-10">
-          <h1 className="text-3xl font-semibold mb-6 text-center text-purple-700">
+          <h1 className="text-4xl font-bold mb-6 text-center text-white">
             Register Your Cinema Hall
           </h1>
 
@@ -163,7 +163,7 @@ const AddCineplex = () => {
 
             <button
               type="submit"
-              className="w-full bg-purple-700 hover:bg-purple-800 text-white p-3 rounded-lg font-medium"
+              className="w-full bg-green-700 hover:bg-green-800 text-white p-3 rounded-lg font-medium"
             >
               Register Cinema Hall
             </button>

@@ -41,7 +41,7 @@ import { TbCategory } from "react-icons/tb";
 
 const MovieHeroSlider = () => {
   const { movies } = useEntertainmentData();
-  // console.log(movies);
+  console.log(movies);
   const newMovies = movies.slice(5, 10);
   return (
     <div className="relative text-white">
@@ -63,7 +63,7 @@ const MovieHeroSlider = () => {
               key={idx}
               className="!w-[80%] md:!w-[60%]  lg:!w-[80%] mx-auto transition-all duration-500 ease-in-out"
             >
-              <div className="relative h-56 md:h-64 lg:h-96 overflow-hidden  shadow-lg">
+              <div className="relative h-56 md:h-64 lg:h-[500px] overflow-hidden  shadow-lg">
                 <img
                   src={slide.imageLink || `https://image.tmdb.org/t/p/w500${slide?.backdrop_path}`}
                   alt={`Slide ${idx + 1}`}
@@ -103,7 +103,7 @@ const MovieHeroSlider = () => {
                 </button>
                 </Link>
               </h1>
-              <div className=" absolute z-50 top-32 md:ml-10 flex gap-5">
+              <div className=" absolute z-50 top-35 lg:top-60 md:ml-10 flex gap-5">
                 <motion.div
                   initial={{ opacity: 0, x: -50 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -120,8 +120,8 @@ const MovieHeroSlider = () => {
                   <h2 className=" gap-5 text-3xl md:text-5xl  font-bold ">
                     {slide?.title || slide?.name}
                   </h2>
-                  <p className="flex"><TbCategory  className="my-auto mr-1"/>{slide.genre ||slide?.overview?.split(" ").slice(0,10).join(" ")} </p>
-                  <p className="hidden md:flex"><MdAccessTimeFilled  className="my-auto mr-1"/>{slide?.release_date || slide.duration}</p>
+                  <p className=" hidden lg:flex"><TbCategory  className="my-auto mr-1"/>{slide.genre ||slide?.overview?.split(" ").slice(0,10).join(" ")} </p>
+                  <p className=" flex"><MdAccessTimeFilled  className="my-auto mr-1"/>{slide?.release_date || slide.duration}</p>
                 </div>
               </div>
             </SwiperSlide>
