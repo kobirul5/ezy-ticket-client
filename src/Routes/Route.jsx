@@ -49,6 +49,7 @@ import TravelPaymentSuccess from "../Pages/Travel/TravelPaymentReceipt/TravelPay
 import Page404 from "../Pages/Page404/Page404";
 import AddBusCompany from "../Pages/Dashboard/Travel/AddBusCompany/AddBusCompany";
 import TicketSold from "../Pages/Dashboard/DashboardComponents/TicketSold";
+import TicketBought from "../Pages/Dashboard/User/TicketBought/TicketBought";
 
 
 const Route = createBrowserRouter([
@@ -167,6 +168,10 @@ const Route = createBrowserRouter([
       {
         path: "manageUsers",
         element: <ManageUsers></ManageUsers>,
+      },
+      {
+path:'ticket-bought',
+element:<TicketBought></TicketBought>
       },
       {
         path: "add-your-bus-service",

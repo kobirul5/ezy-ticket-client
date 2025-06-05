@@ -12,10 +12,10 @@ import MovieCard from "../Components/MovieCard";
 
 
 const AllMovies = () => {
-  const [isNowActive, setisActive] = useState(true);
-  const [isComingActive, setisComingActive] = useState(false);
-  const [isAdvancedActive, setisAdvancedActive] = useState(false);
-  const [selectedLocations, setSelectedLocations] = useState([]);
+  // const [isNowActive, setisActive] = useState(true);
+  // const [isComingActive, setisComingActive] = useState(false);
+  // const [isAdvancedActive, setisAdvancedActive] = useState(false);
+  // const [selectedLocations, setSelectedLocations] = useState([]);
   // const [showMovie, setShowMovie] = useState([]);
 
 
@@ -24,43 +24,43 @@ const AllMovies = () => {
 
  
 
-  const options = [
-    { value: "london", label: "Dhaka" },
-    { value: "new_york", label: "Jessore" },
-    { value: "paris", label: "Khulna" },
-    { value: "tokyo", label: "Mirpur" },
-    { value: "berlin", label: "Dhanmondi" },
-  ];
+  // const options = [
+  //   { value: "london", label: "Dhaka" },
+  //   { value: "new_york", label: "Jessore" },
+  //   { value: "paris", label: "Khulna" },
+  //   { value: "tokyo", label: "Mirpur" },
+  //   { value: "berlin", label: "Dhanmondi" },
+  // ];
   
 
-  const handleHallSelect=(selectedHall)=>{
+//   const handleHallSelect=(selectedHall)=>{
 
- const showingHanll = movies.filter((movie) => movie.cinemaHalls.map(p=>p==selectedHall) );
-console.log(showingHanll);
-  }
+//  const showingHanll = movies.filter((movie) => movie.cinemaHalls.map(p=>p==selectedHall) );
+// console.log(showingHanll);
+//   }
 
-  const handleNowShowing = () => {
-    setisActive(true);
-    setisComingActive(false);
-    setisAdvancedActive(false);
-  };
+//   const handleNowShowing = () => {
+//     setisActive(true);
+//     setisComingActive(false);
+//     setisAdvancedActive(false);
+//   };
 
-  const handleComing = () => {
-    setisActive(false);
-    setisComingActive(true);
-    setisAdvancedActive(false);
-  };
+//   const handleComing = () => {
+//     setisActive(false);
+//     setisComingActive(true);
+//     setisAdvancedActive(false);
+//   };
 
-  const handleAdvanced = () => {
-    setisActive(false);
-    setisComingActive(false);
-    setisAdvancedActive(true);
-  };
+//   const handleAdvanced = () => {
+//     setisActive(false);
+//     setisComingActive(false);
+//     setisAdvancedActive(true);
+//   };
 
 
   return (
     <section
-      className={`md:py-24 px-4 flex justify-center flex-col md:px-10 bg-gradient-to-br ${
+      className={` px-4 flex justify-center flex-col md:px-10 bg-gradient-to-br ${
         darkMode
           ? "text-white"
           : ""
@@ -123,7 +123,7 @@ console.log(showingHanll);
       <div className="">
        
 
-        <div className="flex flex-wrap justify-center md:gap-10 w-11/12 md:w-10/12 mx-auto">
+        <div className="flex flex-wrap justify-center md:gap-10  md:w-10/12 mx-auto">
           {movies.map((movie) => (
           <MovieCard movie={movie}></MovieCard>
           ))}

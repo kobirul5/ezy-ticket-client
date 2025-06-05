@@ -54,7 +54,7 @@ const MovieMarquee = () => {
           darkMode ? "text-white" : "text-black "
         }  `}
       >
-        <span>🎬</span> Movie Marquee Showcase for new testing
+        <span></span> Movie Marquee Showcase
       </h2>
 
       <div className="relative overflow-hidden">
