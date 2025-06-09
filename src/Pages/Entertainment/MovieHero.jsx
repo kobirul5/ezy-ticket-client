@@ -58,7 +58,7 @@ const MovieHeroSlider = () => {
         className="mySwiper"
       >
         {newMovies.map((slide, idx) => (
-          <div className="relative">
+          <div key={idx} className="relative">
             <SwiperSlide
               key={idx}
               className="!w-[80%] md:!w-[60%]  lg:!w-[80%] mx-auto transition-all duration-500 ease-in-out"
