@@ -3,7 +3,7 @@ import { MdErrorOutline } from "react-icons/md";
 import useAuth from "../../../Hooks/useAuth";
 
 const BusUnavailable = () => {
-    const {darkMode}= useAuth()
+    const {darkMode} = useAuth() as any
 
   return (
     <div className={` ${darkMode ? "bg-[#1d1d1d] text-white" : "bg-white "} mx-auto my-8 p-8 w-full shadow-xl border border-white/20 backdrop-blur-lg ` }>

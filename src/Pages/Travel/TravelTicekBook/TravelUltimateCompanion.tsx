@@ -7,7 +7,7 @@ import SelectPlaceTime from './SelectPlaceTime';
 const TravelUltimateCompanion = () => {
 
   // TODO: all bus data will todays bus data. fetch data, and api 4 deferent bus info
-  const { allBusData } = useTravelContext()
+  // const { allBusData } = useTravelContext() as any
   return (
     <section className='container mx-auto my-20 px-5'>
       <div className={`my-10`}>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { data, Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
 import travelBannerImage from "../../../assets/Travel_image/travel-service/bg-bus.jpg"
 import useTravelContext from "../../../Hooks/TrevalHook/useTravelContext";
@@ -8,18 +8,17 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const TravelSelectSet = () => {
     const axiosSecure = useAxiosSecure()
-    const { user } = useAuth()
-    const [currentUser] = useCurrentUser()
-    const [selectedSeats, setSelectedSeats] = useState([]);
-    const { busPassengerData, setBusPassengerData } = useTravelContext()
+    const { user } = useAuth() as any
+    const [currentUser] = useCurrentUser() as any
+    const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+    const { setBusPassengerData } = useTravelContext() as any
     const location = useLocation()
     const seatPrice = location?.state?.ticketPrice;
-    const navigate = useNavigate()
-    const { darkMode } = useAuth()
-    const [bookedSeat, setBookedSeat] = useState(location?.state?.bookedSeats)
+    const { darkMode } = useAuth() as any
+    const [bookedSeat] = useState<string[]>(location?.state?.bookedSeats || [])
     console.log(location.state)
 
-    const handleSeatSelect = (seat) => {
+    const handleSeatSelect = (seat: string) => {
         setSelectedSeats((prevSeats) => {
             if (prevSeats.includes(seat)) {
                 return prevSeats.filter((s) => s !== seat);
@@ -28,12 +27,10 @@ const TravelSelectSet = () => {
         });
     };
 
-    // console.log(selectedSeats)
 
-
-    const handleTravelInfo = async (e) => {
+    const handleTravelInfo = async (e: React.FormEvent) => {
         e.preventDefault();
-        const form = e.target;
+        const form = e.target as any;
         const name = form.name.value;
         const email = form.email.value;
         const number = form.number.value;
@@ -49,7 +46,6 @@ const TravelSelectSet = () => {
         console.log(passengerData)
         setBusPassengerData(passengerData)
         console.log("hello", passengerData)
-        // navigate("/strip-payment")
 
         const res = await axiosSecure.post("/order/bus", passengerData);
         if (res.data) {
@@ -114,7 +110,7 @@ const TravelSelectSet = () => {
                                         num ? (
                                             <button
                                                 disabled={bookedSeat?.includes(`${row}${num}`) ||
-                                                    selectedSeats.length >= 4 && !selectedSeats.includes(`${row}${num}`)
+                                                    (selectedSeats.length >= 4 && !selectedSeats.includes(`${row}${num}`))
                                                 }
                                                 key={`${row}${num}`}
                                                 onClick={() => handleSeatSelect(`${row}${num}`)}

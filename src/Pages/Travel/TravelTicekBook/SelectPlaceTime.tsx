@@ -12,16 +12,16 @@ const SelectPlaceTime = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const axiosSecure = useAxiosSecure()
-    const { darkMode } = useAuth()
+    const { darkMode } = useAuth() as any
     const [isSwapped, setIsSwapped] = useState(false);
 
     // Data from Travel Provider
-    const { searchData, setSearchData, districts, filterBus, setFilterBus } = useTravelContext()
+    const { searchData, setSearchData, districts, setFilterBus } = useTravelContext() as any
     // console.log("Search Data",searchData)
 
     // console.log(filterBus)
 
-    const handleSearchData = (e) => {
+    const handleSearchData = (e: any) => {
         e.preventDefault();
         const form = e.target;
         const fromDistrict = form.fromDistrict.value;
@@ -57,7 +57,7 @@ const SelectPlaceTime = () => {
     }
 
     const handleSwapLocations = () => {
-        const form = document.forms[0];
+        const form = (document.forms as any)[0];
         const temp = form.fromDistrict.value;
         form.fromDistrict.value = form.toDistrict.value;
         form.toDistrict.value = temp;
@@ -94,7 +94,7 @@ const SelectPlaceTime = () => {
                                 required
                             >
                                 <option value="" disabled>Select departure</option>
-                                {districts.map((stand, idx) => (
+                                {districts?.map((stand: string, idx: number) => (
                                     <option key={idx} value={stand}>{stand}</option>
                                 ))}
                             </select>
@@ -131,7 +131,7 @@ const SelectPlaceTime = () => {
                                 required
                             >
                                 <option value="" disabled>Select destination</option>
-                                {districts.map((stand, idx) => (
+                                {districts?.map((stand: string, idx: number) => (
                                     <option key={idx} value={stand}>{stand}</option>
                                 ))}
                             </select>

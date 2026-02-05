@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import travelBannerImage from "../../../assets/Travel_image/travel-service/bg-bus.jpg"
 import useTravelData from '../../../Hooks/TrevalHook/useTravelData';
 import Swal from 'sweetalert2'
+
 const BusReservationPage = () => {
-  const { busServices } = useTravelData()
+  const { busServices } = useTravelData() as any
 
   const [serviceType, setServiceType] = useState('');
   const [name, setName] = useState('');
@@ -12,7 +13,7 @@ const BusReservationPage = () => {
   const [date, setDate] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission
     console.log({ serviceType, name, email, phone, date, message });
@@ -47,7 +48,7 @@ const BusReservationPage = () => {
             <label className="block text-sm font-medium text-gray-700">Select Service Type</label>
             <div className="mt-1 grid grid-cols-2 gap-4">
               {
-                busServices?.map((service, idx) => <button
+                busServices?.map((service: any, idx: number) => <button
                   key={idx}
                   type="button"
                   onClick={() => setServiceType(`${service.title}`)}
@@ -111,7 +112,7 @@ const BusReservationPage = () => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-              rows="4"
+              rows={4}
             ></textarea>
           </div>
 

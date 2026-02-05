@@ -3,8 +3,8 @@ import useAuth from "../../../Hooks/useAuth";
 import useTravelContext from "../../../Hooks/TrevalHook/useTravelContext";
 
 const BusFilter = () => {
-  const { darkMode } = useAuth();
-  const { allBusData, setFilterBus } = useTravelContext();
+  const { darkMode } = useAuth() as any;
+  const { allBusData, setFilterBus } = useTravelContext() as any;
 
   const [filters, setFilters] = useState({
     ac: false,
@@ -13,8 +13,8 @@ const BusFilter = () => {
     greenLine: false,
   });
 
-  const handleChange = (type) => {
-    setFilters((prev) => ({
+  const handleChange = (type: string) => {
+    setFilters((prev: any) => ({
       ...prev,
       [type]: !prev[type],
     }));
@@ -30,19 +30,19 @@ const BusFilter = () => {
   };
 
   useEffect(() => {
-    const result = allBusData.filter((bus) => {
-      const matchAC =
-        (filters.ac && bus.type === "AC") ||
-        (filters.nonAc && bus.type === "Non AC") ||
-        (!filters.ac && !filters.nonAc); // Show all if none selected
+    // const result = allBusData.filter((bus: any) => {
+    //   const matchAC =
+    //     (filters.ac && bus.type === "AC") ||
+    //     (filters.nonAc && bus.type === "Non AC") ||
+    //     (!filters.ac && !filters.nonAc); // Show all if none selected
 
-      const matchOperator =
-        (filters.shohagh && bus.operator === "Shohagh Paribahan") ||
-        (filters.greenLine && bus.operator === "Green Line Paribahan") ||
-        (!filters.shohagh && !filters.greenLine); // Show all if none selected
+    //   const matchOperator =
+    //     (filters.shohagh && bus.operator === "Shohagh Paribahan") ||
+    //     (filters.greenLine && bus.operator === "Green Line Paribahan") ||
+    //     (!filters.shohagh && !filters.greenLine); // Show all if none selected
 
-      return matchAC && matchOperator;
-    });
+    //   return matchAC && matchOperator;
+    // });
 
     // setFilterBus(result);
   }, [filters, allBusData, setFilterBus]);

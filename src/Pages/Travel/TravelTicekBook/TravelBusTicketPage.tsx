@@ -8,19 +8,20 @@ import SelectPlaceTime from "./SelectPlaceTime"
 import { useEffect } from "react";
 import { fetchBus } from "../../../features/allBus/allBusSlice";
 import BusUnavailable from "./BusUnavailable";
+
 const TravelBusTicketPage = () => {
 
 
-  const { allBus } = useSelector(state => state.allBus)
-  const dispatch = useDispatch()
+  const { allBus } = useSelector((state: any) => state.allBus)
+  const dispatch = useDispatch() as any
 
   useEffect(() => {
     dispatch(fetchBus())
   }, [dispatch])
 
 
-  const { allBusData, filterBus, } = useTravelContext()
-  const { darkMode } = useAuth()
+  const { filterBus, } = useTravelContext() as any
+  const { darkMode } = useAuth() as any
 
   console.log("filter------------------", filterBus)
 
@@ -55,9 +56,9 @@ const TravelBusTicketPage = () => {
           {
             filterBus ?
               filterBus?.length < 1 ? <BusUnavailable/> :
-                filterBus.map((bus, idx) => <BusCard key={idx} bus={bus} />)
+                filterBus.map((bus: any, idx: number) => <BusCard key={idx} bus={bus} />)
               :
-              allBus.map((bus, idx) => <BusCard key={idx} bus={bus} />)
+              allBus?.map((bus: any, idx: number) => <BusCard key={idx} bus={bus} />)
           }
         </div>
       </section>

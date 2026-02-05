@@ -8,7 +8,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAuth from "../../../Hooks/useAuth";
 
 const TravelPaymentSuccess = () => {
-    const { darkMode } = useAuth()
+    const { darkMode } = useAuth() as any
     const { tran_id } = useParams();
     const axiosSecure = useAxiosSecure();
 
@@ -21,8 +21,8 @@ const TravelPaymentSuccess = () => {
         }
     });
 
-    const contentRef = useRef();
-    const handlePrint = useReactToPrint({ contentRef });
+    const contentRef = useRef<HTMLDivElement>(null);
+    const handlePrint = useReactToPrint({ contentRef } as any);
 
     if (isLoading) return (
         <div className="min-h-screen pt-24 flex items-center justify-center">

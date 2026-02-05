@@ -1,7 +1,14 @@
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const TravelServiceCard = ({ service }) => {
+interface TravelServiceCardProps {
+  service: {
+    image: string;
+    title: string;
+  }
+}
+
+const TravelServiceCard: React.FC<TravelServiceCardProps> = ({ service }) => {
     return (
         <div className="relative">
             <img src={service?.image} className="w-full" alt="" />

@@ -1,10 +1,10 @@
 import useAuth from "../../../Hooks/useAuth";
 import busImage from "../../../assets/Travel_image/travel-service/homebus.png"
-import { motion } from "motion/react"
+import { motion } from "framer-motion"
 
 
 function TravelHomSection() {
-    const { darkMode } = useAuth();
+    const { darkMode } = useAuth() as any;
     return (
         <section className="pb-16 overflow-x-hidden">
             <div className="w-11/12 mx-auto mb-10">
