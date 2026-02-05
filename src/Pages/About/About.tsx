@@ -1,6 +1,6 @@
 import { IoIosArrowForward, IoIosTimer } from "react-icons/io";
 import useAuth from "../../Hooks/useAuth";
-import AboutCounter from "./AboutCounter";
+import AboutCounter from "../../components/About/AboutCounter";
 import { MdMoreTime } from "react-icons/md";
 import { CiCreditCard1, CiMedicalClipboard } from "react-icons/ci";
 import { FaFacebookF, FaLinkedinIn, FaRegHandshake } from "react-icons/fa";

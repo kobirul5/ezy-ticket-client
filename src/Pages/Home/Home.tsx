@@ -1,10 +1,10 @@
-import HomeBanner from "./HomeComponents/HomeBanner";
-import HomeCategory from "./HomeComponents/HomeCategory";
-import EventSection from "./HomeComponents/EventSection";
-import TravelSection from "./HomeComponents/TravelSection";
-import Testimonials from "./HomeComponents/Testimonials";
-import AboutUs from "./HomeComponents/AboutUs";
-import EventSectionBanner from "./HomeComponents/EventSectionBanner";
+import HomeBanner from "../../components/Home/HomeBanner";
+import HomeCategory from "../../components/Home/HomeCategory";
+import EventSection from "../../components/Home/EventSection";
+import TravelSection from "../../components/Home/TravelSection";
+import Testimonials from "../../components/Home/Testimonials";
+import AboutUs from "../../components/Home/AboutUs";
+import EventSectionBanner from "../../components/Home/EventSectionBanner";
 
 const Home = () => {
 

@@ -1,13 +1,13 @@
-import TravelBanner from './TravelComponents/TravelBanner'
-// import TravelService from './TravelServiceSeciton/TravelService'
-import AddTravelService from './AddTravelService/AddTravelService'
-import FlashDeals from './FlashDeals/FlashDeals'
+import TravelBanner from "../../components/Travel/TravelBanner"
+// import TravelService from '../../components/Travel/TravelServiceSeciton/TravelService'
+import AddTravelService from "../../components/Travel/AddTravelService/AddTravelService"
+import FlashDeals from "../../components/Travel/FlashDeals/FlashDeals"
 import useAuth from '../../Hooks/useAuth'
-import TravelFAQ from './TravelFAQ/TravelFAQ'
-import WhyChooseUsTravel from './TravelComponents/WhyChooseUsTravel'
-// import TravelTestimonials from './TravelComponents/TravelTestimonials'
-import BusCompaniesSection from './BusCompaniesSection/BusCompaniesSection'
-import PopularBusRoutes from './BusCompaniesSection/PopularBusRoutes'
+import TravelFAQ from "../../components/Travel/TravelFAQ/TravelFAQ"
+import WhyChooseUsTravel from "../../components/Travel/WhyChooseUsTravel"
+// import TravelTestimonials from '../../components/Travel/TravelTestimonials'
+import BusCompaniesSection from "../../components/Travel/BusCompaniesSection/BusCompaniesSection"
+import PopularBusRoutes from "../../components/Travel/BusCompaniesSection/PopularBusRoutes"
 
 const Travel = () => {
   const { darkMode } = useAuth() as any

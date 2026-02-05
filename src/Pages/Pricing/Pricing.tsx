@@ -1,6 +1,6 @@
-import PricingBanner from "./PricingComponents/PricingBanner";
+import PricingBanner from "../../components/Pricing/PricingComponents/PricingBanner";
 import bangladesh from "../../assets/Pricing_image/bangladesh-icon.png"
-import PricingCalculator from "./PricingComponents/PricingCalculator";
+import PricingCalculator from "../../components/Pricing/PricingComponents/PricingCalculator";
 import Marquee from "react-fast-marquee";
 import logo1 from "../../assets/Pricing_image/logo1.png"
 import logo2 from "../../assets/Pricing_image/logo2.jpeg"
@@ -14,7 +14,7 @@ import logo9 from "../../assets/Pricing_image/logo9.png"
 import logo10 from "../../assets/Pricing_image/logo10.jpeg"
 import logo11 from "../../assets/Pricing_image/logo11.jpeg"
 import logo12 from "../../assets/Pricing_image/logo12.png"
-import PricingFaq from "./PricingComponents/PricingFaq";
+import PricingFaq from "../../components/Pricing/PricingComponents/PricingFaq";
 const Pricing = () => {
     return (
         <div className="pt-16">

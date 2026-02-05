@@ -1,10 +1,10 @@
 import useAuth from "../../Hooks/useAuth";
-import AllEvents from "./AllEvents/AllEvents";
-import EventBanner from "./EventsComponents/EventBanner";
-// import EventCards from "./EventsComponents/EventCards";
-import EventInfo from "./EventsComponents/EventInfo";
-// import EventReview from "./EventsComponents/EventReview";
-import TopEvents from "./EventsComponents/TopEvents";
+import AllEvents from "../../components/Events/AllEvents/AllEvents";
+import EventBanner from "../../components/Events/EventBanner";
+// import EventCards from "../../components/Events/EventCards";
+import EventInfo from "../../components/Events/EventInfo";
+// import EventReview from "../../components/Events/EventReview";
+import TopEvents from "../../components/Events/TopEvents";
 
 const Events = () => {
   const { darkMode } = useAuth() as any;
