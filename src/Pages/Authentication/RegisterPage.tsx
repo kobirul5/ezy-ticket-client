@@ -13,10 +13,11 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
-import { saveUserInformation } from "../../API/Utils";
+import { useRegisterUserMutation } from "../../app/features/auth/authApi";
 
 function RegisterPage() {
   const { createUser, signInWithGoogle, darkMode, setLoading } = useAuth()! as any;
+  const [registerUser] = useRegisterUserMutation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -36,7 +37,15 @@ function RegisterPage() {
     try {
       const result = await createUser(email, password);
       const user = result?.user;
-      await saveUserInformation(user);
+      await registerUser({
+        name: data.name,
+        email: user?.email,
+        displayName: data.name,
+        status: "",
+        phone: "",
+        address: "",
+        role: "user",
+      }).unwrap();
       Swal.fire({
         icon: "success",
         title: "Registration Successful",
@@ -55,7 +64,15 @@ function RegisterPage() {
     try {
       const result = await signInWithGoogle();
       const user = result?.user;
-      await saveUserInformation(user);
+      await registerUser({
+        name: user?.displayName,
+        email: user?.email,
+        displayName: user?.displayName,
+        status: "",
+        phone: "",
+        address: "",
+        role: "user",
+      }).unwrap();
       Swal.fire({
         icon: "success",
         title: "Signed in with Google!",

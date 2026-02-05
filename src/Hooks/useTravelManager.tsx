@@ -1,21 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "./useAxiosSecure";
+import { useCheckTravelManagerQuery } from "../app/features/auth/authApi";
 import useAuth from "./useAuth";
 
 const useTravelManager = () => {
     const { user, loading } = useAuth() as any;
-    const axiosSecure = useAxiosSecure();
-    
-    const { data: isTravelManager, isPending: isTravelManagerLoading } = useQuery({
-        queryKey: [user?.email, 'isTravelManager'],
-        enabled: !loading && !!user?.email, 
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/users/travelManager/${user?.email}`);
-            return res.data?.travelManager;
-        }
+    const { data: travelManagerData, isLoading: isTravelManagerLoading } = useCheckTravelManagerQuery(user?.email, {
+        skip: loading || !user?.email,
     });
-    
-    return [isTravelManager, isTravelManagerLoading];
+
+    return [travelManagerData?.travelManager, isTravelManagerLoading];
 };
 
 export default useTravelManager;

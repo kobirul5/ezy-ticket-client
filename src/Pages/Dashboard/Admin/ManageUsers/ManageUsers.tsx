@@ -1,24 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
-import { FaTrashAlt, FaUserEdit } from "react-icons/fa";
-import Swal from "sweetalert2";
-import { useState } from "react";
-import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
-import noImage from "../../../../assets/Common_image/noImage.png";
 import useAuth from "../../../../Hooks/useAuth";
+import { useDeleteUserMutation, useGetUsersQuery, useUpdateUserRoleMutation } from "../../../../app/features/auth/authApi";
+import Swal from "sweetalert2";
+import { FaTrashAlt, FaUserEdit } from "react-icons/fa";
+import noImage from "../../../../assets/Common_image/noImage.png";
 
 const ManageUsers = () => {
-    const [loading, setLoading] = useState(false);
-    const axiosSecure = useAxiosSecure();
     const { user } = useAuth()! as any;
-
-    // Fetch all users from MongoDB
-    const { data: savedUsers = [], refetch } = useQuery<any[]>({
-        queryKey: ['users'],
-        queryFn: async () => {
-            const res = await axiosSecure.get('/users');
-            return res.data;
-        }
-    });
+    const { data: savedUsers = [], isLoading: usersLoading } = useGetUsersQuery(undefined);
+    const [deleteUser] = useDeleteUserMutation();
+    const [updateUserRole] = useUpdateUserRoleMutation();
 
     // Handle user deletion
     const handleDeleteUser = (user: any) => {
@@ -32,17 +22,22 @@ const ManageUsers = () => {
             confirmButtonText: "Yes, delete!"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                setLoading(true);
-                const res = await axiosSecure.delete(`/users/${user._id}`);
-                if (res.data.deletedCount > 0) {
-                    refetch();
+                try {
+                    const res = await deleteUser(user._id).unwrap();
+                    if (res.deletedCount > 0) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: `${user.name} has been deleted.`,
+                            icon: "success"
+                        });
+                    }
+                } catch (error) {
                     Swal.fire({
-                        title: "Deleted!",
-                        text: `${user.name} has been deleted.`,
-                        icon: "success"
+                        title: "Error!",
+                        text: "Failed to delete user.",
+                        icon: "error"
                     });
                 }
-                setLoading(false);
             }
         });
     };
@@ -59,20 +54,33 @@ const ManageUsers = () => {
             confirmButtonText: "Yes, update!"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                setLoading(true);
-                const res = await axiosSecure.patch(`/users/role/${user._id}`, { role: newRole });
-                if (res.data.modifiedCount > 0) {
-                    refetch();
+                try {
+                    const res = await updateUserRole({ id: user._id, role: newRole }).unwrap();
+                    if (res.modifiedCount > 0) {
+                        Swal.fire({
+                            title: "Updated!",
+                            text: `${user.name}'s role has been updated to ${newRole}.`,
+                            icon: "success"
+                        });
+                    }
+                } catch (error) {
                     Swal.fire({
-                        title: "Updated!",
-                        text: `${user.name}'s role has been updated to ${newRole}.`,
-                        icon: "success"
+                        title: "Error!",
+                        text: "Failed to update role.",
+                        icon: "error"
                     });
                 }
-                setLoading(false);
             }
         });
     };
+
+    if (usersLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <span className="loading loading-spinner loading-lg"></span>
+            </div>
+        );
+    }
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -156,7 +164,7 @@ const ManageUsers = () => {
                                             <button
                                                 onClick={() => !isCurrentUser && handleDeleteUser(savedUser)}
                                                 className={`btn btn-sm btn-outline btn-error ${isCurrentUser ? 'btn-disabled opacity-80' : ''}`}
-                                                disabled={loading || isCurrentUser}
+                                                disabled={isCurrentUser}
                                             >
                                                 <FaTrashAlt /> Remove
                                             </button>

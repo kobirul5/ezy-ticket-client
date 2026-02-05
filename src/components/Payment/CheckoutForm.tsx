@@ -12,7 +12,7 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure()
-  const { busPassengerData, getBusPaymentData } = useTravelContext() // need price set hare for all section and make this state public for use all sections
+  const { busPassengerData, getBusPaymentData } = useTravelContext() 
   const { user } = useAuth()! as any
   const navigate = useNavigate()
 

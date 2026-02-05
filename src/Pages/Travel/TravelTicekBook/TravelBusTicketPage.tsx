@@ -1,22 +1,23 @@
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import travelBannerImage from "../../../assets/Travel_image/travel-service/bg-bus.jpg"
 import useTravelContext from "../../../Hooks/TrevalHook/useTravelContext"
 import BusCard from "../TravelComponents/BusCard"
 import BusFilter from "./BusFilter";
 import SelectPlaceTime from "./SelectPlaceTime"
 import { useEffect } from "react";
-import { fetchBus } from "../../../features/allBus/allBusSlice";
+import { useGetBusesQuery } from "../../../app/features/allBus/busApi";
 import BusUnavailable from "./BusUnavailable";
 
 const TravelBusTicketPage = () => {
+  const { data: allBus, isLoading } = useGetBusesQuery(undefined);
 
-
-  const { allBus } = useSelector((state: any) => state.allBus)
-  const dispatch = useDispatch() as any
-
-  useEffect(() => {
-    dispatch(fetchBus())
-  }, [dispatch])
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
 
 
   const { filterBus, } = useTravelContext() as any

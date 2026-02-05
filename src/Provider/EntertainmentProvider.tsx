@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState, ReactNode, Dispatch, SetStateAction } from "react";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
-import axios from "axios";
+import { useGetCinemaHallsQuery, useGetExternalMoviesQuery, useGetLocalMoviesQuery } from "../app/features/entertainment/entertainmentApi";
 
 interface Movie {
   id: number;
@@ -32,33 +31,16 @@ export const EntertainmentContext = createContext<EntertainmentContextType | nul
 
 const EntertainmentProvider = ({ children }: { children: ReactNode }) => {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [halls, setHalls] = useState<Hall[]>([]);
-  const axiosSecure = useAxiosSecure();
+  const { data: halls = [], isLoading: hallsLoading } = useGetCinemaHallsQuery(undefined);
+  const { data: localMovies = [], isLoading: localMoviesLoading } = useGetLocalMoviesQuery(undefined);
+  const { data: externalMoviesData, isLoading: externalMoviesLoading } = useGetExternalMoviesQuery(undefined);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Get cinema halls
-        const hallsResponse = await axiosSecure.get('/cinemahalls');
-        setHalls(hallsResponse.data);
-        
-        // Get local movies
-        const localMoviesResponse = await axiosSecure.get('/allmovies');
-        const localMovies = localMoviesResponse.data;
-        
-        // Get external movies
-        const externalMoviesResponse = await axios.get("https://api.themoviedb.org/3/movie/popular?api_key=7c6a26f876561b33041c71bf76c78528");
-        const externalMovies = externalMoviesResponse.data.results;
-        
-        // Combine both movie sources
-        setMovies([...localMovies, ...externalMovies]);
-      } catch (error) {
-        console.error("Error fetching entertainment data:", error);
-      }
-    };
-    
-    fetchData();
-  }, [axiosSecure]);
+    if (externalMoviesData?.results || localMovies.length > 0) {
+      const combined = [...localMovies, ...(externalMoviesData?.results || [])];
+      setMovies(combined);
+    }
+  }, [localMovies, externalMoviesData]);
 
   const entertainmentInfo: EntertainmentContextType = {
     movies,

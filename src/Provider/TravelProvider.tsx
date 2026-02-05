@@ -1,8 +1,8 @@
 import { createContext, useState, ReactNode, Dispatch, SetStateAction } from 'react'
 import useBusStandName from '../Pages/Travel/TravelHooks/useBusStandName';
 import useBusState from '../Pages/Travel/TravelHooks/useBusState';
-import useAxiosSecure from '../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2'
+import { usePostBusPaymentMutation } from '../app/features/travel/travelApi';
 
 interface TravelContextType {
   searchData: any;
@@ -24,23 +24,22 @@ const TravelProvider = ({ children }: { children: ReactNode }) => {
   const [allBusData] = useBusState() as [any[]];
   const [filterBus, setFilterBus] = useState<any>();
   const [busPassengerData, setBusPassengerData] = useState<any>();
-  const axiosSecure = useAxiosSecure();
+  const [postBusPayment] = usePostBusPaymentMutation();
 
-  const getBusPaymentData = (data: any, navigate: any) => {
-    axiosSecure.post("/payment-bus-ticket", data)
-      .then(res => {
-        if (res.data.result.insertedId) {
-          Swal.fire({
-            title: "Payment Successful",
-            icon: "success",
-            draggable: true
-          });
-          navigate(`/travel-payment-success/${data.transactionId}`)
-        }
-      })
-      .catch(err => {
-        console.error("Payment error:", err);
-      });
+  const getBusPaymentData = async (data: any, navigate: any) => {
+    try {
+      const res = await postBusPayment(data).unwrap();
+      if (res.result.insertedId) {
+        Swal.fire({
+          title: "Payment Successful",
+          icon: "success",
+          draggable: true
+        });
+        navigate(`/travel-payment-success/${data.transactionId}`)
+      }
+    } catch (err) {
+      console.error("Payment error:", err);
+    }
   }
 
 

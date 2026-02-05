@@ -13,8 +13,7 @@ import {
 } from "firebase/auth";
 import app from "../Pages/Authentication/Firebase";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
-import { useQuery, QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { useGetUserInfoQuery, useLoginUserMutation, useLogoutUserMutation } from "../app/features/auth/authApi";
 
 const googleProvider = new GoogleAuthProvider();
 const auth = getAuth(app);
@@ -45,7 +44,7 @@ interface AuthContextType {
   updateUserProfile: (name: string, photo: string) => Promise<void>;
   userInfo: UserInfo | null;
   setUserInfo: Dispatch<SetStateAction<UserInfo | any>>;
-  refetchUserInfo: (options?: RefetchOptions) => Promise<QueryObserverResult<any, Error>>;
+  refetchUserInfo: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -56,9 +55,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userInfo, setUserInfo] = useState<UserInfo | any>([]);
   // console.log(user);
   const [loading, setLoading] = useState(true);
-  const [userInfoLoading, setUserInfoLoading] = useState(true);
   const axiosPublic = useAxiosPublic();
-  const axiosSecure = useAxiosSecure();
+  const [loginUser] = useLoginUserMutation();
+  const [logoutUserMutation] = useLogoutUserMutation();
 
 
   const createUser = (email: string, password: string) => {
@@ -95,22 +94,14 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser?.email) {
         setUser(currentUser);
-        await axiosPublic.post('/jwt',
-          { email: currentUser.email },
-          { withCredentials: true }
-        )
+        await loginUser(currentUser.email).unwrap()
           .then(res => {
             console.log('login token', res.data);
             setLoading(false)
           })
       } else {
         setUser(currentUser);
-        await axiosPublic.post('/logout',
-          {},
-          {
-            withCredentials: true,
-          }
-        )
+        await logoutUserMutation(undefined).unwrap()
           .then(res => {
             console.log('logout', res.data)
             setLoading(false)
@@ -124,18 +115,15 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [user?.displayName, user?.photoURL, axiosPublic]);
 
   //get user info from mongodb
-  const { data: userData, refetch: refetchUserInfo } = useQuery({
-    queryKey: ['savedUser', user?.email],
-    queryFn: async () => {
-      setUserInfoLoading(true);
-      if (!user?.email) return null;
-      const res = await axiosSecure.get(`/users/${user.email}`);
-      setUserInfo(res.data[0]);
-      setUserInfoLoading(false);
-      return res.data[0];
-    },
-    enabled: !!user?.email,
+  const { data: userData, isLoading: userInfoLoading, refetch: refetchUserInfo } = useGetUserInfoQuery(user?.email, {
+    skip: !user?.email,
   });
+
+  useEffect(() => {
+    if (userData) {
+      setUserInfo(userData[0] || userData);
+    }
+  }, [userData]);
 
   const authInfo: AuthContextType = {
     user,
