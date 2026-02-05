@@ -4,7 +4,6 @@ import { FaBars, FaTimes, FaMoon, FaSun } from "react-icons/fa";
 import {
   MdOutlineKeyboardDoubleArrowDown,
   MdOutlinePriceChange,
-  MdOutlineMovieCreation,
   MdOutlineEventAvailable,
   MdOutlineDescription,
   MdOutlineContactSupport,
@@ -32,8 +31,6 @@ const Navbar: React.FC = () => {
   const isTransparent = (location.pathname === "/" 
     || location.pathname === "/events" 
     || location.pathname === "/travel"
-     || location.pathname === "/entertainment"
-  
   ) && !isScrolled;
 
   useEffect(() => {
@@ -49,8 +46,6 @@ const Navbar: React.FC = () => {
     if (location.pathname === "/" 
       || location.pathname === "/events" 
       || location.pathname === "/travel"
-      || location.pathname === "/entertainment"
-
     ) {
       window.addEventListener("scroll", handleScroll);
       handleScroll();
@@ -99,7 +94,6 @@ const Navbar: React.FC = () => {
     { to: "/", label: "Home", icon: <IoHomeOutline /> },
     { to: "/travel", label: "Travel", icon: <RiCompassDiscoverLine /> },
     { to: "/events", label: "Event", icon: <MdOutlineEventAvailable /> },
-    { to: "/entertainment", label: "Entertainment", icon: <MdOutlineMovieCreation /> },
     { to: "/about", label: "About", icon: <MdOutlineDescription /> },
     { to: "/contact", label: "Contact", icon: <MdOutlineContactSupport /> },
   ];

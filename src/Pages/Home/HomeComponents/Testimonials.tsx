@@ -26,9 +26,9 @@ const Testimonials = () => {
         {
             id: 3,
             name: "Michael Chen",
-            role: "Marathon Runner",
+            role: "Business Traveler",
             rating: 5,
-            content: "Booking movie tickets used to be a headache — not anymore! I just select the showtime and seat on EzyTicket and enjoy the film stress-free. It’s now my go-to app for entertainment!",
+            content: "I travel frequently for business, and EzyTicket has been a lifesaver. Booking tickets on the go is seamless, and the instant confirmation gives me peace of mind. Highly recommended!",
             image: "https://randomuser.me/api/portraits/men/75.jpg",
             accentColor: "bg-orange-500"
         }

@@ -1,5 +1,4 @@
 import AdminProfile from "./ProfileComponents/AdminProfile";
-import EntertainmentManagerProfile from "./ProfileComponents/EntertainmentManagerProfile";
 import EventManagerProfile from "./ProfileComponents/EventManagerProfile";
 import TravelManagerProfile from "./ProfileComponents/TravelManagerProfile";
 import UserProfile from "./ProfileComponents/UserProfile";
@@ -26,8 +25,6 @@ const Profile = () => {
                         :
                         userInfo?.role === 'eventManager' ? <EventManagerProfile></EventManagerProfile>
                             :
-                            userInfo?.role === 'entertainmentManager' ? <EntertainmentManagerProfile></EntertainmentManagerProfile>
-                                :
                                 <UserProfile></UserProfile>
             }
         </div>

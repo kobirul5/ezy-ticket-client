@@ -1,6 +1,5 @@
 import { FaCheck, FaShippingFast, FaHeadset } from "react-icons/fa";
 import busTicket from '../../../assets/Home_image/busTicket.webp';
-import movieTicket from '../../../assets/Home_image/movieTicket.webp';
 import concertTicket from '../../../assets/Home_image/concertTicket.webp';
 import { motion, useAnimation } from "framer-motion";
 import useAuth from "../../../Hooks/useAuth";
@@ -104,13 +103,6 @@ const AboutUs = () => {
             className="w-1/2 absolute top-0 left-0 rounded-xl shadow-lg border-4 border-white z-0"
           />
           
-          {/* Movie Ticket - Bottom Right */}
-          <motion.img
-            variants={imageRight}
-            src={movieTicket}
-            alt="Movie Ticket"
-            className="w-1/2 absolute bottom-0 right-0 rounded-xl shadow-lg border-4 border-white z-0"
-          />
           
           {/* Concert Ticket - Centered */}
           <motion.img
@@ -131,13 +123,6 @@ const AboutUs = () => {
             className="w-2/3 absolute bottom-0 left-0 rounded-xl shadow-lg border-4 border-white z-0"
           />
           
-          {/* Movie Ticket - Top Right */}
-          <motion.img
-            variants={imageRight}
-            src={movieTicket}
-            alt="Movie Ticket"
-            className="w-2/3 absolute top-0 right-0 rounded-xl shadow-lg border-4 border-white z-0"
-          />
           
           {/* Concert Ticket - Centered */}
           <motion.img
@@ -162,7 +147,7 @@ const AboutUs = () => {
         </h3>
 
         <p className={`text-base sm:text-lg mb-6 ${darkMode ? 'text-dark-secondary' : 'text-gray-600'}`}>
-          Whether it's hopping on a bus, catching the latest blockbuster, or attending the hottest concerts — EzyTicket brings convenience to your fingertips.
+          Whether it's hopping on a bus or attending the hottest concerts — EzyTicket brings convenience to your fingertips.
         </p>
 
         <ul className="space-y-3 sm:space-y-4 mb-8">

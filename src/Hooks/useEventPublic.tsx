@@ -36,7 +36,7 @@ const axiosInstance = axios.create({
       _id: "gaming-fiesta-2025",
       title: "Gaming Fiesta 2025",
       description:
-        "A paradise for gamers! Join thrilling gaming tournaments, participate in workshops by professional gamers, and get an exclusive first look at upcoming games. Whether you're a casual player or a hardcore esports fan, this event is packed with excitement and entertainment.",
+        "A paradise for gamers! Join thrilling gaming tournaments, participate in workshops by professional gamers, and get an exclusive first look at upcoming games. Whether you're a casual player or a hardcore esports fan, this event is packed with excitement and fun.",
       organizedBy: "Gamers Unite Bangladesh",
       dateTime: "2025-05-05T12:00:00",
       duration: "8 hours",

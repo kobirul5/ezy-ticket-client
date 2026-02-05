@@ -2,11 +2,9 @@ import HomeBanner from "./HomeComponents/HomeBanner";
 import HomeCategory from "./HomeComponents/HomeCategory";
 import EventSection from "./HomeComponents/EventSection";
 import TravelSection from "./HomeComponents/TravelSection";
-import EntertainmentSection from "./HomeComponents/EntertainmentSection";
 import Testimonials from "./HomeComponents/Testimonials";
 import AboutUs from "./HomeComponents/AboutUs";
 import EventSectionBanner from "./HomeComponents/EventSectionBanner";
-import EntertainmentSectionBanner from "./HomeComponents/EntertainmentSectionBanner";
 
 const Home = () => {
 
@@ -26,14 +24,12 @@ const Home = () => {
       <HomeBanner />
 
       {/* Reusable Home Category Component */}
-      <HomeCategory scrollToSection={scrollToSection} />
+      <HomeCategory />
 
       {/* Other Sections */}
       <TravelSection />
       <EventSectionBanner />
       <EventSection />
-      <EntertainmentSectionBanner />
-      <EntertainmentSection />
       {/* <AboutUs></AboutUs> */}
       <Testimonials />
     </div>

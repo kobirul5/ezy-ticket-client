@@ -55,9 +55,6 @@ export const authApi = baseApi.injectEndpoints({
     checkTravelManager: builder.query({
       query: (email) => `/users/travelManager/${email}`,
     }),
-    checkEntertainmentManager: builder.query({
-      query: (email) => `/users/entertainmentManager/${email}`,
-    }),
   }),
 });
 
@@ -72,5 +69,4 @@ export const {
   useCheckAdminQuery,
   useCheckEventManagerQuery,
   useCheckTravelManagerQuery,
-  useCheckEntertainmentManagerQuery,
 } = authApi;

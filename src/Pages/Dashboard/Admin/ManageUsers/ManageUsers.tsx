@@ -153,8 +153,6 @@ const ManageUsers = () => {
 
                                                         <li><button onClick={() => handleChangeRole(savedUser, 'eventManager')}>Event Manager</button></li>
 
-                                                        <li><button onClick={() => handleChangeRole(savedUser, 'entertainmentManager')}>Entertainment Manager</button></li>
-
                                                         <li><button onClick={() => handleChangeRole(savedUser, 'user')}>Make Regular User</button></li>
                                                     </ul>
                                                 )}

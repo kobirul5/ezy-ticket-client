@@ -10,9 +10,7 @@ import useAuth from "../Hooks/useAuth";
 // import noImage from "../assets/Common_image/noImage.png";
 import useEventManager from "../Hooks/useEventManager";
 import useTravelManager from "../Hooks/useTravelManager";
-import useEntertainmentManager from "../Hooks/useEntertainmentManager";
 import { MdEmojiEvents } from "react-icons/md";
-import { BiMoviePlay } from "react-icons/bi";
 import { useState } from "react";
 
 const Dashboard = () => {
@@ -20,7 +18,6 @@ const Dashboard = () => {
     const [isAdmin] = useAdmin();
     const [isEventManager] = useEventManager();
     const [isTravelManager] = useTravelManager();
-    const [isEntertainmentManager] = useEntertainmentManager();
     const { user, userInfo } = useAuth() as any;
 
     // Active link style function
@@ -82,8 +79,6 @@ const Dashboard = () => {
                             <h2 className="dashboard-badge bg-purple-200 text-purple-800">TRAVEL MANAGER</h2>
                         ) : isEventManager ? (
                             <h2 className="dashboard-badge bg-teal-200 text-teal-800">EVENT MANAGER</h2>
-                        ) : isEntertainmentManager ? (
-                            <h2 className="dashboard-badge bg-amber-200 text-amber-800">ENTERTAINMENT MANAGER</h2>
                         ) : (
                             <h2 className="dashboard-badge bg-red-200 text-red-800">USER</h2>
                         )}
@@ -108,8 +103,6 @@ const Dashboard = () => {
                                 <li onClick={closeMenu}><NavLink to="/dashboard/manageEvents" className={getNavLinkClass}><MdEmojiEvents /> Manage Events</NavLink></li>
 
                                 <li onClick={closeMenu}><NavLink to="/dashboard/manageTravel" className={getNavLinkClass}><FaBus /> Manage Travel</NavLink></li>
-
-                                <li onClick={closeMenu}><NavLink to="/dashboard/manageEntertainments" className={getNavLinkClass}><BiMoviePlay /> Manage Entertainments</NavLink></li>
 
                                 <li onClick={closeMenu}><NavLink to="/dashboard/manageUsers" className={getNavLinkClass}><FaUsers /> Manage Users</NavLink></li>
                             </>
@@ -136,23 +129,6 @@ const Dashboard = () => {
                                 <li onClick={closeMenu}><NavLink to="/dashboard/soldTickets" className={getNavLinkClass}><HiCurrencyDollar /> Ticket Sold</NavLink></li>
 
                                 {/* <li onClick={closeMenu}><NavLink to="/dashboard/manageReview" className={getNavLinkClass}><FaHouseCircleExclamation /> Manage Review</NavLink></li> */}
-                            </>
-                        ) : isEntertainmentManager ? (
-                            <>
-                                <li onClick={closeMenu}><NavLink to="/dashboard/profile" className={getNavLinkClass}><IoPerson /> My Profile</NavLink></li>
-
-                                <li onClick={closeMenu}><NavLink to="/dashboard/addcineplex" className={getNavLinkClass}><TbHomePlus /> Add Cinema Hall</NavLink></li>
-
-                                <li onClick={closeMenu}><NavLink to="/dashboard/addmovie" className={getNavLinkClass}><TbHomePlus /> Add Movie Show</NavLink></li>
-
-
-                                <li onClick={closeMenu}><NavLink to="/dashboard/ticketcineplex" className={getNavLinkClass}><HiCurrencyDollar /> Ticket Manager</NavLink></li>
-                                
-
-                                <li onClick={closeMenu}><NavLink to="/dashboard/managemovie" className={getNavLinkClass}><FaHouseCircleExclamation /> Manage Movies</NavLink></li>
-
-                                
-                                <li onClick={closeMenu}><NavLink to="/dashboard/managecineplex" className={getNavLinkClass}><FaList /> Manage Halls</NavLink></li>
                             </>
                         ) : (
                             <>

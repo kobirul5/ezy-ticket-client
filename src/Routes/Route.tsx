@@ -4,7 +4,6 @@ import Home from "../Pages/Home/Home";
 import About from "../Pages/About/About";
 import Events from "../Pages/Events/Events";
 import Travel from "../Pages/Travel/Travel";
-import Entertainment from "../Pages/Entertainment/Entertainment";
 import Error from "../Pages/Error/Error";
 import LoginPage from "../Pages/Authentication/LoginPage";
 import RegisterPage from "../Pages/Authentication/RegisterPage";
@@ -15,7 +14,6 @@ import TravelBusTicketPage from "../Pages/Travel/TravelTicekBook/TravelBusTicket
 import BusTicketCancellation from "../components/BusTicketCancellation";
 import MyWishList from "../Pages/MyWishList/MyWishList";
 import Contact from "../Pages/Contact/Contact";
-import AllMovie from "../Pages/Entertainment/AllMovie/AllMovies";
 import Dashboard from "../Layout/Dashboard";
 import TravelSelectSet from "../Pages/Travel/TravelTicekBook/TravelSelectSet";
 import AddEvents from "../Pages/Dashboard/Events/AddEvents/AddEvents";
@@ -23,28 +21,15 @@ import PrivateRoute from "./PrivateRoute";
 import ManageEvents from "../Pages/Dashboard/Admin/ManageEvents/ManageEvents";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers/ManageUsers";
 import Profile from "../Pages/Dashboard/Profile/Profile";
-
 import PaymentSuccess from "../Pages/PaymentSuccess/PaymentSuccess";
 import PaymentFail from "../Pages/PaymentFail/PaymentFail";
-import AddCineplex from "../Pages/Dashboard/Entertainment/AddCineplex/AddCineplex";
-// import SoldedCineTicket from "../Pages/Dashboard/Entertainment/SoldedCineTicket/SoldedCineTicket";
-// import ManageCineplex from "../Pages/Dashboard/Entertainment/ManageCineplex/ManageCineplex";
-import AddMovie from "../Pages/Dashboard/Entertainment/AddMovie/AddMovie";
-import MovieManager from "../Pages/Dashboard/Entertainment/MovieManager/MovieManager";
-import MovieDetails from "../Pages/Dashboard/Entertainment/MovieManager/MovieDetails/MovieDetails";
-import MovieDetailsPage from "../Pages/Entertainment/MovieDetails/MovieDetailsPage";
 import MyAddedEvents from "../Pages/Dashboard/Events/MyAddedEvents/MyAddedEvents";
 import AddBusService from "../Pages/Dashboard/Travel/AddBusService/AddBusService";
 import ManageReviews from "../Pages/Dashboard/Travel/ManageReviews/ManageReviews";
 import MyBusServices from "../Pages/Dashboard/Travel/MyBusServices/MyBusServices";
 import SoldTickets from "../Pages/Dashboard/Travel/SoldTickets/SoldTickets";
 import Payment from "../components/Payment/Payment";
-import ManageMovies from "../Pages/Dashboard/Entertainment/MovieManager/ManageMovies/ManageMovies";
-import TicketManager from "../Pages/Dashboard/Entertainment/TicketManager/TicketManager";
-import ManageHalls from "../Pages/Dashboard/Entertainment/ManageHalls/ManageHalls";
-import UpdateMovieData from "../Pages/Dashboard/Entertainment/UpdateMovieData/UpdateMovieData";
 import ManageEventReview from "../Pages/Dashboard/Events/ManageEventReviews/ManageEventReview";
-import ManageEntertainment from "../Pages/Dashboard/Admin/ManageEntertainments/ManageEntertainment";
 import TravelPaymentSuccess from "../Pages/Travel/TravelPaymentReceipt/TravelPaymentSuccess";
 import Page404 from "../Pages/Page404/Page404";
 import AddBusCompany from "../Pages/Dashboard/Travel/AddBusCompany/AddBusCompany";
@@ -123,10 +108,6 @@ const Route = createBrowserRouter([
         element: <EventDetails></EventDetails>,
       },
       //-------------event route end---------------
-      {
-        path: "/entertainment",
-        element: <Entertainment></Entertainment>,
-      },
       //my wishlists
       {
         path: "/mywishlist",
@@ -139,15 +120,6 @@ const Route = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact></Contact>,
-      },
-
-      {
-        path: "/entertainment/allmovies",
-        element: <AllMovie></AllMovie>,
-      },
-      {
-        path: `/entertainment/allmovies/:id`,
-        element: <MovieDetailsPage></MovieDetailsPage>,
       },
     ],
   },
@@ -196,45 +168,11 @@ const Route = createBrowserRouter([
         element: <ManageEvents></ManageEvents>,
       },
       {
-        path: 'manageEntertainments',
-        element: <ManageEntertainment></ManageEntertainment>
-      },
-      {
         path: "myAddedEvents",
         element: <MyAddedEvents></MyAddedEvents>,
       },
       // -----------Events route ends------------
 
-      // -----------Entertaiment route start------------
-      {
-        path: "addcineplex",
-        element: <AddCineplex></AddCineplex>,
-      },
-      {
-        path: "addmovie",
-        element: <AddMovie></AddMovie>,
-      },
-      {
-        path: "managecineplex",
-        element: <ManageHalls></ManageHalls>,
-      },
-      {
-        path: "ticketcineplex",
-        element: <TicketManager></TicketManager>,
-      },
-
-      {
-        path: "managemovie",
-        element: <ManageMovies></ManageMovies>,
-      },
-      {
-        path: "managemovie/moviedetails/:id",
-        element: <MovieDetails></MovieDetails>,
-      },
-      {
-        path: "update-movie/:id",
-        element: <UpdateMovieData></UpdateMovieData>,
-      },
       //add bus service page, review manage, added by susanto
       {
         path: "add-bus-service",

@@ -8,7 +8,6 @@ import AuthProvider from './Provider/AuthProvider.jsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastContainer } from 'react-toastify';
 import TravelProvider from './Provider/TravelProvider.jsx';
-import EntertainmentProvider from './Provider/EntertainmentProvider.jsx';
 import { store } from './app/store.js';
 import { Provider } from 'react-redux';
 
@@ -20,12 +19,10 @@ createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <EntertainmentProvider>
-            <TravelProvider>
-              <RouterProvider router={Route} />
-              <ToastContainer />
-            </TravelProvider>
-          </EntertainmentProvider>
+          <TravelProvider>
+            <RouterProvider router={Route} />
+            <ToastContainer />
+          </TravelProvider>
         </AuthProvider>
       </QueryClientProvider>
     </Provider>

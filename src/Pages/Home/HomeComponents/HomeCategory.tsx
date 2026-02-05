@@ -5,7 +5,6 @@ import Heading from "../../../components/Heading";
 import useAuth from "../../../Hooks/useAuth";
 import bus from "../../../assets/Home_image/bus.webp";
 import dance from "../../../assets/Home_image/dance.webp";
-import movie from "../../../assets/Home_image/movie.webp";
 
 const HomeCategory: React.FC = () => {
   const { darkMode } = useAuth()! as any;
@@ -28,7 +27,7 @@ const HomeCategory: React.FC = () => {
         type: "spring",
         stiffness: 100,
         damping: 30,
-      }
+        }
     }
   };
 
@@ -51,15 +50,6 @@ const HomeCategory: React.FC = () => {
       lightBg: "bg-[#D2B483]",
       darkBg: "bg-[#817351]",
       imageClass: "rounded-tl-[120px] lg:rounded-tl-[150px] rounded-br-[120px] lg:rounded-br-[150px]"
-    },
-    {
-      title: "Enjoy Movies",
-      description: "Get your movie tickets in a minute.",
-      image: movie,
-      path: "/entertainment",
-      lightBg: "bg-[#C68D6E]",
-      darkBg: "bg-[#6B4C3A]",
-      imageClass: "rounded-[80px] lg:rounded-[150px]"
     }
   ];
 
