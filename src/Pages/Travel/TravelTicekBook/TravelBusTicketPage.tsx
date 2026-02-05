@@ -5,7 +5,7 @@ import BusCard from "../TravelComponents/BusCard"
 import BusFilter from "./BusFilter";
 import SelectPlaceTime from "./SelectPlaceTime"
 import { useEffect } from "react";
-import { useGetBusesQuery } from "../../../app/features/allBus/busApi";
+import { useGetBusesQuery } from "../../../app/features/travel/travelApi";
 import BusUnavailable from "./BusUnavailable";
 
 const TravelBusTicketPage = () => {

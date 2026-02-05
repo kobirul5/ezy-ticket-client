@@ -2,6 +2,10 @@ import { baseApi } from '../../baseApi';
 
 export const travelApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getBuses: builder.query({
+      query: () => '/bus',
+      providesTags: ['Bus'],
+    }),
     postBusPayment: builder.mutation({
       query: (data) => ({
         url: '/payment-bus-ticket',
@@ -13,4 +17,4 @@ export const travelApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { usePostBusPaymentMutation } = travelApi;
+export const { useGetBusesQuery, usePostBusPaymentMutation } = travelApi;

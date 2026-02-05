@@ -1,8 +1,7 @@
 import { createContext, useState, ReactNode, Dispatch, SetStateAction } from 'react'
 import useBusStandName from '../Pages/Travel/TravelHooks/useBusStandName';
-import useBusState from '../Pages/Travel/TravelHooks/useBusState';
 import Swal from 'sweetalert2'
-import { usePostBusPaymentMutation } from '../app/features/travel/travelApi';
+import { useGetBusesQuery, usePostBusPaymentMutation } from '../app/features/travel/travelApi';
 
 interface TravelContextType {
   searchData: any;
@@ -21,7 +20,7 @@ export const TravelContext = createContext<TravelContextType | null>(null);
 const TravelProvider = ({ children }: { children: ReactNode }) => {
   const [searchData, setSearchData] = useState<any>();
   const [districts] = useBusStandName() as [string[]];
-  const [allBusData] = useBusState() as [any[]];
+  const { data: allBusData = [] } = useGetBusesQuery(undefined);
   const [filterBus, setFilterBus] = useState<any>();
   const [busPassengerData, setBusPassengerData] = useState<any>();
   const [postBusPayment] = usePostBusPaymentMutation();
