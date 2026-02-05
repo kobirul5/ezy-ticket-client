@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"; 
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
 import { motion } from "framer-motion";
@@ -109,10 +109,6 @@ const TicketBooking = () => {
     });
   };
 
-  const myDate = new Date;
-  // console.log(myDate,"my date");
-
-  const [selected, setSelected] = useState(new Date());
   const [days, setDays] = useState(["Today", "Tomorrow"]);
   const [calerndar, setCalendar] = useState(false);
   const [dayName, setDayName] = useState("Today");
@@ -135,15 +131,15 @@ const TicketBooking = () => {
       const nextDate = new Date();
       nextDate.setDate(today.getDate() + i);
 
-      const dayName = days[nextDate.getDay()];
+      // const dayName = days[nextDate.getDay()];
       // If you want to include formatted date, uncomment:
-      const formattedDate = nextDate.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      });
+      // const formattedDate = nextDate.toLocaleDateString("en-US", {
+      //   year: "numeric",
+      //   month: "long",
+      //   day: "numeric"
+      // });
 
-      nextDays.push(`${dayName}`);
+      nextDays.push(`${days[nextDate.getDay()]}`);
     }
     setDays(nextDays);
     // console.log(nextDays);

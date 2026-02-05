@@ -1,14 +1,14 @@
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"; // Added React import
 import { useInView } from "react-intersection-observer";
 import useAuth from "../../Hooks/useAuth";
 
 interface CounterItemProps {
     targetNumber: number;
-    label: string;
+    // label: string; // Commented out as 'label' is not used in CounterItem
 }
 
-const CounterItem: React.FC<CounterItemProps> = ({ targetNumber, label }) => {
+const CounterItem: React.FC<CounterItemProps> = ({ targetNumber }) => { // Removed 'label' from destructuring
     const {darkMode} = useAuth()! as any;
     const [count, setCount] = useState(0);
     const controls = useAnimation();
@@ -66,10 +66,9 @@ const AboutCounter = () => {
             <div className="container mx-auto ">
                 <div className=" gap-4">
                     {stats.map((stat, index) => (
-                        <CounterItem
+                       <CounterItem
                             key={index}
                             targetNumber={stat.number}
-                            label={stat.label}
                         />
                     ))}
                 </div>

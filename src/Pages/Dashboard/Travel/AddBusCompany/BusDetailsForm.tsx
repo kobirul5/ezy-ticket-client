@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { FiUploadCloud, FiX, FiCheckCircle, FiMapPin, FiClock, FiDollarSign } from 'react-icons/fi';
+import { FiUploadCloud, FiX, FiMapPin, FiClock } from 'react-icons/fi';
 import { useForm } from 'react-hook-form';
 import { FaBangladeshiTakaSign } from 'react-icons/fa6';
 
 const AddBusServiceForm = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit } = useForm();
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 

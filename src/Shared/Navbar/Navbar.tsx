@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { FaBars, FaTimes, FaMoon, FaSun } from "react-icons/fa";
 import {
@@ -20,8 +20,8 @@ import noImage from "../../assets/Common_image/noImage.png";
 import { CgProfile } from "react-icons/cg";
 import useScrollToTop from "../../Hooks/useScrollToTop";
 
-const Navbar = () => {
-  const { darkMode, setDarkMode, user, userInfo, logOut, setUser } = useAuth();
+const Navbar: React.FC = () => {
+  const { darkMode, setDarkMode, user, userInfo, logOut, setUser } = useAuth() as any;
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -79,14 +79,14 @@ const Navbar = () => {
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       const dropdown = document.getElementById("dropdownMenu");
       const button = document.getElementById("dropdownToggle");
       if (
         dropdown &&
         button &&
-        !dropdown.contains(event.target) &&
-        !button.contains(event.target)
+        !dropdown.contains(event.target as Node) &&
+        !button.contains(event.target as Node)
       ) {
         setDropdownOpen(false);
       }
@@ -104,7 +104,7 @@ const Navbar = () => {
     { to: "/contact", label: "Contact", icon: <MdOutlineContactSupport /> },
   ];
 
-  const navLinkClasses = ({ isActive }) => {
+  const navLinkClasses = ({ isActive }: { isActive: boolean }) => {
     const baseColor = menuOpen && isTransparent
       ? "text-black"  // Mobile menu always shows black text when transparent
       : isTransparent

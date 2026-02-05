@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from "react";
 import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
@@ -8,21 +8,52 @@ import {
   signInWithPopup,
   signOut,
   updateProfile,
+  User,
+  UserCredential,
 } from "firebase/auth";
 import app from "../Pages/Authentication/Firebase";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const googleProvider = new GoogleAuthProvider();
 const auth = getAuth(app);
 
-export const AuthContext = createContext(null);
+interface UserInfo {
+  _id?: string;
+  name?: string;
+  email?: string;
+  role?: string;
+  status?: string;
+  phone?: string;
+  address?: string;
+  [key: string]: any;
+}
 
-const AuthProvider = ({ children }) => {
+interface AuthContextType {
+  user: User | null;
+  setUser: Dispatch<SetStateAction<User | null>>;
+  darkMode: boolean;
+  setDarkMode: Dispatch<SetStateAction<boolean>>;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  userInfoLoading: boolean;
+  createUser: (email: string, password: string) => Promise<UserCredential>;
+  signIn: (email: string, password: string) => Promise<UserCredential>;
+  signInWithGoogle: () => Promise<UserCredential>;
+  logOut: () => Promise<void>;
+  updateUserProfile: (name: string, photo: string) => Promise<void>;
+  userInfo: UserInfo | null;
+  setUserInfo: Dispatch<SetStateAction<UserInfo | any>>;
+  refetchUserInfo: (options?: RefetchOptions) => Promise<QueryObserverResult<any, Error>>;
+}
+
+export const AuthContext = createContext<AuthContextType | null>(null);
+
+const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [darkMode, setDarkMode] = useState(false);
-  const [user, setUser] = useState(null);
-  const [userInfo, setUserInfo] = useState([]);
+  const [user, setUser] = useState<User | null>(null);
+  const [userInfo, setUserInfo] = useState<UserInfo | any>([]);
   // console.log(user);
   const [loading, setLoading] = useState(true);
   const [userInfoLoading, setUserInfoLoading] = useState(true);
@@ -30,12 +61,12 @@ const AuthProvider = ({ children }) => {
   const axiosSecure = useAxiosSecure();
 
 
-  const createUser = (email, password) => {
+  const createUser = (email: string, password: string) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const signIn = (email, password) => {
+  const signIn = (email: string, password: string) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
@@ -50,8 +81,9 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
-  const updateUserProfile = (name, photo) => {
+  const updateUserProfile = (name: string, photo: string) => {
     setLoading(true)
+    if (!auth.currentUser) return Promise.reject("No user logged in");
     return updateProfile(auth.currentUser, {
       displayName: name,
       photoURL: photo,
@@ -105,7 +137,7 @@ const AuthProvider = ({ children }) => {
     enabled: !!user?.email,
   });
 
-  const authInfo = {
+  const authInfo: AuthContextType = {
     user,
     setUser,
     darkMode,

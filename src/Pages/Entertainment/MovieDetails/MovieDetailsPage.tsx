@@ -1,14 +1,11 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React from "react";
+import { useParams } from "react-router-dom";
 
 import { motion } from "framer-motion";
-import { FaBus, FaCheckSquare } from "react-icons/fa";
-import Heading from "../../../components/Heading";
 import useAuth from "../../../Hooks/useAuth";
 import { IoStar } from "react-icons/io5";
-import { MdCast, MdDirectionsBike, MdLocalMovies } from "react-icons/md";
-import TicketBooking from "./TicketBooking";
+import { MdCast, MdDirectionsBike } from "react-icons/md";
 import useEntertainmentData from "../../../Hooks/EntertainmentHook/useEntertainmentData";
 import Recommended from "./Recommended/Recommended";
 import { Selection } from "./Selection/Selection";

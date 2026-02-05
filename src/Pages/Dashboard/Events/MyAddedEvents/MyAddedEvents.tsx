@@ -35,47 +35,47 @@ const MyAddedEvents = () => {
         }
     });
 
-    const handleViewDetails = (event: any) => {
-        setSelectedEvent(event);
-        // (document.getElementById('view_modal') as HTMLDialogElement).showModal();
-        const modal = document.getElementById('view_modal') as HTMLDialogElement;
-        if (modal) modal.showModal();
-    };
+    // const handleViewDetails = (event: any) => {
+    //     setSelectedEvent(event);
+    //     // (document.getElementById('view_modal') as HTMLDialogElement).showModal();
+    //     const modal = document.getElementById('view_modal') as HTMLDialogElement;
+    //     if (modal) modal.showModal();
+    // };
 
-    const handleUpdate = (event: any) => {
-        setSelectedEvent(event);
-        // (document.getElementById('update_modal') as HTMLDialogElement).showModal();
-        const modal = document.getElementById('update_modal') as HTMLDialogElement;
-        if (modal) modal.showModal();
-    };
+    // const handleUpdate = (event: any) => {
+    //     setSelectedEvent(event);
+    //     // (document.getElementById('update_modal') as HTMLDialogElement).showModal();
+    //     const modal = document.getElementById('update_modal') as HTMLDialogElement;
+    //     if (modal) modal.showModal();
+    // };
 
     // Update form handler
-    const onUpdateSubmit = async (data: any) => {
-        
-        const updatedInfo = {
-            title: data.title || selectedEvent?.title,
-            eventType: data.eventType || selectedEvent?.eventType,
-            eventDate: data.eventDate || selectedEvent?.eventDate,
-            eventTime: data.eventTime || selectedEvent?.eventTime,
-            duration: data.duration || selectedEvent?.duration,
-            price: parseFloat(data.price) || selectedEvent?.price,
-            totalTickets: parseInt(data.totalTickets) || selectedEvent?.totalTickets,
-            location: data.location || selectedEvent?.location,
-            details: data.details || selectedEvent?.details,
-        };
+    // const onUpdateSubmit = async (data: any) => {
+    //     
+    //     const updatedInfo = {
+    //         title: data.title || selectedEvent?.title,
+    //         eventType: data.eventType || selectedEvent?.eventType,
+    //         eventDate: data.eventDate || selectedEvent?.eventDate,
+    //         eventTime: data.eventTime || selectedEvent?.eventTime,
+    //         duration: data.duration || selectedEvent?.duration,
+    //         price: parseFloat(data.price) || selectedEvent?.price,
+    //         totalTickets: parseInt(data.totalTickets) || selectedEvent?.totalTickets,
+    //         location: data.location || selectedEvent?.location,
+    //         details: data.details || selectedEvent?.details,
+    //     };
 
-        try {
-            const res = await axiosSecure.patch(`/events/${selectedEvent._id}`, updatedInfo);
-            if (res.data.modifiedCount > 0) {
-                Swal.fire("Success", "Event updated successfully!", "success");
-                refetch();
-                handleCloseModal();
-            }
-        } catch (err) {
-            console.error(err);
-            Swal.fire("Error", "Failed to update event.", "error");
-        }
-    };
+    //     try {
+    //         const res = await axiosSecure.patch(`/events/${selectedEvent._id}`, updatedInfo);
+    //         if (res.data.modifiedCount > 0) {
+    //             Swal.fire("Success", "Event updated successfully!", "success");
+    //             refetch();
+    //             handleCloseModal();
+    //         }
+    //     } catch (err) {
+    //         console.error(err);
+    //         Swal.fire("Error", "Failed to update event.", "error");
+    //     }
+    // };
 
     const handleEdit = (event) => {
         setSelectedEvent(event);
@@ -171,7 +171,7 @@ const MyAddedEvents = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {myEvents.map((event: any, index: number) => (
+                            {myEvents.map((event: any) => (
                                 <tr key={event._id} className="hover:bg-gray-50">
                                     <td><img src={event.image || noImage} className="w-20 h-16 rounded" alt="event" /></td>
                                     <td>{event.title}</td>

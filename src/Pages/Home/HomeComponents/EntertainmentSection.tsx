@@ -1,15 +1,15 @@
-import { FaPlane, FaTag, FaMapMarkerAlt, FaRegSmile, FaBus } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import dhaka from "../../../assets/Home_image/dhaka.webp";
-import merinDrive from "../../../assets/Home_image/marinDrive.webp";
-import sylhet from "../../../assets/Home_image/sylhet.webp";
-import chittagong from "../../../assets/Home_image/chittagong.jpg";
+import { /* FaPlane, FaTag, FaMapMarkerAlt, FaRegSmile, FaBus */ } from "react-icons/fa";
+import { /* Link */ } from "react-router-dom";
+// import dhaka from "../../../assets/Home_image/dhaka.webp";
+// import merinDrive from "../../../assets/Home_image/marinDrive.webp";
+// import sylhet from "../../../assets/Home_image/sylhet.webp";
+// import chittagong from "../../../assets/Home_image/chittagong.jpg";
 import cineplex1 from "../../../assets/Home_image/cineplex1.webp";
 import cineplex2 from "../../../assets/Home_image/cineplex2.webp";
 import cineplex3 from "../../../assets/Home_image/cineplex3.webp";
 import cineplex4 from "../../../assets/Home_image/cineplex4.webp";
 import { motion } from "framer-motion";
-import StatsCounter from "./StatsCounter";
+// import StatsCounter from "./StatsCounter";
 import Heading from "../../../components/Heading";
 
 const TravelSection = () => {

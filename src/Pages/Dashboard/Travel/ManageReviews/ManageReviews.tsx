@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
 
 const ManageReviews = () => {
-    const [reviews, setReviews] = useState([
+    const [reviews] = useState([
         {
           _id: "1",
           userName: "Sofik",
@@ -30,7 +30,8 @@ const ManageReviews = () => {
       ]);
 
 
-  const handleDelete = (id: string) => {
+  // const handleDelete = (id: string) => {
+  const handleDelete = () => {
     Swal.fire({
         title: "Are You Sure to Delete?",
         text: "You won't be able to revert this!",
@@ -41,12 +42,10 @@ const ManageReviews = () => {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success"
-          });
-        }
+        // TODO: API call for delete here
+        // console.log("Deleting bus with ID:", id);
+        Swal.fire("Deleted!", "Your bus has been deleted.", "success");
+      }
       });
   };
 
@@ -83,7 +82,7 @@ const ManageReviews = () => {
                   <td>{new Date(review.date).toLocaleDateString()}</td>
                   <td>
                     <button
-                      onClick={() => handleDelete(review._id)}
+                      onClick={handleDelete}
                       className="btn btn-sm bg-red-500 hover:bg-red-600 text-white"
                     >
                       Delete

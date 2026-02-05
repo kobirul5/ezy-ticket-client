@@ -46,7 +46,7 @@ const AddBusService = () => {
     e.preventDefault();
     console.log("Submitted Bus Service:", formData);
 
-    axiosSecure.post("/busServices", { bus: formData }).then((res) => {
+    axiosSecure.post("/busServices", { bus: formData }).then(() => {
       Swal.fire({
         title: "Your Bus Service Has Been Added!",
         icon: "success",

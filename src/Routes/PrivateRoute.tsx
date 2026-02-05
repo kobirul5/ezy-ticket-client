@@ -1,9 +1,13 @@
+import { ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 
+interface PrivateRouteProps {
+    children: ReactNode;
+}
 
-const PrivateRoute = ({ children }) => {
-    const { user, loading } = useAuth();
+const PrivateRoute = ({ children }: PrivateRouteProps) => {
+    const { user, loading } = useAuth() as any;
     const location = useLocation();
     if (loading) {
         return <div className="my-36 w-full flex-col justify-center text-center items-center">

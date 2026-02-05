@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import useAxiosPublic from '../../../../../Hooks/useAxiosPublic';
@@ -19,7 +19,7 @@ const MovieDetails = () => {
         console.error('Failed to load movie:', err);
         setLoading(false);
       });
-  }, [id]);
+  }, [axiosSecure, id]);
 
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (!movie) return <p className="text-center mt-10">Movie not found!</p>;

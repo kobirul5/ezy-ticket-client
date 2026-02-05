@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../Layout/MainLayout";
 import Home from "../Pages/Home/Home";
 import About from "../Pages/About/About";
@@ -16,7 +16,7 @@ import BusTicketCancellation from "../components/BusTicketCancellation";
 import MyWishList from "../Pages/MyWishList/MyWishList";
 import Contact from "../Pages/Contact/Contact";
 import AllMovie from "../Pages/Entertainment/AllMovie/AllMovies";
-import Dashboard from "../Layout/dashboard";
+import Dashboard from "../Layout/Dashboard";
 import TravelSelectSet from "../Pages/Travel/TravelTicekBook/TravelSelectSet";
 import AddEvents from "../Pages/Dashboard/Events/AddEvents/AddEvents";
 import PrivateRoute from "./PrivateRoute";
@@ -27,8 +27,8 @@ import Profile from "../Pages/Dashboard/Profile/Profile";
 import PaymentSuccess from "../Pages/PaymentSuccess/PaymentSuccess";
 import PaymentFail from "../Pages/PaymentFail/PaymentFail";
 import AddCineplex from "../Pages/Dashboard/Entertainment/AddCineplex/AddCineplex";
-import SoldedCineTicket from "../Pages/Dashboard/Entertainment/SoldedCineTicket/SoldedCineTicket";
-import ManageCineplex from "../Pages/Dashboard/Entertainment/ManageCineplex/ManageCineplex";
+// import SoldedCineTicket from "../Pages/Dashboard/Entertainment/SoldedCineTicket/SoldedCineTicket";
+// import ManageCineplex from "../Pages/Dashboard/Entertainment/ManageCineplex/ManageCineplex";
 import AddMovie from "../Pages/Dashboard/Entertainment/AddMovie/AddMovie";
 import MovieManager from "../Pages/Dashboard/Entertainment/MovieManager/MovieManager";
 import MovieDetails from "../Pages/Dashboard/Entertainment/MovieManager/MovieDetails/MovieDetails";
@@ -170,8 +170,8 @@ const Route = createBrowserRouter([
         element: <ManageUsers></ManageUsers>,
       },
       {
-path:'ticket-bought',
-element:<TicketBought></TicketBought>
+        path:'ticket-bought',
+        element:<TicketBought></TicketBought>
       },
       {
         path: "add-your-bus-service",
@@ -242,15 +242,15 @@ element:<TicketBought></TicketBought>
       },
       {
         path: "manageReview",
-        element: <ManageReviews> </ManageReviews>,
+        element: <ManageReviews />,
       },
       {
         path: "MyBusServices",
-        element: <MyBusServices> </MyBusServices>,
+        element: <MyBusServices />,
       },
       {
         path: "SoldTickets",
-        element: <SoldTickets> </SoldTickets>,
+        element: <SoldTickets />,
       },
     ],
   },

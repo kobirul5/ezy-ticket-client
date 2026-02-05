@@ -1,19 +1,19 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";
 import { FaPhone, FaLocationDot } from "react-icons/fa6";
-import { motion } from "framer-motion";
-import useAuth from "../../Hooks/useAuth";
+import { motion, Variants } from "framer-motion";
 
-const Footer = () => {
-  const { darkMode } = useAuth();
+const Footer: React.FC = () => {
+  // const { darkMode } = useAuth() as any;
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { y: 20, opacity: 0 },
     visible: { y: 0, opacity: 1 }
   };

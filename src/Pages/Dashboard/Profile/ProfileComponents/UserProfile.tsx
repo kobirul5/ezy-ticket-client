@@ -5,33 +5,33 @@ import { FaFolderOpen } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import EditButton from "../ProfileComponents/EditButton";
 import useAuth from "../../../../Hooks/useAuth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AuthContext } from "../../../../Provider/AuthProvider";
 import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";  // Import SweetAlert
-import { motion } from "framer-motion";  // Import motion for animations
+// import { motion } from "framer-motion";  // Import motion for animations
 
 const UserProfile = () => {
   const { userInfo, user, refetchUserInfo } = useAuth()! as any;
-  const [orders, setOrders] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  // const [orders, setOrders] = useState<any[]>([]);
+  // const [loading, setLoading] = useState(true);
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     const fetchOrders = async () => {
       if (!user?.email) {
-        setLoading(false);
+        // setLoading(false); // Commented out as loading state is commented out
         return;
       }
       
       try {
-        const response = await axiosSecure.get("/order");
-        // Filter orders for current user and where paidStatus is true
-        const userOrders = response.data.filter(
-          (order: any) => order.order.email === user.email && order.paidStatus === true
-        );
-        setOrders(userOrders);
-        setLoading(false);
+        // const response = await axiosSecure.get("/order");
+        // // Filter orders for current user and where paidStatus is true
+        // const userOrders = response.data.filter(
+        //   (order: any) => order.order.email === user.email && order.paidStatus === true
+        // );
+        // setOrders(userOrders); // Commented out as orders state is commented out
+        // setLoading(false); // Commented out as loading state is commented out
       } catch (error) {
         console.error("Error fetching orders:", error);
         Swal.fire({
@@ -39,17 +39,17 @@ const UserProfile = () => {
           title: "Oops...",
           text: "Failed to load your tickets. Please try again later.",
         });
-        setLoading(false);
+        // setLoading(false); // Commented out as loading state is commented out
       }
     };
 
     fetchOrders();
   }, [user?.email, axiosSecure]);
 
-  const formatDate = (dateString: string) => {
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
+  // const formatDate = (dateString: string) => {
+  //   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  //   return new Date(dateString).toLocaleDateString(undefined, options);
+  // };
 
   return (
     <div className="min-h-screen mt-5 mb-10">

@@ -8,7 +8,6 @@ import noImage from "../../../../assets/Common_image/noImage.png"
 const ManageEntertainment = () => {
     const axiosSecure = useAxiosSecure();
     const [viewMovie, setViewMovie] = useState<any>(null);
-    const [movies, setMovies] = useState<any[]>([]);
 
     const { data: allMovies = [], refetch, isLoading, isError } = useQuery<any[]>({
         queryKey: ['movie'],
@@ -45,39 +44,32 @@ const ManageEntertainment = () => {
         handleCloseModal();
     };
 
-    const handleMakePremium = (id: string) => {
-        // console.log(id);
-        // This function was inserted here, but its implementation is missing.
-        // Assuming it would involve an API call and a Swal notification.
-        // For now, it's an empty placeholder as per the instruction.
-    };
-
     // Delete Movie
-    const handleDelete = (id: string) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axiosSecure.delete(`/movie/${id}`)
-                    .then(res => {
-                        if (res.data.deletedCount > 0) {
-                            refetch();
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Your movie has been deleted.",
-                                icon: "success"
-                            });
-                        }
-                    })
-            }
-        });
-    };
+    // const handleDelete = (id: string) => {
+    //     Swal.fire({
+    //         title: "Are you sure?",
+    //         text: "You won't be able to revert this!",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Yes, delete it!"
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             axiosSecure.delete(`/movie/${id}`)
+    //                 .then(res => {
+    //                     if (res.data.deletedCount > 0) {
+    //                         refetch();
+    //                         Swal.fire({
+    //                             title: "Deleted!",
+    //                             text: "Your movie has been deleted.",
+    //                             icon: "success"
+    //                         });
+    //                     }
+    //                 })
+    //         }
+    //     });
+    // };
 
     const handleReject = (id: string) => {
         axiosSecure.patch(`/verifyMovie/${id}`, { status: 'rejected' })
@@ -123,7 +115,7 @@ const ManageEntertainment = () => {
                                     <td colSpan={6} className="text-center">No movies found.</td>
                                 </tr>
                             ) : (
-                                allMovies.map((movie: any, index: number) => (
+                                allMovies.map((movie: any) => (
                                     <tr key={movie._id} className="hover:bg-gray-50">
                                         <td className="p-2">
                                             <img src={movie?.imageLink ? movie.imageLink : noImage} alt={movie.title} className="w-20 h-24 rounded" />

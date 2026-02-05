@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import travelBannerImage from "../../../assets/Travel_image/travel-service/bg-bus.jpg"
 import useTravelContext from "../../../Hooks/TrevalHook/useTravelContext"
-import useAuth from "../../../Hooks/useAuth";
 import BusCard from "../TravelComponents/BusCard"
 import BusFilter from "./BusFilter";
 import SelectPlaceTime from "./SelectPlaceTime"
@@ -21,7 +20,7 @@ const TravelBusTicketPage = () => {
 
 
   const { filterBus, } = useTravelContext() as any
-  const { darkMode } = useAuth() as any
+  // const { darkMode } = useAuth() as any
 
   console.log("filter------------------", filterBus)
 

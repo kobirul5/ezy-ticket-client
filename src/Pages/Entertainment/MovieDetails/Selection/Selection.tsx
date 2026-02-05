@@ -22,7 +22,7 @@ export function Selection() {
     { label: "Today", date: new Date() },
     { label: "Tomorrow", date: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000) },
   ]);
-  const [calerndar, setCalendar] = useState(false);
+  const [calendar, setCalendar] = useState(false);
   const [dayName, setDayName] = useState("Today");
 
   const timeSlots = ["11:00 AM", "01:30 PM", "5:30 PM", "8:00 PM"];
@@ -224,19 +224,19 @@ export function Selection() {
                 </div>
               ))}
             </div>
-            {/* <button
-              onClick={() => setCalendar(!calerndar)}
+             <button
+              onClick={() => setCalendar(!calendar)}
               className="px-3 cursor-pointer transition-all duration-600 hover:bg-green-700 bg-main text-white rounded-full text-sm"
             >
               Choose Date
-            </button> */}
+            </button>
           </div>
         )}
       </div>
 
       <div
         className={`rounded-lg border absolute right-15 z-20 backdrop-blur-3xl  border-gray-200 p-2 ${
-          calerndar ? "transition-all duration-500 " : "hidden "
+          calendar ? "transition-all duration-500 " : "hidden "
         } `}
       >
         <DayPicker

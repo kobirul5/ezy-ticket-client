@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { useState } from "react";
 import Swal from "sweetalert2";
 import useEventReview from "./../../../../Hooks/useEventReview";
@@ -40,7 +39,7 @@ const ManageEventReview = () => {
             "Review verified successfully!",
             "success"
           ).then(() => {
-            const updatedReviews = eventReviews.map((review) => {
+            const updatedReviews = eventReviews.map((review: any) => {
               if (review._id === selectedEvent._id) {
                 return { ...review, status: "verified" };
               }

@@ -7,11 +7,7 @@ import bus from "../../../assets/Home_image/bus.webp";
 import dance from "../../../assets/Home_image/dance.webp";
 import movie from "../../../assets/Home_image/movie.webp";
 
-interface HomeCategoryProps {
-  scrollToSection: (sectionId: string) => void;
-}
-
-const HomeCategory: React.FC<HomeCategoryProps> = ({ scrollToSection }) => {
+const HomeCategory: React.FC = () => {
   const { darkMode } = useAuth()! as any;
 
   // Animation variants
