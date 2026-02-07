@@ -96,14 +96,14 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(currentUser);
         await loginUser(currentUser.email).unwrap()
           .then(res => {
-            console.log('login token', res.data);
+            console.log("login token", res.data);
             setLoading(false)
           })
       } else {
         setUser(currentUser);
         await logoutUserMutation(undefined).unwrap()
           .then(res => {
-            console.log('logout', res.data)
+            console.log("logout", res.data)
             setLoading(false)
           })
       }

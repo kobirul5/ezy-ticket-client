@@ -3,16 +3,16 @@ import {
   FaTicketAlt,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
-import Heading from "../../../components/Heading";
-import DiscountImage from "../../../assets/Events_image/event-banner1.avif";
-import DiscountImage2 from "../../../assets/Events_image/ride.webp";
-import DiscountImage3 from "../../../assets/Events_image/event-banner3.jpg";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import 'swiper/css/effect-creative';
-import { Autoplay, Pagination, EffectCreative } from 'swiper/modules';
+import Heading from "@/components/shared/Heading";
+import DiscountImage from "@/assets/Events_image/event-banner1.avif";
+import DiscountImage2 from "@/assets/Events_image/ride.webp";
+import DiscountImage3 from "@/assets/Events_image/event-banner3.jpg";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "swiper/css/effect-creative";
+import { Autoplay, Pagination, EffectCreative } from "swiper/modules";
 import { FaUsers } from "react-icons/fa6";
 
 const EventOffer = () => {

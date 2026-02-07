@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import useAuth from "../../../Hooks/useAuth";
-import useTravelContext from "../../../Hooks/TrevalHook/useTravelContext";
+import useAuth from "@/Hooks/useAuth";
+import useTravelContext from "@/Hooks/TrevalHook/useTravelContext";
 
 const BusFilter = () => {
   const { darkMode } = useAuth() as any;

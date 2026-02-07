@@ -93,7 +93,7 @@ const Footer: React.FC = () => {
         <motion.div variants={itemVariants} className="space-y-6">
           <h4 className="text-lg font-semibold text-white">Resources</h4>
           <div className="flex flex-col gap-4 text-gray-400">
-            {['Application', 'Documentation', 'Systems', 'FAQ'].map((item) => (
+            {["Application", "Documentation", "Systems", "FAQ"].map((item) => (
               <Link
                 key={item}
                 to={`/${item.toLowerCase()}`}
@@ -109,10 +109,10 @@ const Footer: React.FC = () => {
         <motion.div variants={itemVariants} className="space-y-6">
           <h4 className="text-lg font-semibold text-white">Company</h4>
           <div className="flex flex-col gap-4 text-gray-400">
-            {['About Us', 'Blog', 'Partnerships', 'Careers', 'Press'].map((item) => (
+            {["About Us", "Blog", "Partnerships", "Careers", "Press"].map((item) => (
               <Link
                 key={item}
-                to={`/${item.toLowerCase().replace(' ', '-')}`}
+                to={`/${item.toLowerCase().replace(" ", "-")}`}
                 className="hover:text-main transition-colors flex items-center gap-2 group"
               >
                 <span className="w-2 h-2 bg-main rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>

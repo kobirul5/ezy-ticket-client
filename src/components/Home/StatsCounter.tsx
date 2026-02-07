@@ -1,7 +1,7 @@
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import useAuth from "../../Hooks/useAuth";
+import useAuth from "@/Hooks/useAuth";
 
 const CounterItem = ({ targetNumber, label }: { targetNumber: number, label: string }) => {
     const {darkMode} = useAuth()! as any;
@@ -40,7 +40,7 @@ const CounterItem = ({ targetNumber, label }: { targetNumber: number, label: str
         <motion.div
             ref={ref}
             animate={controls}
-            className={`text-center flex flex-col justify-center items-center  py-4 rounded-md border  ${darkMode ? 'text-dark-primary bg-dark-surface border-gray-500' : 'bg-green-100 border-gray-200 text-gray-700'}`}
+            className={`text-center flex flex-col justify-center items-center  py-4 rounded-md border  ${darkMode ? "text-dark-primary bg-dark-surface border-gray-500" : "bg-green-100 border-gray-200 text-gray-700"}`}
         >
             <div className="text-5xl md:text-7xl font-semibold  mb-2 flex items-center gap-2">
                 {count} <span className="text-3xl">+</span>

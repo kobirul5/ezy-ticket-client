@@ -1,5 +1,5 @@
 import { FaArrowRight, FaTicketAlt } from "react-icons/fa";
-import ticket from "../../../assets/Pricing_image/ticket.png";
+import ticket from "@/assets/Pricing_image/ticket.png";
 
 const PricingBanner = () => {
     return (

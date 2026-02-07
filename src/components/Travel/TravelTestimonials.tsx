@@ -1,6 +1,6 @@
 import { FaQuoteLeft, FaStar } from "react-icons/fa";
 import { motion } from "framer-motion";
-import useAuth from "../../../Hooks/useAuth";
+import useAuth from "@/Hooks/useAuth";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, A11y,  Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -27,7 +27,7 @@ const testimonials = [
         role: "Freelance Photographer",
         rating: 4,
         content:
-            "Was on a tight schedule for a client shoot in Cox's Bazar. EzyTicket helped me get there early and comfortably. Great platform for travelers!",
+            "Was on a tight schedule for a client shoot in Cox"s Bazar. EzyTicket helped me get there early and comfortably. Great platform for travelers!",
         image: "https://i.ibb.co.com/CKGcCQRb/man-6.jpg",
         accentColor: "bg-indigo-500"
     },

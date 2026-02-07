@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
-import useAuth from "../../../../Hooks/useAuth";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import useAuth from "@/Hooks/useAuth";
 
 const AddBusService = () => {
   const { user, userInfo } = useAuth()! as any;

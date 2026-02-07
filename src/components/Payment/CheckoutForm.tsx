@@ -1,9 +1,9 @@
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import React, { useEffect, useState } from 'react'
-import useAxiosSecure from '../../Hooks/useAxiosSecure';
-import useAuth from '../../Hooks/useAuth';
-import useTravelContext from '../../Hooks/TrevalHook/useTravelContext';
-import { useNavigate } from 'react-router-dom';
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
+import React, { useEffect, useState } from "react"
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import useAuth from "@/Hooks/useAuth";
+import useTravelContext from "@/Hooks/TrevalHook/useTravelContext";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = () => {
   const [errorMsg, setErrorMsg] = useState("")
@@ -42,7 +42,7 @@ const CheckoutForm = () => {
     }
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: 'card',
+      type: "card",
       card
     })
 
@@ -72,7 +72,7 @@ const CheckoutForm = () => {
     else {
       console.log("Payment Intent", paymentIntent)
       if (paymentIntent.status === "succeeded") {
-        console.log('transaction id', paymentIntent.id)
+        console.log("transaction id", paymentIntent.id)
         setTransactionId(paymentIntent.id)
         // save data in database
         if(busPassengerData.verifyData === "bus"){
@@ -95,15 +95,15 @@ const CheckoutForm = () => {
             options={{
               style: {
                 base: {
-                  fontSize: '16px',
-                  color: '#1a202c',
-                  fontFamily: 'Arial, sans-serif',
-                  '::placeholder': {
-                    color: '#a0aec0',
+                  fontSize: "16px",
+                  color: "#1a202c",
+                  fontFamily: "Arial, sans-serif",
+                  "::placeholder": {
+                    color: "#a0aec0",
                   },
                 },
                 invalid: {
-                  color: '#e53e3e',
+                  color: "#e53e3e",
                 },
               },
             }}
@@ -114,7 +114,7 @@ const CheckoutForm = () => {
           <p className="text-green-600 text-sm my-2">Your transaction ID: {transactionId}</p>
         )}
         <button
-          className='mt-4 w-full bg-main text-white py-2 rounded-lg hover:bg-main transition disabled:opacity-50'
+          className="mt-4 w-full bg-main text-white py-2 rounded-lg hover:bg-main transition disabled:opacity-50"
           type="submit"
           disabled={!stripe || !clientSecret}
         >

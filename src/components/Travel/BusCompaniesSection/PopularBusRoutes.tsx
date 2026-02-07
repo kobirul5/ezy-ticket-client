@@ -1,11 +1,11 @@
 import { FaArrowRight, FaBus, } from "react-icons/fa";
 import { motion } from "framer-motion";
-import Heading from "../../../components/Heading";
-import useTravelContext from "../../../Hooks/TrevalHook/useTravelContext";
-import useAuth from "../../../Hooks/useAuth";
+import Heading from "@/components/shared/Heading";
+import useTravelContext from "@/Hooks/TrevalHook/useTravelContext";
+import useAuth from "@/Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import Swal from 'sweetalert2'
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2"
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
 
 const PopularBusRoutes = () => {
   const { allBusData, setSearchData, setFilterBus } = useTravelContext() as any
@@ -58,7 +58,7 @@ const PopularBusRoutes = () => {
             })
     } catch (err) {
         console.error("Search error:", err);
-        alert('Failed to search. Please try again.');
+        alert("Failed to search. Please try again.");
     }
       
    }

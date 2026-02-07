@@ -1,24 +1,24 @@
-import Heading from "../../../components/Heading"
+import Heading from "@/components/shared/Heading"
 import FlashDealCard from "./FlashDealCard"
 import { useQuery } from "@tanstack/react-query";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-// import 'swiper/css/effect-fade';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+// import "swiper/css/effect-fade";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import useAxiosPublic from "@/Hooks/useAxiosPublic";
 
 const FlashDeals = () => {
   const axiosPublic = useAxiosPublic()
 
     const { data: flashDeals = []} = useQuery({
-        queryKey: ['flashDeals'],
+        queryKey: ["flashDeals"],
         queryFn: async () => {
-            const res = await axiosPublic.get('/bus-flash-deal');
+            const res = await axiosPublic.get("/bus-flash-deal");
             return res.data;
         }
     })

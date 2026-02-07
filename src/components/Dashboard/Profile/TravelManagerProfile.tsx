@@ -1,10 +1,10 @@
 import { MdOutlineEmail, MdEdit } from "react-icons/md";
-import noImage from "../../../../assets/Common_image/noImage.png";
+import noImage from "@/assets/Common_image/noImage.png";
 import { FaHome, FaPhoneAlt, FaTicketAlt, FaUserCircle } from "react-icons/fa";
 import { FaFolderOpen } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import EditButton from "../ProfileComponents/EditButton"
-import useAuth from "../../../../Hooks/useAuth";
+import useAuth from "@/Hooks/useAuth";
+import EditButton from "./EditButton";
 
 
 const TravelManagerProfile = () => {
@@ -28,7 +28,7 @@ const TravelManagerProfile = () => {
                     {/* Profile Content */}
                     <div className="pt-20 pb-8 px-6 sm:px-8 text-center">
                         <h1 className="text-3xl font-bold text-gray-800 mb-1">
-                            {userInfo?.name || 'Anonymous User'}
+                            {userInfo?.name || "Anonymous User"}
                         </h1>
 
                         <div className="flex justify-center gap-2  md:gap-4 lg:gap-8 mt-6 mb-8">
@@ -61,7 +61,7 @@ const TravelManagerProfile = () => {
                                 <div>
                                     <p className="text-sm text-gray-500">Email</p>
                                     <p className="font-medium text-gray-800">
-                                        {userInfo?.email || 'Not provided'}
+                                        {userInfo?.email || "Not provided"}
                                     </p>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@ const TravelManagerProfile = () => {
                                 <div>
                                     <p className="text-sm text-gray-500">Phone</p>
                                     <p className="font-medium text-gray-800">
-                                        {userInfo?.phone || 'Not provided'}
+                                        {userInfo?.phone || "Not provided"}
                                     </p>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@ const TravelManagerProfile = () => {
                                 <div>
                                     <p className="text-sm text-gray-500">Address</p>
                                     <p className="font-medium text-gray-800">
-                                        {userInfo?.address || 'Not provided'}
+                                        {userInfo?.address || "Not provided"}
                                     </p>
                                 </div>
                             </div>

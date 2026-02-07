@@ -32,7 +32,6 @@ import Payment from "../components/Payment/Payment";
 import ManageEventReview from "../Pages/Dashboard/Events/ManageEventReview";
 import TravelPaymentSuccess from "../Pages/Travel/TravelPaymentSuccess";
 import Page404 from "../Pages/Page404/Page404";
-import AddBusCompany from "../Pages/Dashboard/Travel/AddBusCompany";
 import TicketSold from "../components/Dashboard/TicketSold";
 import TicketBought from "../Pages/Dashboard/User/TicketBought";
 
@@ -142,12 +141,8 @@ const Route = createBrowserRouter([
         element: <ManageUsers></ManageUsers>,
       },
       {
-        path:'ticket-bought',
+        path:"ticket-bought",
         element:<TicketBought></TicketBought>
-      },
-      {
-        path: "add-your-bus-service",
-        element: <AddBusCompany/>
       },
       {
         path:"ticketSold",
@@ -193,7 +188,7 @@ const Route = createBrowserRouter([
     ],
   },
   {
-    path: '*',
+    path: "*",
     element: <Page404></Page404>
   }
 ]);

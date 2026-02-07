@@ -12,7 +12,7 @@ const MainLayout = () => {
             </div>
 
             {/* Main content area */}
-            <main className={`flex-grow ${darkMode ? 'bg-dark-background' : 'bg-background'}`}>
+            <main className={`flex-grow ${darkMode ? "bg-dark-background" : "bg-background"}`}>
                 <Outlet />
             </main>
             <Footer />

@@ -1,4 +1,4 @@
-import tanoura from "../../assets/Home_image/tanoura.jpg";
+import tanoura from "@/assets/Home_image/tanoura.jpg";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useInView } from "react-intersection-observer";
@@ -13,10 +13,10 @@ const EventSectionBanner = () => {
     <div
       style={{
         backgroundImage: `url(${tanoura})`,
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed'
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed"
       }}
       className="relative h-[70vh] md:h-[80vh] w-full flex items-end pb-8 md:pb-16 mb-8 md:mb-16 lg:mb-20"
     >

@@ -1,10 +1,10 @@
-import TravelBanner from "../../components/Travel/TravelBanner"
-import FlashDeals from "../../components/Travel/FlashDeals/FlashDeals"
-import useAuth from '../../Hooks/useAuth'
-import TravelFAQ from "../../components/Travel/TravelFAQ/TravelFAQ"
-import WhyChooseUsTravel from "../../components/Travel/WhyChooseUsTravel"
-import BusCompaniesSection from "../../components/Travel/BusCompaniesSection/BusCompaniesSection"
-import PopularBusRoutes from "../../components/Travel/BusCompaniesSection/PopularBusRoutes"
+import TravelBanner from "@/components/Travel/TravelBanner"
+import FlashDeals from "@/components/Travel/FlashDeals/FlashDeals"
+import TravelFAQ from "@/components/Travel/TravelFAQ/TravelFAQ"
+import WhyChooseUsTravel from "@/components/Travel/WhyChooseUsTravel"
+import BusCompaniesSection from "@/components/Travel/BusCompaniesSection/BusCompaniesSection"
+import PopularBusRoutes from "@/components/Travel/BusCompaniesSection/PopularBusRoutes"
+import useAuth from "@/Hooks/useAuth"
 
 const Travel = () => {
   const { darkMode } = useAuth() as any
@@ -14,14 +14,10 @@ const Travel = () => {
     >
       <TravelBanner />
 
-      <section className='container mx-auto px-4 pt-10 mb-14'>
+      <section className="container mx-auto px-4 pt-10 mb-14">
         <FlashDeals />
       </section>
-      {/*      
-      <div className='px-4 mb-20'>
-        <TravelService />
-      </div> */}
-
+      
       {/* <AddTravelService /> */}
       <BusCompaniesSection></BusCompaniesSection>
 
@@ -29,7 +25,7 @@ const Travel = () => {
       <div id="scroll-section ">
         {/* <TravelUltimateCompanion/> */}
       </div>
-      <section className='px-4 mb-20'>
+      <section className="px-4 mb-20">
         <TravelFAQ />
         {/* TODO: need added premium section */}
         <WhyChooseUsTravel />

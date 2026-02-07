@@ -1,6 +1,6 @@
 import { IoIosArrowForward, IoIosTimer } from "react-icons/io";
-import useAuth from "../../Hooks/useAuth";
-import AboutCounter from "../../components/About/AboutCounter";
+import useAuth from "@/Hooks/useAuth";
+import AboutCounter from "@/components/About/AboutCounter";
 import { MdMoreTime } from "react-icons/md";
 import { CiCreditCard1, CiMedicalClipboard } from "react-icons/ci";
 import { FaFacebookF, FaLinkedinIn, FaRegHandshake } from "react-icons/fa";
@@ -76,7 +76,7 @@ const About = () => {
             Home <IoIosArrowForward className="my-auto" /> About
           </p>
           {/* <p className="text-lg max-w-2xl mx-auto">
-                  We'd love to hear from you! Whether you have a question, feedback, or just want to say hello — we’re here to help.
+                  We"d love to hear from you! Whether you have a question, feedback, or just want to say hello — we’re here to help.
                 </p> */}
         </div>
 
@@ -191,14 +191,14 @@ const About = () => {
 
               <div className="flex gap-5 justify-center items-center mt-7">
 
-                <Link to='https://www.linkedin.com/in/apu-r0y/'>
+                <Link to="https://www.linkedin.com/in/apu-r0y/">
                 <FaLinkedinIn />
                 </Link>
-                <Link to='https://www.linkedin.com/in/apu-r0y/'>
+                <Link to="https://www.linkedin.com/in/apu-r0y/">
                 <BsTwitterX />
                 </Link>
 
-                <Link to='https://www.linkedin.com/in/apu-r0y/'>
+                <Link to="https://www.linkedin.com/in/apu-r0y/">
                 <FaFacebookF />
                 </Link>
              

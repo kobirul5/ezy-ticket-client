@@ -6,10 +6,10 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
-import useAuth from "../../Hooks/useAuth";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
-import Loading from "../../components/shared/Loading/Loading";
-import noImage from "../../assets/Common_image/noImage.png";
+import useAuth from "@/Hooks/useAuth";
+import useAxiosPublic from "@/Hooks/useAxiosPublic";
+import Loading from "@/components/shared/Loading/Loading";
+import noImage from "@/assets/Common_image/noImage.png";
 import { BsFillCalendar2DateFill } from "react-icons/bs";
 
 // Icons
@@ -26,7 +26,7 @@ import {
 } from "react-icons/io";
 import { GiTicket } from "react-icons/gi";
 import { FaMapMarkerAlt, FaMoneyCheckAlt } from "react-icons/fa";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
 
 const EventDetails = () => {
   // Hooks and state

@@ -1,8 +1,8 @@
-import useAuth from "../../../../Hooks/useAuth";
-import { useDeleteUserMutation, useGetUsersQuery, useUpdateUserRoleMutation } from "../../../../app/features/auth/authApi";
+import useAuth from "@/Hooks/useAuth";
+import { useDeleteUserMutation, useGetUsersQuery, useUpdateUserRoleMutation } from "@/app/features/auth/authApi";
 import Swal from "sweetalert2";
 import { FaTrashAlt, FaUserEdit } from "react-icons/fa";
-import noImage from "../../../../assets/Common_image/noImage.png";
+import noImage from "@/assets/Common_image/noImage.png";
 
 const ManageUsers = () => {
     const { user } = useAuth()! as any;
@@ -46,7 +46,7 @@ const ManageUsers = () => {
     const handleChangeRole = (user: any, newRole: string) => {
         Swal.fire({
             title: "Change Role",
-            text: `Change ${user.name}'s role to ${newRole}?`,
+            text: `Change ${user.name}"s role to ${newRole}?`,
             icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -59,7 +59,7 @@ const ManageUsers = () => {
                     if (res.modifiedCount > 0) {
                         Swal.fire({
                             title: "Updated!",
-                            text: `${user.name}'s role has been updated to ${newRole}.`,
+                            text: `${user.name}"s role has been updated to ${newRole}.`,
                             icon: "success"
                         });
                     }
@@ -127,7 +127,7 @@ const ManageUsers = () => {
                                         </div>
                                     </td>
                                     <td>{savedUser.email}</td>
-                                    <td className="capitalize">{savedUser.role || 'user'}</td>
+                                    <td className="capitalize">{savedUser.role || "user"}</td>
                                     <td>
                                         <div className="flex gap-2">
                                             {/* Change Role Dropdown - Disabled for current user */}
@@ -135,25 +135,25 @@ const ManageUsers = () => {
                                                 <div
                                                     tabIndex={0}
                                                     role="button"
-                                                    className={`btn btn-sm btn-outline btn-primary ${isCurrentUser ? 'btn-disabled opacity-90' : ''}`}
+                                                    className={`btn btn-sm btn-outline btn-primary ${isCurrentUser ? "btn-disabled opacity-90" : ""}`}
                                                     aria-disabled={isCurrentUser}
                                                 >
                                                     <FaUserEdit /> Role
                                                 </div>
                                                 {!isCurrentUser && (
-                                                    <ul tabIndex={0} className={`dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 ${savedUser?.role === 'admin' && 'tooltip'}`}
+                                                    <ul tabIndex={0} className={`dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 ${savedUser?.role === "admin" && "tooltip"}`}
                                                         data-tip="Cannot modify your own account"
                                                     >
                                                         {
-                                                            savedUser?.role !== 'admin' &&
-                                                            <li><button onClick={() => handleChangeRole(savedUser, 'admin')}>Make Admin</button></li>
+                                                            savedUser?.role !== "admin" &&
+                                                            <li><button onClick={() => handleChangeRole(savedUser, "admin")}>Make Admin</button></li>
                                                         }
 
-                                                        <li><button onClick={() => handleChangeRole(savedUser, 'travelManager')}>Travel Manager</button></li>
+                                                        <li><button onClick={() => handleChangeRole(savedUser, "travelManager")}>Travel Manager</button></li>
 
-                                                        <li><button onClick={() => handleChangeRole(savedUser, 'eventManager')}>Event Manager</button></li>
+                                                        <li><button onClick={() => handleChangeRole(savedUser, "eventManager")}>Event Manager</button></li>
 
-                                                        <li><button onClick={() => handleChangeRole(savedUser, 'user')}>Make Regular User</button></li>
+                                                        <li><button onClick={() => handleChangeRole(savedUser, "user")}>Make Regular User</button></li>
                                                     </ul>
                                                 )}
                                             </div>
@@ -161,7 +161,7 @@ const ManageUsers = () => {
                                             {/* Delete Button - Disabled for current user */}
                                             <button
                                                 onClick={() => !isCurrentUser && handleDeleteUser(savedUser)}
-                                                className={`btn btn-sm btn-outline btn-error ${isCurrentUser ? 'btn-disabled opacity-80' : ''}`}
+                                                className={`btn btn-sm btn-outline btn-error ${isCurrentUser ? "btn-disabled opacity-80" : ""}`}
                                                 disabled={isCurrentUser}
                                             >
                                                 <FaTrashAlt /> Remove

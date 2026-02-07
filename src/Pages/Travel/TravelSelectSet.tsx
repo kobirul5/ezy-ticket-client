@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import travelBannerImage from "../../assets/Travel_image/travel-service/bg-bus.jpg"
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import useCurrentUser from "../../Hooks/useCurrentUser";
-import useAuth from "../../Hooks/useAuth";
-import useTravelContext from "../../Hooks/TrevalHook/useTravelContext";
+import travelBannerImage from "@/assets/Travel_image/travel-service/bg-bus.jpg"
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import useCurrentUser from "@/Hooks/useCurrentUser";
+import useAuth from "@/Hooks/useAuth";
+import useTravelContext from "@/Hooks/TrevalHook/useTravelContext";
 
 const TravelSelectSet = () => {
     const axiosSecure = useAxiosSecure()

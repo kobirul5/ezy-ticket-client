@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
-import useEventReview from "./../../../../Hooks/useEventReview";
-import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import useEventReview from "@/Hooks/useEventReview";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
 
 const ManageEventReview = () => {
   const [eventReviews, setEventReviews, isLoading, refetch] = useEventReview() as any;

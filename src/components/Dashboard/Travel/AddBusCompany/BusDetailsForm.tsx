@@ -1,8 +1,8 @@
-import { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import { FiUploadCloud, FiX, FiMapPin, FiClock } from 'react-icons/fi';
-import { useForm } from 'react-hook-form';
-import { FaBangladeshiTakaSign } from 'react-icons/fa6';
+import { useCallback, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { FiUploadCloud, FiX, FiMapPin, FiClock } from "react-icons/fi";
+import { useForm } from "react-hook-form";
+import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
 const AddBusServiceForm = () => {
   const { register, handleSubmit } = useForm();
@@ -19,13 +19,13 @@ const AddBusServiceForm = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: {'image/*': []},
+    accept: {"image/*": []},
     multiple: false
   });
 
   const removeImage = () => {
     setLogoPreview(null);
-    URL.revokeObjectURL(logoPreview || '');
+    URL.revokeObjectURL(logoPreview || "");
   };
 
   const onSubmit = async (data: any) => {
@@ -34,7 +34,7 @@ const AddBusServiceForm = () => {
       ...data,
       logo: logoPreview,
       ticketPrice: Number(data.ticketPrice),
-      refund: data.refund === 'true'
+      refund: data.refund === "true"
     };
     console.log(formData);
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -55,8 +55,8 @@ const AddBusServiceForm = () => {
           <div
             {...getRootProps()}
             className={`mx-auto w-56 h-56 rounded-full border-4 border-dashed cursor-pointer
-              ${isDragActive ? 'border-main bg-blue-100/50' : 'border-gray-300/50'}
-              ${logoPreview ? 'border-transparent' : ''}
+              ${isDragActive ? "border-main bg-blue-100/50" : "border-gray-300/50"}
+              ${logoPreview ? "border-transparent" : ""}
               transition-all duration-300 hover:border-main relative overflow-hidden`}
           >
             <input {...getInputProps()} />
@@ -82,7 +82,7 @@ const AddBusServiceForm = () => {
                   <FiUploadCloud className="w-8 h-8 text-main/80" />
                 </div>
                 <p className="text-sm font-medium text-gray-600 px-4">
-                  {isDragActive ? 'Drop logo here' : 'Drag & drop or click to upload'}
+                  {isDragActive ? "Drop logo here" : "Drag & drop or click to upload"}
                 </p>
                 {isDragActive && (
                   <div className="absolute inset-0 bg-main/10 backdrop-blur-sm rounded-full" />
@@ -102,7 +102,7 @@ const AddBusServiceForm = () => {
               </label>
               <div className="relative">
                 <input
-                  {...register('busName', { required: true })}
+                  {...register("busName", { required: true })}
                   defaultValue="Shohagh Paribahan"
                   className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200/80 focus:border-main focus:ring-2 focus:ring-blue-200/50 outline-none bg-white/95 shadow-sm"
                 />
@@ -116,7 +116,7 @@ const AddBusServiceForm = () => {
               <label className="block text-sm font-semibold text-gray-700 mb-2 ml-1">From Location</label>
               <div className="relative">
                 <input
-                  {...register('from')}
+                  {...register("from")}
                   defaultValue="Mohakhali Bus Terminal, Dhaka"
                   className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200/80 focus:border-main focus:ring-2 focus:ring-blue-200/50 outline-none bg-white/95 shadow-sm"
                 />
@@ -132,7 +132,7 @@ const AddBusServiceForm = () => {
               <label className="block text-sm font-semibold text-gray-700 mb-2 ml-1">To Location</label>
               <div className="relative">
                 <input
-                  {...register('to')}
+                  {...register("to")}
                   defaultValue="Kamalapur Bus Stand, Dhaka"
                   className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200/80 focus:border-main focus:ring-2 focus:ring-blue-200/50 outline-none bg-white/95 shadow-sm"
                 />
@@ -148,7 +148,7 @@ const AddBusServiceForm = () => {
                 <div className="relative">
                   <input
                     type="date"
-                    {...register('date')}
+                    {...register("date")}
                     defaultValue="2025-03-01"
                     className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200/80 focus:border-main focus:ring-2 focus:ring-blue-200/50 outline-none bg-white/95 shadow-sm"
                   />
@@ -163,7 +163,7 @@ const AddBusServiceForm = () => {
                 <div className="relative">
                   <input
                     type="time"
-                    {...register('busTimes')}
+                    {...register("busTimes")}
                     defaultValue="08:30"
                     className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200/80 focus:border-main focus:ring-2 focus:ring-blue-200/50 outline-none bg-white/95 shadow-sm"
                   />
@@ -185,7 +185,7 @@ const AddBusServiceForm = () => {
               <div className="relative">
                 <input
                   type="number"
-                  {...register('ticketPrice')}
+                  {...register("ticketPrice")}
                   defaultValue={350}
                   className="w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200/80 focus:border-main focus:ring-2 focus:ring-blue-200/50 outline-none bg-white/95"
                 />
@@ -198,9 +198,9 @@ const AddBusServiceForm = () => {
             <div className="relative group">
               <label className="block text-sm font-semibold text-gray-700 mb-2 ml-1">Bus Type</label>
               <select
-                {...register('type')}
+                {...register("type")}
                 defaultValue="AC"
-                className="w-full px-4 py-3.5 rounded-xl border border-gray-200/80 focus:border-main focus:ring-2 focus:ring-blue-200/50 outline-none bg-white/95 appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2NjgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSIvPjwvc3ZnPg==')] bg-no-repeat bg-[center_right_1rem]"
+                className="w-full px-4 py-3.5 rounded-xl border border-gray-200/80 focus:border-main focus:ring-2 focus:ring-blue-200/50 outline-none bg-white/95 appearance-none bg-[url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2NjgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSIvPjwvc3ZnPg==")] bg-no-repeat bg-[center_right_1rem]"
               >
                 <option value="AC">AC</option>
                 <option value="Non-AC">Non-AC</option>
@@ -210,9 +210,9 @@ const AddBusServiceForm = () => {
             <div className="relative group">
               <label className="block text-sm font-semibold text-gray-700 mb-2 ml-1">Refund Policy</label>
               <select
-                {...register('refund')}
+                {...register("refund")}
                 defaultValue="true"
-                className="w-full px-4 py-3.5 rounded-xl border border-gray-200/80 focus:border-main focus:ring-2 focus:ring-blue-200/50 outline-none bg-white/95 appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2NjgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSIvPjwvc3ZnPg==')] bg-no-repeat bg-[center_right_1rem]"
+                className="w-full px-4 py-3.5 rounded-xl border border-gray-200/80 focus:border-main focus:ring-2 focus:ring-blue-200/50 outline-none bg-white/95 appearance-none bg-[url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2NjgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSI2IDkgMTIgMTUgMTggOSIvPjwvc3ZnPg==")] bg-no-repeat bg-[center_right_1rem]"
               >
                 <option value="true">Refund Available</option>
                 <option value="false">Non-refundable</option>
@@ -227,12 +227,12 @@ const AddBusServiceForm = () => {
           disabled={isSubmitting}
           className={`w-full py-4 px-6 rounded-xl font-semibold text-white transition-all transform
             ${isSubmitting 
-              ? 'bg-blue-400 cursor-not-allowed' 
-              : 'bg-gradient-to-r from-main to-main hover:from-main hover:to-main hover:shadow-lg hover:scale-[1.005]'} 
+              ? "bg-blue-400 cursor-not-allowed" 
+              : "bg-gradient-to-r from-main to-main hover:from-main hover:to-main hover:shadow-lg hover:scale-[1.005]"} 
             relative overflow-hidden group`}
         >
-          <span className={`relative z-10 ${isSubmitting ? 'opacity-50' : ''}`}>
-            {isSubmitting ? 'Publishing Service...' : 'Publish Bus Service'}
+          <span className={`relative z-10 ${isSubmitting ? "opacity-50" : ""}`}>
+            {isSubmitting ? "Publishing Service..." : "Publish Bus Service"}
           </span>
           {!isSubmitting && (
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

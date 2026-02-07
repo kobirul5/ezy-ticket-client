@@ -1,5 +1,5 @@
 // src/components/CountdownTimer.tsx
-import React from 'react';
+import React from "react";
 
 interface CountdownTimerProps {
   timeLeft: Record<string, number>;

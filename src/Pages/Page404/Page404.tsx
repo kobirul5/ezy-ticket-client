@@ -21,7 +21,7 @@ const Page404 = () => {
           Oops! Page not found
         </h2>
         <p className="text-gray-600 max-w-md mb-6 mx-auto md:mx-0">
-          The page you're looking for doesn’t exist or has been moved. Let’s get
+          The page you"re looking for doesn’t exist or has been moved. Let’s get
           you back to where you belong.
         </p>
         <Link

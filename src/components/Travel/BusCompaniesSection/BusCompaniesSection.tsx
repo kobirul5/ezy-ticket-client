@@ -1,72 +1,74 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaBus, FaHandshake, FaRegClock, FaRoute, FaStar } from 'react-icons/fa';
-import { TbAirConditioning } from 'react-icons/tb';
-import Heading from '../../../components/Heading';
-import useAuth from '../../../Hooks/useAuth';
+import { motion, AnimatePresence } from "framer-motion";
+import { FaBus, FaHandshake, FaRegClock, FaRoute, FaStar } from "react-icons/fa";
+import { TbAirConditioning } from "react-icons/tb";
+
+import useAuth from "@/Hooks/useAuth";
+import Heading from "@/components/shared/Heading";
+import { JSX } from "react";
 
 const BusPartnersSection = () => {
   const { darkMode } = useAuth() as any
 
   const partners = [
     {
-      name: 'Shohagh Paribahan',
-      logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC6Br4x4iQdSsuUsR5IuDsAJAFmXNbKTb0Pw&s',
+      name: "Shohagh Paribahan",
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC6Br4x4iQdSsuUsR5IuDsAJAFmXNbKTb0Pw&s",
       since: 2024,
       routes: 1,
-      features: ['ac'],
-      tags: ['affordable'],
+      features: ["ac"],
+      tags: ["affordable"],
       rating: 4.2,
-      description: 'Reliable intercity AC service with refund option',
+      description: "Reliable intercity AC service with refund option",
     },
     {
-      name: 'Green Line Paribahan',
-      logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC6Br4x4iQdSsuUsR5IuDsAJAFmXNbKTb0Pw&s',
+      name: "Green Line Paribahan",
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC6Br4x4iQdSsuUsR5IuDsAJAFmXNbKTb0Pw&s",
       since: 2023,
       routes: 1,
-      features: ['non-ac'],
-      tags: ['economy'],
+      features: ["non-ac"],
+      tags: ["economy"],
       rating: 3.9,
-      description: 'Non-AC service with multiple seat bookings available',
+      description: "Non-AC service with multiple seat bookings available",
     },
     {
-      name: 'Hanif Enterprise',
-      logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC6Br4x4iQdSsuUsR5IuDsAJAFmXNbKTb0Pw&s',
+      name: "Hanif Enterprise",
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC6Br4x4iQdSsuUsR5IuDsAJAFmXNbKTb0Pw&s",
       since: 2015,
       routes: 1,
-      features: ['ac'],
-      tags: ['comfortable'],
+      features: ["ac"],
+      tags: ["comfortable"],
       rating: 4.5,
-      description: 'Comfortable AC service to Rajshahi with refund support',
+      description: "Comfortable AC service to Rajshahi with refund support",
     },
     {
-      name: 'Ena Transport',
-      logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC6Br4x4iQdSsuUsR5IuDsAJAFmXNbKTb0Pw&s',
+      name: "Ena Transport",
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC6Br4x4iQdSsuUsR5IuDsAJAFmXNbKTb0Pw&s",
       since: 2015,
       routes: 1,
-      features: ['ac'],
-      tags: ['premium'],
+      features: ["ac"],
+      tags: ["premium"],
       rating: 4.6,
-      description: 'Premium long-distance service with refund option',
+      description: "Premium long-distance service with refund option",
     },
     {
-      name: 'Desh Travels',
-      logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC6Br4x4iQdSsuUsR5IuDsAJAFmXNbKTb0Pw&s',
+      name: "Desh Travels",
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC6Br4x4iQdSsuUsR5IuDsAJAFmXNbKTb0Pw&s",
       since: 2018,
       routes: 1,
-      features: ['ac'],
-      tags: ['holiday'],
+      features: ["ac"],
+      tags: ["holiday"],
       rating: 4.3,
-      description: 'AC holiday trip with convenient timing but no refund',
+      description: "AC holiday trip with convenient timing but no refund",
     },
     {
-      name: 'Shyamoli Paribahan',
-      logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC6Br4x4iQdSsuUsR5IuDsAJAFmXNbKTb0Pw&s',
+      name: "Shyamoli Paribahan",
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC6Br4x4iQdSsuUsR5IuDsAJAFmXNbKTb0Pw&s",
       since: 2025,
       routes: 1,
-      features: ['non-ac'],
-      tags: ['budget'],
+      features: ["non-ac"],
+      tags: ["budget"],
       rating: 4.0,
-      description: 'Non-AC budget service suitable for family trips',
+      description: "Non-AC budget service suitable for family trips",
     },
   ];
 
@@ -75,7 +77,7 @@ const BusPartnersSection = () => {
     // wifi: <FaWifi className="text-blue-400" />,
     // charging: <FaPlug className="text-green-400" />,
     ac: <TbAirConditioning className="text-red-400" />,
-    // 'eco-friendly': <FaSnowflake className="text-emerald-400" />,
+    // "eco-friendly": <FaSnowflake className="text-emerald-400" />,
     // luxury: <FaStar className="text-supporting" />,
   };
 
@@ -153,7 +155,7 @@ const BusPartnersSection = () => {
                         className={`flex items-center gap-2 ${darkMode ? "bg-dark-surface" : "bg-gray-100"} px-3 py-2 rounded-lg backdrop-blur-sm`}
                       >
                         {featureIcons[feature] || <FaBus className="text-emerald-400" />}
-                        <span className="text-sm  capitalize">{feature.replace('-', ' ')}</span>
+                        <span className="text-sm  capitalize">{feature.replace("-", " ")}</span>
                       </motion.div>
                     ))}
                   </div>
@@ -180,10 +182,10 @@ const BusPartnersSection = () => {
         >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
-              { value: '10+', label: 'Years Experience', icon: <FaRegClock className="text-3xl text-blue-400" /> },
-              { value: '50+', label: 'Active Partners', icon: <FaHandshake className="text-3xl text-purple-400" /> },
-              { value: '1M+', label: 'Monthly Passengers', icon: <FaBus className="text-3xl text-emerald-400" /> },
-              { value: '24/7', label: 'Support', icon: <TbAirConditioning className="text-3xl text-amber-400" /> },
+              { value: "10+", label: "Years Experience", icon: <FaRegClock className="text-3xl text-blue-400" /> },
+              { value: "50+", label: "Active Partners", icon: <FaHandshake className="text-3xl text-purple-400" /> },
+              { value: "1M+", label: "Monthly Passengers", icon: <FaBus className="text-3xl text-emerald-400" /> },
+              { value: "24/7", label: "Support", icon: <TbAirConditioning className="text-3xl text-amber-400" /> },
             ].map((metric, idx) => (
               <motion.div
                 key={metric.label}

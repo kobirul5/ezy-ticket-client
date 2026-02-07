@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
-import useAuth from "../../../../Hooks/useAuth";
-import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import useAuth from "@/Hooks/useAuth";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import { FaTicketAlt } from "react-icons/fa";
 import { IoInformationCircle } from "react-icons/io5";
-import useAxiosPublic from "../../../../Hooks/useAxiosPublic";
+import useAxiosPublic from "@/Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 
 
@@ -22,7 +22,7 @@ const AddEvents = () => {
         const imageFile = { image: data.image[0] }
         const res = await axiosPublic.post(image_hosting_api, imageFile, {
             headers: {
-                'content-type': 'multipart/form-data'
+                "content-type": "multipart/form-data"
             },
             withCredentials: false
         })
@@ -49,14 +49,14 @@ const AddEvents = () => {
                 category: "event",
                 status: "pending"
             }
-            const eventRes = await axiosSecure.post('/events', eventInfo);
+            const eventRes = await axiosSecure.post("/events", eventInfo);
             if (eventRes.data.insertedId) {
                 reset();
                 //show success popup
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: 'Your Event has been added',
+                    title: "Your Event has been added",
                     showConfirmButton: false,
                     timer: 1500
                 });
@@ -84,7 +84,7 @@ const AddEvents = () => {
                         <input
                             type="text"
                             placeholder="Enter event name here"
-                            {...register('title', { required: true })}
+                            {...register("title", { required: true })}
                             className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow" />
                     </div>
 
@@ -93,9 +93,9 @@ const AddEvents = () => {
                         <div className="label">
                             <span className="label-text text-lg">Chose Event Type</span>
                         </div>
-                        <select defaultValue='default' {...register('eventType', { required: true })}
+                        <select defaultValue="default" {...register("eventType", { required: true })}
                             className="select select-bordered w-full focus:outline-none focus:border-supporting focus:shadow">
-                            <option disabled value='default'>Select Event Type</option>
+                            <option disabled value="default">Select Event Type</option>
                             <option value="online">Online</option>
                             <option value="venue">Venue</option>
                         </select>
@@ -106,9 +106,9 @@ const AddEvents = () => {
                         <div className="label">
                             <span className="label-text text-lg">Chose Event Category</span>
                         </div>
-                        <select defaultValue='default' {...register('eventCategory', { required: true })}
+                        <select defaultValue="default" {...register("eventCategory", { required: true })}
                             className="select select-bordered w-full focus:outline-none focus:border-supporting focus:shadow">
-                            <option disabled value='default'>Select Event Category</option>
+                            <option disabled value="default">Select Event Category</option>
                             <option value="adventureTour">Adventure Tour</option>
                             <option value="concert">Concert</option>
                             <option value="theater">Theater</option>
@@ -130,7 +130,7 @@ const AddEvents = () => {
                             </div>
                             <input
                                 type="date"
-                                {...register('eventDate', { required: true })}
+                                {...register("eventDate", { required: true })}
                                 className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow"
                                 placeholder="MM/DD/YYYY"
                             />
@@ -142,7 +142,7 @@ const AddEvents = () => {
                                 <span className="label-text">Time*</span>
                             </div>
                             <select
-                                {...register('eventTime', { required: true })}
+                                {...register("eventTime", { required: true })}
                                 className="select select-bordered w-full focus:outline-none focus:border-supporting focus:shadow"
                             >
                                 {/* AM Times */}
@@ -205,7 +205,7 @@ const AddEvents = () => {
                                 <span className="label-text">Duration*</span>
                             </div>
                             <select
-                                {...register('duration', { required: true })}
+                                {...register("duration", { required: true })}
                                 className="select select-bordered w-full focus:outline-none focus:border-supporting focus:shadow"
                             >
                                 {/* Minutes Only */}
@@ -249,7 +249,7 @@ const AddEvents = () => {
                         <input
                             type="text"
                             placeholder="Online / for venue Type Full Address"
-                            {...register('location', { required: true })}
+                            {...register("location", { required: true })}
                             className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow" />
                     </div>
 
@@ -261,7 +261,7 @@ const AddEvents = () => {
                         <textarea
                             className="textarea textarea-bordered h-36 w-full focus:outline-none focus:border-supporting focus:shadow"
                             placeholder="Details"
-                            {...register('details')}
+                            {...register("details")}
                         >
                         </textarea>
                     </div>
@@ -274,7 +274,7 @@ const AddEvents = () => {
                         <input
                             type="text"
                             placeholder="Organizer Company"
-                            {...register('organizer', { required: true })}
+                            {...register("organizer", { required: true })}
                             className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow" />
                     </div>
 
@@ -283,7 +283,7 @@ const AddEvents = () => {
                         <input
                             type="file"
                             className="file-input w-full"
-                            {...register('image', { required: true })}
+                            {...register("image", { required: true })}
                         />
                     </div>
 
@@ -305,7 +305,7 @@ const AddEvents = () => {
                                 type="number"
                                 min="0"
                                 placeholder="Total available tickets"
-                                {...register('totalTickets', {
+                                {...register("totalTickets", {
                                     required: "Total tickets is required",
                                     min: {
                                         value: 0,
@@ -329,10 +329,10 @@ const AddEvents = () => {
                                 type="number"
                                 min="0"
                                 placeholder="Max per customer"
-                                {...register('maxTickets', {
+                                {...register("maxTickets", {
                                     required: "Max tickets is required",
                                     validate: (value) => {
-                                        const total = getValues('totalTickets');
+                                        const total = getValues("totalTickets");
                                         if (value < 0) return "Must be at least 0";
                                         if (total !== undefined && value > total) {
                                             return `Cannot exceed total tickets (${total})`;
@@ -356,7 +356,7 @@ const AddEvents = () => {
                             <input
                                 type="number"
                                 placeholder="Each ticket Price"
-                                {...register('price', {
+                                {...register("price", {
                                     required: "Price is required",
                                     valueAsNumber: true,
                                     validate: (value) => value >= 10 || "Minimum price should be at least 10",

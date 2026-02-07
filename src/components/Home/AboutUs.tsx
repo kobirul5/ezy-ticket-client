@@ -1,8 +1,8 @@
 import { FaCheck, FaShippingFast, FaHeadset } from "react-icons/fa";
-import busTicket from '../../assets/Home_image/busTicket.webp';
-import concertTicket from '../../assets/Home_image/concertTicket.webp';
+import busTicket from "@/assets/Home_image/busTicket.webp";
+import concertTicket from "@/assets/Home_image/concertTicket.webp";
 import { motion, useAnimation } from "framer-motion";
-import useAuth from "../../Hooks/useAuth";
+import useAuth from "@/Hooks/useAuth";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -139,46 +139,46 @@ const AboutUs = () => {
         variants={content}
         className="flex flex-col justify-center mt-8 md:mt-0"
       >
-        <p className={`uppercase text-lg sm:text-xl font-semibold mb-2 ${darkMode ? 'text-dark-supporting' : 'text-supporting'}`}>
+        <p className={`uppercase text-lg sm:text-xl font-semibold mb-2 ${darkMode ? "text-dark-supporting" : "text-supporting"}`}>
           About EzyTicket
         </p>
-        <h3 className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-6 ${darkMode ? 'text-dark-primary' : 'text-gray-800'}`}>
+        <h3 className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-6 ${darkMode ? "text-dark-primary" : "text-gray-800"}`}>
           One Platform for All Your Ticketing Needs
         </h3>
 
-        <p className={`text-base sm:text-lg mb-6 ${darkMode ? 'text-dark-secondary' : 'text-gray-600'}`}>
-          Whether it's hopping on a bus or attending the hottest concerts — EzyTicket brings convenience to your fingertips.
+        <p className={`text-base sm:text-lg mb-6 ${darkMode ? "text-dark-secondary" : "text-gray-600"}`}>
+          Whether it"s hopping on a bus or attending the hottest concerts — EzyTicket brings convenience to your fingertips.
         </p>
 
         <ul className="space-y-3 sm:space-y-4 mb-8">
           <li className="flex items-start gap-3 sm:gap-4">
             <FaCheck className="text-green-500 mt-1 flex-shrink-0 text-lg" />
             <div>
-              <h4 className={`font-semibold text-base sm:text-lg ${darkMode ? 'text-dark-primary' : 'text-gray-700'}`}>Simple & Fast Booking</h4>
-              <p className={`text-sm sm:text-base ${darkMode ? 'text-dark-secondary' : 'text-gray-600'}`}>Book your tickets in seconds with a user-friendly interface.</p>
+              <h4 className={`font-semibold text-base sm:text-lg ${darkMode ? "text-dark-primary" : "text-gray-700"}`}>Simple & Fast Booking</h4>
+              <p className={`text-sm sm:text-base ${darkMode ? "text-dark-secondary" : "text-gray-600"}`}>Book your tickets in seconds with a user-friendly interface.</p>
             </div>
           </li>
           <li className="flex items-start gap-3 sm:gap-4">
             <FaShippingFast className="text-blue-500 mt-1 flex-shrink-0 text-lg" />
             <div>
-              <h4 className={`font-semibold text-base sm:text-lg ${darkMode ? 'text-dark-primary' : 'text-gray-700'}`}>Instant Confirmation</h4>
-              <p className={`text-sm sm:text-base ${darkMode ? 'text-dark-secondary' : 'text-gray-600'}`}>Get real-time confirmation and never miss out on events.</p>
+              <h4 className={`font-semibold text-base sm:text-lg ${darkMode ? "text-dark-primary" : "text-gray-700"}`}>Instant Confirmation</h4>
+              <p className={`text-sm sm:text-base ${darkMode ? "text-dark-secondary" : "text-gray-600"}`}>Get real-time confirmation and never miss out on events.</p>
             </div>
           </li>
           <li className="flex items-start gap-3 sm:gap-4">
             <FaHeadset className="text-purple-500 mt-1 flex-shrink-0 text-lg" />
             <div>
-              <h4 className={`font-semibold text-base sm:text-lg ${darkMode ? 'text-dark-primary' : 'text-gray-700'}`}>24/7 Customer Support</h4>
-              <p className={`text-sm sm:text-base ${darkMode ? 'text-dark-secondary' : 'text-gray-600'}`}>We're always here to help with your ticketing queries.</p>
+              <h4 className={`font-semibold text-base sm:text-lg ${darkMode ? "text-dark-primary" : "text-gray-700"}`}>24/7 Customer Support</h4>
+              <p className={`text-sm sm:text-base ${darkMode ? "text-dark-secondary" : "text-gray-600"}`}>We"re always here to help with your ticketing queries.</p>
             </div>
           </li>
         </ul>
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <button className={`px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium ${darkMode ? 'bg-dark-accent hover:bg-dark-accent-dark' : 'bg-main hover:bg-main-dark'} text-white transition-colors`}>
+          <button className={`px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium ${darkMode ? "bg-dark-accent hover:bg-dark-accent-dark" : "bg-main hover:bg-main-dark"} text-white transition-colors`}>
             Explore Tickets
           </button>
-          <button className={`px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium border ${darkMode ? 'border-dark-primary text-dark-primary hover:bg-dark-surface' : 'border-gray-700 text-gray-700 hover:bg-gray-50'} transition-colors`}>
+          <button className={`px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium border ${darkMode ? "border-dark-primary text-dark-primary hover:bg-dark-surface" : "border-gray-700 text-gray-700 hover:bg-gray-50"} transition-colors`}>
             Learn More
           </button>
         </div>

@@ -3,8 +3,8 @@ import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { TbListDetails } from "react-icons/tb";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
-import useAuth from "../../../../Hooks/useAuth";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import useAuth from "@/Hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { IoBus, IoLocationSharp, IoTime } from "react-icons/io5";
 import { MdOutlineTour, MdDirectionsBusFilled } from "react-icons/md";
@@ -15,7 +15,7 @@ const MyBusServices = () => {
   const [selectedBus, setSelectedBus] = useState<any>(null);
   // const { user } = useAuth()! as any; // This line was commented out as per instruction.
   // const email = user?.email; // This line was commented out as per instruction.
-  const { user } = useAuth()! as any; // Keeping this line as 'user' is used later and commenting it out would break the code.
+  const { user } = useAuth()! as any; // Keeping this line as "user" is used later and commenting it out would break the code.
   const axiosSecure = useAxiosSecure();
 
   const fetchUserBuses = async () => {
@@ -25,7 +25,7 @@ const MyBusServices = () => {
 
   const useUserBuses = (email: string) => {
     return useQuery<any[]>({
-      queryKey: ['user-buses', email],
+      queryKey: ["user-buses", email],
       queryFn: () => fetchUserBuses(),
       enabled: !!email,
     });
@@ -36,7 +36,7 @@ const MyBusServices = () => {
   const handleDelete = async () => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "You wont be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

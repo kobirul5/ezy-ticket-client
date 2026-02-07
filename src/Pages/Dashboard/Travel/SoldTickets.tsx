@@ -1,30 +1,27 @@
-import useSoldTicket from "./useSoldTicket";
+
+import useAuth from "@/Hooks/useAuth";
 
 
 const SoldTickets = () => {
-
-  // const soldTickets = []
-  // [
-  //   {
-  //     _id: "67fea80c5ad7a99c3c3966f2",
-  //     verifyData: "bus",
-  //     busPostId: "67e12be5f6b8682745586563",
-  //     name: "kobirul",
-  //     email: "user@gmail.com",
-  //     number: "32424234",
-  //     selectedSeats: ["A1", "A2"],
-  //     address: "efdsf afasfdd",
-  //     totalPrices: 1155,
-  //     seatPrice: 550,
-  //     routeAndDateAndTime: {
-  //       buyDate: "2025-04-15T18:39:26.751Z",
-  //       transactionId: "pi_3REEOIC8XXjshKCn0gYcTZ9v"
-  //     }
-  //   }
-  // ];
-
-  const [soldTickets] = useSoldTicket() as any;
-
+const soldTickets = [
+    {
+      _id: "67fea80c5ad7a99c3c3966f2",
+      verifyData: "bus",
+      busPostId: "67e12be5f6b8682745586563",
+      name: "kobirul",
+      email: "user@gmail.com",
+      number: "32424234",
+      selectedSeats: ["A1", "A2"],
+      address: "efdsf afasfdd",
+      totalPrices: 1155,
+      seatPrice: 550,
+      routeAndDateAndTime: {
+        buyDate: "2025-04-15T18:39:26.751Z",
+        transactionId: "pi_3REEOIC8XXjshKCn0gYcTZ9v"
+      }
+    }
+  ];  
+  // const [soldTickets] = useSoldTicket() as any;
   return (
     <div className="mx-auto p-8 bg-white rounded-2xl shadow-xl overflow-hidden">
       <div className="mb-8 flex items-center justify-center space-x-3">
@@ -83,10 +80,10 @@ const SoldTickets = () => {
                 </td>
 
                 <td className="px-6 py-4 min-w-[180px] text-gray-500">
-                  {new Date(ticket?.buyDate).toLocaleDateString('en-GB', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
+                  {new Date(ticket?.buyDate).toLocaleDateString("en-GB", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
                   })}
                 </td>
 

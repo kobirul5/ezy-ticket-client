@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import noImage from "../../../../assets/Common_image/noImage.png"
+import noImage from "@/assets/Common_image/noImage.png"
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
 
 const ManageEvents = () => {
     const axiosSecure = useAxiosSecure();
@@ -10,9 +10,9 @@ const ManageEvents = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { data: allEvents = [], isLoading, isError, refetch } = useQuery({
-        queryKey: ['allEvents'],
+        queryKey: ["allEvents"],
         queryFn: async () => {
-            const res = await axiosSecure.get('/events');
+            const res = await axiosSecure.get("/events");
             return res.data;
         }
     });
@@ -28,7 +28,7 @@ const ManageEvents = () => {
     };
 
     const handleApprove = (id: string) => {
-        axiosSecure.patch(`/verifyEvent/${id}`, { status: 'verified' })
+        axiosSecure.patch(`/verifyEvent/${id}`, { status: "verified" })
             .then(res => {
                 const data = res.data;
                 refetch();
@@ -36,7 +36,7 @@ const ManageEvents = () => {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: 'Congratulation! The Event has been verified',
+                        title: "Congratulation! The Event has been verified",
                         showConfirmButton: false,
                         timer: 1500
                     });
@@ -47,7 +47,7 @@ const ManageEvents = () => {
     };
 
     const handleReject = (id: string) => {
-        axiosSecure.patch(`/verifyEvent/${id}`, { status: 'rejected' })
+        axiosSecure.patch(`/verifyEvent/${id}`, { status: "rejected" })
             .then(res => {
                 const data = res.data;
                 refetch();
@@ -55,7 +55,7 @@ const ManageEvents = () => {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: 'Sorry! The Event has been rejected',
+                        title: "Sorry! The Event has been rejected",
                         showConfirmButton: false,
                         timer: 1500
                     });

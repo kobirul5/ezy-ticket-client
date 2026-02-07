@@ -22,7 +22,7 @@ const Dashboard = () => {
 
     // Active link style function
     const getNavLinkClass = ({ isActive }: { isActive: boolean }) => 
-        isActive ? 'bg-main text-white' : 'hover:bg-main';
+        isActive ? "bg-main text-white" : "hover:bg-main";
         
     const closeMenu = ()=>{
         setIsMobileMenuOpen(false)
@@ -32,7 +32,7 @@ const Dashboard = () => {
         <div className="flex flex-col md:flex-row h-screen overflow-hidden">
             {/* Mobile Header */}
             <div className="md:hidden flex justify-between items-center p-4 bg-background border-b border-gray-200">
-                <Link to={'/'}>
+                <Link to={"/"}>
                     <p className="text-2xl text-main font-bold">Ezy Tickets</p>
                 </Link>
                 <button 
@@ -53,7 +53,7 @@ const Dashboard = () => {
 
             {/* Sidebar */}
             <div className={`
-                ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} 
+                ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"} 
                 md:translate-x-0
                 fixed md:relative
                 w-64
@@ -65,7 +65,7 @@ const Dashboard = () => {
             `}>
                 <div className="p-4">
                     {/* Desktop Logo */}
-                    <Link to={'/'} className="hidden md:block">
+                    <Link to={"/"} className="hidden md:block">
                         <div className="flex items-center justify-center gap-1 pt-4">
                             <p className="text-3xl text-main font-bold">Ezy Tickets</p>
                         </div>

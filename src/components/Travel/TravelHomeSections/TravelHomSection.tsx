@@ -1,5 +1,5 @@
-import useAuth from "../../../Hooks/useAuth";
-import busImage from "../../../assets/Travel_image/travel-service/homebus.png"
+import useAuth from "@/Hooks/useAuth";
+import busImage from "@/assets/Travel_image/travel-service/homebus.png"
 import { motion } from "framer-motion"
 
 
@@ -9,7 +9,7 @@ function TravelHomSection() {
         <section className="pb-16 overflow-x-hidden">
             <div className="w-11/12 mx-auto mb-10">
                 <p className="text-xl text-supporting font-semibold mb-1 border-l-4 border-supporting pl-2">Travel</p>
-                <h3 className={`text-4xl font-bold ${darkMode && 'text-dark-primary'}`}>Book Adventures Seamlessly</h3>
+                <h3 className={`text-4xl font-bold ${darkMode && "text-dark-primary"}`}>Book Adventures Seamlessly</h3>
             </div>
             <div className="bg-dark-supporting py-10">
 

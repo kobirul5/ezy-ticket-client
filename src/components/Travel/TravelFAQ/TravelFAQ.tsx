@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
-import useTravelData from "../../../Hooks/TrevalHook/useTravelData"
-import useAuth from "../../../Hooks/useAuth"
+import useTravelData from "@/Hooks/TrevalHook/useTravelData"
+import useAuth from "@/Hooks/useAuth"
 
 const TravelFAQ = () => {
     const {travelFaqs} = useTravelData() as any

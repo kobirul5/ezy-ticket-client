@@ -1,7 +1,7 @@
-import { createContext, useState, ReactNode, Dispatch, SetStateAction } from 'react'
-import useBusStandName from '../Pages/Travel/TravelHooks/useBusStandName';
-import Swal from 'sweetalert2'
-import { useGetBusesQuery, usePostBusPaymentMutation } from '../app/features/travel/travelApi';
+import { createContext, useState, ReactNode, Dispatch, SetStateAction } from "react"
+import useBusStandName from "../Pages/Travel/TravelHooks/useBusStandName";
+import Swal from "sweetalert2"
+import { useGetBusesQuery, usePostBusPaymentMutation } from "../app/features/travel/travelApi";
 
 interface TravelContextType {
   searchData: any;

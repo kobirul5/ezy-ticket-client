@@ -1,5 +1,5 @@
-import Heading from "../../../components/Heading"
-import useTravelData from "../../../Hooks/TrevalHook/useTravelData"
+import Heading from "@/components/shared/Heading"
+import useTravelData from "@/Hooks/TrevalHook/useTravelData"
 import TravelServiceCard from "./TravelServiceCard"
 
 const TravelService = () => {

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import useAuth from "../../../Hooks/useAuth";
+import useAuth from "@/Hooks/useAuth";
 import { IoWalletOutline } from "react-icons/io5";
 
 interface FlashDealCardProps {

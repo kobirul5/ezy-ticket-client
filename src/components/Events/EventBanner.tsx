@@ -1,8 +1,8 @@
-// import React, { useRef } from 'react';
-// import { FaTicketAlt } from 'react-icons/fa';
-import eventBanner from "../../assets/Events_image/show.webp";
+// import React, { useRef } from "react";
+// import { FaTicketAlt } from "react-icons/fa";
+import eventBanner from "@/assets/Events_image/show.webp";
 import { motion } from "framer-motion";
-import { FaArrowDownLong } from 'react-icons/fa6';
+import { FaArrowDownLong } from "react-icons/fa6";
 
 interface EventBannerProps {
     scrollToSection: (sectionId: string) => void;

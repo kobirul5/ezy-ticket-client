@@ -1,43 +1,43 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaBus, FaStar, FaRegStar, FaSearch, FaCrown, FaWifi, FaPlug, FaArrowRight } from 'react-icons/fa';
-import { RiCustomerServiceFill, RiRouteLine } from 'react-icons/ri';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaBus, FaStar, FaRegStar, FaSearch, FaCrown, FaWifi, FaPlug, FaArrowRight } from "react-icons/fa";
+import { RiCustomerServiceFill, RiRouteLine } from "react-icons/ri";
 
 const BusCompaniesSection = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const companies = [
     {
-      name: 'Express Travels',
+      name: "Express Travels",
       icon: <FaBus className="text-blue-600" />,
-      destinations: ['New York', 'Boston'],
+      destinations: ["New York", "Boston"],
       rating: 4,
-      departure: 'Every 2 hours',
-      price: '$$',
-      amenities: ['wifi', 'power'],
+      departure: "Every 2 hours",
+      price: "$$",
+      amenities: ["wifi", "power"],
       popular: true,
-      image: 'bg-[url(https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=400)]'
+      image: "bg-[url(https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=400)]"
     },
     {
-      name: 'City Connect',
+      name: "City Connect",
       icon: <FaBus className="text-emerald-600" />,
-      destinations: ['Chicago', 'Detroit'],
+      destinations: ["Chicago", "Detroit"],
       rating: 5,
-      departure: 'Hourly',
-      price: '$$$',
-      amenities: ['wifi', 'power', 'service'],
+      departure: "Hourly",
+      price: "$$$",
+      amenities: ["wifi", "power", "service"],
       premium: true,
-      image: 'bg-[url(https://images.unsplash.com/photo-1509822929063-6b6cfc9b42f2?auto=format&fit=crop&w=400)]'
+      image: "bg-[url(https://images.unsplash.com/photo-1509822929063-6b6cfc9b42f2?auto=format&fit=crop&w=400)]"
     },
     {
-      name: 'Metro Lines',
+      name: "Metro Lines",
       icon: <FaBus className="text-purple-600" />,
-      destinations: ['San Francisco', 'Los Angeles'],
+      destinations: ["San Francisco", "Los Angeles"],
       rating: 3,
-      departure: 'Every 3 hours',
-      price: '$',
-      amenities: ['wifi'],
-      image: 'bg-[url(https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=400)]'
+      departure: "Every 3 hours",
+      price: "$",
+      amenities: ["wifi"],
+      image: "bg-[url(https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=400)]"
     },
   ];
 
@@ -89,7 +89,7 @@ const BusCompaniesSection = () => {
                 initial={{ opacity: 0, y: 40, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ type: 'spring', delay: index * 0.1, stiffness: 120 }}
+                transition={{ type: "spring", delay: index * 0.1, stiffness: 120 }}
                 whileHover={{ y: -10 }}
                 className="relative group"
               >
@@ -146,17 +146,17 @@ const BusCompaniesSection = () => {
                     </div>
 
                     <div className="flex flex-wrap gap-2">
-                      {company.amenities?.includes('wifi') && (
+                      {company.amenities?.includes("wifi") && (
                         <div className="flex items-center gap-2 bg-blue-50/50 px-3 py-2 rounded-lg text-sm text-blue-600">
                           <FaWifi className="text-lg" /> Free WiFi
                         </div>
                       )}
-                      {company.amenities?.includes('power') && (
+                      {company.amenities?.includes("power") && (
                         <div className="flex items-center gap-2 bg-emerald-50/50 px-3 py-2 rounded-lg text-sm text-emerald-600">
                           <FaPlug className="text-lg" /> Power Outlets
                         </div>
                       )}
-                      {company.amenities?.includes('service') && (
+                      {company.amenities?.includes("service") && (
                         <div className="flex items-center gap-2 bg-purple-50/50 px-3 py-2 rounded-lg text-sm text-purple-600">
                           <RiCustomerServiceFill className="text-lg" /> 24/7 Support
                         </div>

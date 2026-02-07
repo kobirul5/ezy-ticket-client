@@ -1,6 +1,6 @@
 import { FaCircleCheck, FaReceipt } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { FiPackage, FiCreditCard, FiDollarSign, FiHash } from "react-icons/fi";
 
@@ -32,7 +32,7 @@ const PaymentSuccess = () => {
     const axiosSecure = useAxiosSecure();
 
     const { data, isLoading, isError } = useQuery<PaymentData>({
-        queryKey: ['order', tran_id],
+        queryKey: ["order", tran_id],
         queryFn: async () => {
             const res = await axiosSecure.get(`/order/${tran_id}`);
             return res.data;

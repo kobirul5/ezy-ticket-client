@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import useAuth from "../../Hooks/useAuth";
+import useAuth from "@/Hooks/useAuth";
 
 // Fake review data with star ratings
 const reviews = [
@@ -35,7 +35,7 @@ const reviews = [
     id: 5,
     organizer: "Chris Johnson",
     review:
-      "ezyTicket's interface is simple to navigate, but there were some minor issues with processing payments. Would still recommend.",
+      "ezyTicket"s interface is simple to navigate, but there were some minor issues with processing payments. Would still recommend.",
     stars: 4,
   },
 ];
@@ -80,7 +80,7 @@ const EventReview = () => {
       {/* Carousel */}
       <div className="mt-12 relative max-w-4xl mx-auto">
         {/* Carousel Cards */}
-        <div className={`${darkMode ? 'bg-dark-surface text-dark-primary' : 'bg-gradient-to-r from-main/70 to-main text-white'} p-6 rounded-2xl shadow-lg transform transition-all duration-500 ease-in-out`}>
+        <div className={`${darkMode ? "bg-dark-surface text-dark-primary" : "bg-gradient-to-r from-main/70 to-main text-white"} p-6 rounded-2xl shadow-lg transform transition-all duration-500 ease-in-out`}>
           <h3 className="text-2xl font-semibold">
             {reviews[currentIndex].organizer}
           </h3>

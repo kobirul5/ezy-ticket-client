@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { useForm } from 'react-hook-form';
-import { MdEdit } from 'react-icons/md';
-import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
-import Swal from 'sweetalert2';
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import { useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { MdEdit } from "react-icons/md";
+import Swal from "sweetalert2";
 
 const EditButton = ({ user, refetch }: { user: any, refetch: any }) => {
   const axiosSecure = useAxiosSecure();
@@ -18,10 +18,10 @@ const EditButton = ({ user, refetch }: { user: any, refetch: any }) => {
   // Set initial form values
   useEffect(() => {
     reset({
-      name: user?.name || '',
-      phone: user?.phone || '',
-      address: user?.address || '',
-      email: user?.email || ''
+      name: user?.name || "",
+      phone: user?.phone || "",
+      address: user?.address || "",
+      email: user?.email || ""
     });
   }, [user, reset]);
 
@@ -47,7 +47,7 @@ const EditButton = ({ user, refetch }: { user: any, refetch: any }) => {
         await refetch();
         await Swal.fire({
           title: "Updated!",
-          text: 'Profile Update Successful',
+          text: "Profile Update Successful",
           icon: "success",
           timer: 2000,
           showConfirmButton: false
@@ -59,7 +59,7 @@ const EditButton = ({ user, refetch }: { user: any, refetch: any }) => {
       const err = error as any; 
       await Swal.fire({
         title: "Error!",
-        text: err.response?.data?.message || 'Profile Update Failed',
+        text: err.response?.data?.message || "Profile Update Failed",
         icon: "error",
         timer: 2000,
         showConfirmButton: false
@@ -78,7 +78,7 @@ const EditButton = ({ user, refetch }: { user: any, refetch: any }) => {
         Edit Profile
       </button>
 
-      <dialog ref={modalRef} id='updateProfile' className="modal modal-bottom sm:modal-middle">
+      <dialog ref={modalRef} id="updateProfile" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Edit Profile</h3>
           <form onSubmit={handleSubmit(onSubmit)} className="mt-4 space-y-4">
@@ -89,7 +89,7 @@ const EditButton = ({ user, refetch }: { user: any, refetch: any }) => {
               </label>
               <input
                 type="text"
-                {...register('name', { required: 'Name is required' })}
+                {...register("name", { required: "Name is required" })}
                 className="input input-bordered w-full focus:outline-none"
               />
               {errors.name && (
@@ -105,7 +105,7 @@ const EditButton = ({ user, refetch }: { user: any, refetch: any }) => {
               <input
                 type="email"
                 disabled
-                {...register('email')}
+                {...register("email")}
                 className="input input-bordered w-full bg-gray-100"
               />
             </div>
@@ -117,7 +117,7 @@ const EditButton = ({ user, refetch }: { user: any, refetch: any }) => {
               </label>
               <input
                 type="tel"
-                {...register('phone', { required: 'Phone Number is required' })}
+                {...register("phone", { required: "Phone Number is required" })}
                 className="input input-bordered w-full focus:outline-none"
               />
               {errors.phone && (
@@ -132,7 +132,7 @@ const EditButton = ({ user, refetch }: { user: any, refetch: any }) => {
               </label>
               <input
                 type="text"
-                {...register('address', {required: 'Address is required'})}
+                {...register("address", {required: "Address is required"})}
                 className="input input-bordered w-full focus:outline-none"
               />
               {errors.address && (
@@ -155,7 +155,7 @@ const EditButton = ({ user, refetch }: { user: any, refetch: any }) => {
                 className="ezy-button-primary-sm"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? 'Updating...' : 'Update Profile'}
+                {isSubmitting ? "Updating..." : "Update Profile"}
               </button>
             </div>
           </form>

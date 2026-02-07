@@ -1,5 +1,5 @@
 // import { Link } from "react-router-dom";
-import travelBannerImage from "../../assets/Travel_image/Bus3.jpg"
+import travelBannerImage from "@/assets/Travel_image/Bus3.jpg"
 import BannerCard from "./BannerCard";
 // import useCardData from "./useCardData";
 import SelectPlaceTime from "./TravelTicekBook/SelectPlaceTime";
@@ -30,12 +30,12 @@ const TravelBanner = () => {
                             initial={{ y: -20 }}
                             animate={{ y: 0 }}
                             transition={{ duration: 0.5 }}
-                             className='text-2xl font-bold md:text-3xl lg:text-5xl'>Smart Bus Ticket Booking <br /><span className="text-main">Fast, Easy & Secure!</span> </motion.h1>
+                             className="text-2xl font-bold md:text-3xl lg:text-5xl">Smart Bus Ticket Booking <br /><span className="text-main">Fast, Easy & Secure!</span> </motion.h1>
                             <motion.p 
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.3, duration: 0.8 }}
-                            className='my-4'>Book Your Bus Tickets Anytime, Anywhere – Hassle-Free & Instant Confirmation!</motion.p>
+                            className="my-4">Book Your Bus Tickets Anytime, Anywhere – Hassle-Free & Instant Confirmation!</motion.p>
 
                         </div>
                     </div>

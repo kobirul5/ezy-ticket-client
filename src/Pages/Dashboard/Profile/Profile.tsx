@@ -1,9 +1,9 @@
-import AdminProfile from "../../../components/Dashboard/Profile/AdminProfile";
-import EventManagerProfile from "../../../components/Dashboard/Profile/EventManagerProfile";
-import TravelManagerProfile from "../../../components/Dashboard/Profile/TravelManagerProfile";
-import UserProfile from "../../../components/Dashboard/Profile/UserProfile";
-import useAuth from "../../../Hooks/useAuth";
-import Loading from "../../../components/shared/Loading/Loading";
+import AdminProfile from "@/components/Dashboard/Profile/AdminProfile";
+import EventManagerProfile from "@/components/Dashboard/Profile/EventManagerProfile";
+import TravelManagerProfile from "@/components/Dashboard/Profile/TravelManagerProfile";
+import UserProfile from "@/components/Dashboard/Profile/UserProfile";
+import useAuth from "@/Hooks/useAuth";
+import Loading from "@/components/shared/Loading/Loading";
 
 const Profile = () => {
     const { userInfo, userInfoLoading } = useAuth()! as any;
@@ -19,11 +19,11 @@ const Profile = () => {
     return (
         <div>
             {
-                userInfo?.role === 'admin' ? <AdminProfile></AdminProfile>
+                userInfo?.role === "admin" ? <AdminProfile></AdminProfile>
                     :
-                    userInfo?.role === 'travelManager' ? <TravelManagerProfile></TravelManagerProfile>
+                    userInfo?.role === "travelManager" ? <TravelManagerProfile></TravelManagerProfile>
                         :
-                        userInfo?.role === 'eventManager' ? <EventManagerProfile></EventManagerProfile>
+                        userInfo?.role === "eventManager" ? <EventManagerProfile></EventManagerProfile>
                             :
                                 <UserProfile></UserProfile>
             }

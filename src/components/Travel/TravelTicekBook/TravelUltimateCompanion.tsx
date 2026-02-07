@@ -1,15 +1,15 @@
 
-import Heading from '../../../components/Heading';
-// import useTravelContext from '../../../Hooks/TrevalHook/useTravelContext';
-// import BusCard from '../TravelComponents/BusCard';
-import SelectPlaceTime from './SelectPlaceTime';
+import Heading from "@/components/shared/Heading";
+// import useTravelContext from "@/Hooks/TrevalHook/useTravelContext";
+// import BusCard from "../TravelComponents/BusCard";
+import SelectPlaceTime from "./SelectPlaceTime";
 
 const TravelUltimateCompanion = () => {
 
   // TODO: all bus data will todays bus data. fetch data, and api 4 deferent bus info
   // const { allBusData } = useTravelContext() as any
   return (
-    <section className='container mx-auto my-20 px-5'>
+    <section className="container mx-auto my-20 px-5">
       <div className={`my-10`}>
         <Heading
           title="Your Ultimate Travel Companion"

@@ -1,6 +1,6 @@
 import { FaQuoteLeft, FaStar } from "react-icons/fa";
 import { motion } from "framer-motion";
-import useAuth from "../../../Hooks/useAuth";
+import useAuth from "@/Hooks/useAuth";
 
 const Testimonials = () => {
     const { darkMode } = useAuth()! as any;
@@ -79,12 +79,12 @@ const Testimonials = () => {
                             whileHover={{ y: -10 }}
                             className="flex"
                         >
-                            <div className={`px-6 py-16 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex flex-col h-full w-full relative overflow-hidden group border ${darkMode ? 'bg-dark-surface border-gray-400 shadow-gray-400': 'bg-white border-gray-200'}`}>
+                            <div className={`px-6 py-16 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex flex-col h-full w-full relative overflow-hidden group border ${darkMode ? "bg-dark-surface border-gray-400 shadow-gray-400": "bg-white border-gray-200"}`}>
                                 {/* Decorative accent circle */}
                                 <div
                                     className={`absolute -top-16 -left-16 h-40 w-40 ${testimonial.accentColor} rounded-full opacity-10 transition-all duration-500 ease-in-out z-0 group-hover:scale-[12] group-hover:opacity-10 group-hover:-top-full group-hover:-left-full`}
                                     style={{
-                                        transformOrigin: 'top left',
+                                        transformOrigin: "top left",
                                     }}
                                 ></div>
 
@@ -94,12 +94,12 @@ const Testimonials = () => {
                                         {[...Array(5)].map((_, i) => (
                                             <FaStar
                                                 key={i}
-                                                className={`${i < testimonial.rating ? 'text-yellow-400' : 'text-gray-300'} text-lg`}
+                                                className={`${i < testimonial.rating ? "text-yellow-400" : "text-gray-300"} text-lg`}
                                             />
                                         ))}
                                     </div>
                                     <FaQuoteLeft className="text-gray-300 text-3xl mb-4" />
-                                    <p className={`mb-6 flex-grow text-lg leading-relaxed ${darkMode ? 'text-dark-primary' : 'text-gray-600'}`}>{testimonial.content}</p>
+                                    <p className={`mb-6 flex-grow text-lg leading-relaxed ${darkMode ? "text-dark-primary" : "text-gray-600"}`}>{testimonial.content}</p>
                                     <div className="flex items-center mt-auto">
                                         <img
                                             src={testimonial.image}
@@ -107,7 +107,7 @@ const Testimonials = () => {
                                             className="w-12 h-12 rounded-full object-cover mr-4 border-2 border-white shadow"
                                         />
                                         <div>
-                                            <h4 className={`font-bold ${darkMode ? 'text-dark-primary' : 'text-gray-800'}`}>{testimonial.name}</h4>
+                                            <h4 className={`font-bold ${darkMode ? "text-dark-primary" : "text-gray-800"}`}>{testimonial.name}</h4>
                                             <p className="text-sm text-gray-500">{testimonial.role}</p>
                                         </div>
                                     </div>

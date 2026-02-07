@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import useAuth from "../../Hooks/useAuth";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useAuth from "@/Hooks/useAuth";
+import useAxiosPublic from "@/Hooks/useAxiosPublic";
 
 const MyWishList = () => {
   const { user, darkMode } = useAuth()! as any;

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
-import useAuth from "../../Hooks/useAuth";
-import emailjs from '@emailjs/browser';
+import useAuth from "@/Hooks/useAuth";
+import emailjs from "@emailjs/browser";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -51,20 +51,20 @@ const Contact = () => {
   
     const data = {
       ...formData,
-      to_email: 'game0play24@gmail.com', // Email goes to user + you
+      to_email: "game0play24@gmail.com", // Email goes to user + you
     };
   
     emailjs.send(
-      'service_a5b9hp8',
-      'template_0bala3l',
+      "service_a5b9hp8",
+      "template_0bala3l",
       data,
-      '_zYfso5aD1icXWoC-'
+      "_zYfso5aD1icXWoC-"
     ).then(
       (result) => {
-        console.log('Email sent successfully:', result.text);
+        console.log("Email sent successfully:", result.text);
       },
       (error) => {
-        console.error('Error sending email:', error);
+        console.error("Error sending email:", error);
       }
     );
   };
@@ -84,7 +84,7 @@ const Contact = () => {
             Home <IoIosArrowForward className="my-auto" /> Contact
           </p>
           {/* <p className="text-lg max-w-2xl mx-auto">
-          We'd love to hear from you! Whether you have a question, feedback, or just want to say hello — we’re here to help.
+          We"d love to hear from you! Whether you have a question, feedback, or just want to say hello — we’re here to help.
         </p> */}
         </div>
 

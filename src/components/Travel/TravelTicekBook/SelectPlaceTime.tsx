@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import useTravelContext from "../../../Hooks/TrevalHook/useTravelContext";
-import useAuth from "../../../Hooks/useAuth";
-import { motion } from 'framer-motion';
-import { FaExchangeAlt, FaCalendarAlt, FaSearch } from 'react-icons/fa';
-import { toast } from 'react-toastify';
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import useTravelContext from "@/Hooks/TrevalHook/useTravelContext";
+import useAuth from "@/Hooks/useAuth";
+import { motion } from "framer-motion";
+import { FaExchangeAlt, FaCalendarAlt, FaSearch } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 
 const SelectPlaceTime = () => {
@@ -29,7 +29,7 @@ const SelectPlaceTime = () => {
         const date = form.date.value;
         const placeTimeData = { stand1: fromDistrict, stand2: toDistrict, date: date }
         if (!fromDistrict || !toDistrict || !date) {
-            toast.warn('Please fill in all fields')
+            toast.warn("Please fill in all fields")
             return;
         }
 
@@ -52,7 +52,7 @@ const SelectPlaceTime = () => {
                 .catch(err => console.log(err))
         } catch (err) {
             console.error("Search error:", err);
-            alert('Failed to search. Please try again.');
+            alert("Failed to search. Please try again.");
         }
     }
 

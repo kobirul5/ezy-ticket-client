@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import travelBannerImage from "../../assets/Travel_image/travel-service/bg-bus.jpg"
-import Swal from 'sweetalert2'
-import useTravelData from '../../Hooks/TrevalHook/useTravelData';
+import React, { useState } from "react";
+import travelBannerImage from "@/assets/Travel_image/travel-service/bg-bus.jpg"
+import Swal from "sweetalert2"
+import useTravelData from "@/Hooks/TrevalHook/useTravelData"
 
 const BusReservationPage = () => {
   const { busServices } = useTravelData() as any
 
-  const [serviceType, setServiceType] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [date, setDate] = useState('');
-  const [message, setMessage] = useState('');
+  const [serviceType, setServiceType] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [date, setDate] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ const BusReservationPage = () => {
         <div className="text-center text-white relative z-10">
           <div className={` text-center container mx-auto`}>
             <h1 className={`text-3xl font-bold md:text-4xl lg:text-6xl text-main`}>Book Your Bus Easily</h1>
-            <p className='mt-5 md:w-10/12 mx-auto text-white'>Experience a fast, secure, and hassle-free way to reserve bus tickets. Choose your starting point, destination, and travel date effortlessly with our user-friendly booking system.</p>
+            <p className="mt-5 md:w-10/12 mx-auto text-white">Experience a fast, secure, and hassle-free way to reserve bus tickets. Choose your starting point, destination, and travel date effortlessly with our user-friendly booking system.</p>
           </div>
         </div>
       </div>
@@ -52,7 +52,7 @@ const BusReservationPage = () => {
                   key={idx}
                   type="button"
                   onClick={() => setServiceType(`${service.title}`)}
-                  className={`p-4 border rounded-lg flex items-center justify-center ${serviceType === `${service?.title}` ? 'bg-main text-white' : 'bg-gray-100'}`}
+                  className={`p-4 border rounded-lg flex items-center justify-center ${serviceType === `${service?.title}` ? "bg-main text-white" : "bg-gray-100"}`}
                 >
                   {service?.icon} {service?.title}
                 </button>)

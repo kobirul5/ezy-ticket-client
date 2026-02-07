@@ -1,5 +1,3 @@
-// Clean and complete version of MyAddedEvents component with modal-based update functionality
-
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -7,11 +5,9 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FaEdit, FaTrash, FaTicketAlt } from "react-icons/fa";
 import { MdEventAvailable } from "react-icons/md";
-import { IoInformationCircle } from "react-icons/io5";
-
-import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
-import useAuth from "../../../../Hooks/useAuth";
-import noImage from "../../../../assets/Common_image/noImage.png";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import useAuth from "@/Hooks/useAuth";
+import noImage from "@/assets/Common_image/noImage.png";
 
 const MyAddedEvents = () => {
     const axiosSecure = useAxiosSecure();
@@ -28,61 +24,20 @@ const MyAddedEvents = () => {
     } = useForm();
 
     const { data: myEvents = [], isLoading, isError, refetch } = useQuery({
-        queryKey: ['myEvents', user?.email],
+        queryKey: ["myEvents", user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/events/${user?.email}`);
             return res.data;
         }
     });
 
-    // const handleViewDetails = (event: any) => {
-    //     setSelectedEvent(event);
-    //     // (document.getElementById('view_modal') as HTMLDialogElement).showModal();
-    //     const modal = document.getElementById('view_modal') as HTMLDialogElement;
-    //     if (modal) modal.showModal();
-    // };
-
-    // const handleUpdate = (event: any) => {
-    //     setSelectedEvent(event);
-    //     // (document.getElementById('update_modal') as HTMLDialogElement).showModal();
-    //     const modal = document.getElementById('update_modal') as HTMLDialogElement;
-    //     if (modal) modal.showModal();
-    // };
-
-    // Update form handler
-    // const onUpdateSubmit = async (data: any) => {
-    //     
-    //     const updatedInfo = {
-    //         title: data.title || selectedEvent?.title,
-    //         eventType: data.eventType || selectedEvent?.eventType,
-    //         eventDate: data.eventDate || selectedEvent?.eventDate,
-    //         eventTime: data.eventTime || selectedEvent?.eventTime,
-    //         duration: data.duration || selectedEvent?.duration,
-    //         price: parseFloat(data.price) || selectedEvent?.price,
-    //         totalTickets: parseInt(data.totalTickets) || selectedEvent?.totalTickets,
-    //         location: data.location || selectedEvent?.location,
-    //         details: data.details || selectedEvent?.details,
-    //     };
-
-    //     try {
-    //         const res = await axiosSecure.patch(`/events/${selectedEvent._id}`, updatedInfo);
-    //         if (res.data.modifiedCount > 0) {
-    //             Swal.fire("Success", "Event updated successfully!", "success");
-    //             refetch();
-    //             handleCloseModal();
-    //         }
-    //     } catch (err) {
-    //         console.error(err);
-    //         Swal.fire("Error", "Failed to update event.", "error");
-    //     }
-    // };
-
-    const handleEdit = (event) => {
+  
+    const handleEdit = (event:any) => {
         setSelectedEvent(event);
         setIsModalOpen(true);
 
     const editableFields = [
-        'title', 'eventType', 'eventDate', 'eventTime', 'duration', 'price', 'totalTickets', 'location', 'details'
+        "title", "eventType", "eventDate", "eventTime", "duration", "price", "totalTickets", "location", "details"
     ]
 
         // Set form values
@@ -99,7 +54,7 @@ const MyAddedEvents = () => {
         reset();
     };
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (data:any) => {
         console.log(data);
         try {
             const res = await axiosSecure.patch(`/events/${selectedEvent._id}`, data);
@@ -151,7 +106,7 @@ const MyAddedEvents = () => {
 
             {myEvents.length === 0 ? (
                 <div className="text-center py-12">
-                    <p className="text-xl text-gray-500 mb-4">You haven't added any events yet</p>
+                    <p className="text-xl text-gray-500 mb-4">You haven"t added any events yet</p>
                     <Link to="/dashboard/addEvent" className="btn btn-primary">
                         Add Your First Event
                     </Link>
@@ -185,8 +140,8 @@ const MyAddedEvents = () => {
                                         </div>
                                     </td>
                                     <td>
-                                        <span className={`badge badge-outline ${event.status === 'verified' ? 'badge-success' : event.status === 'rejected' ? 'badge-error' : 'badge-warning'}`}>
-                                            {event.status || 'pending'}
+                                        <span className={`badge badge-outline ${event.status === "verified" ? "badge-success" : event.status === "rejected" ? "badge-error" : "badge-warning"}`}>
+                                            {event.status || "pending"}
                                         </span>
                                     </td>
                                     <td >
@@ -237,7 +192,7 @@ const MyAddedEvents = () => {
                                     <span className="label-text">Time*</span>
                                 </div>
                                 <select
-                                    {...register('eventTime', { required: true })}
+                                    {...register("eventTime", { required: true })}
                                     className="select select-bordered w-full focus:outline-none focus:border-supporting focus:shadow"
                                 >
                                     {/* AM Times */}
@@ -299,7 +254,7 @@ const MyAddedEvents = () => {
                                     <span className="label-text">Duration*</span>
                                 </div>
                                 <select
-                                    {...register('duration', { required: true })}
+                                    {...register("duration", { required: true })}
                                     className="select select-bordered w-full focus:outline-none focus:border-supporting focus:shadow"
                                 >
                                     {/* Minutes Only */}
@@ -353,7 +308,7 @@ const MyAddedEvents = () => {
                                         <p className="text-red-600 mt-1">{errors.soldTickets.message as string}</p>
                                     )}
                                 {errors.price && (
-                                    <p className="text-red-600 mt-1">{errors.price.message}</p>
+                                    <p className="text-red-600 mt-1">{errors?.price?.message as string}</p>
                                 )}
                             </div>
 
@@ -367,7 +322,7 @@ const MyAddedEvents = () => {
                                     min="1"
                                     placeholder="Total available tickets"
                                     defaultValue={selectedEvent?.totalTickets}
-                                    {...register('totalTickets', {
+                                    {...register("totalTickets", {
                                         required: "Total tickets is required",
                                         min: {
                                             value: 1,
@@ -375,7 +330,7 @@ const MyAddedEvents = () => {
                                         },
                                         valueAsNumber: true,
                                         validate: value =>
-                                            value >= selectedEvent?.soldTickets || `Total tickets can't be less than sold tickets (${selectedEvent?.soldTickets})`
+                                            value >= selectedEvent?.soldTickets || `Total tickets can"t be less than sold tickets (${selectedEvent?.soldTickets})`
                                     })}
                                     className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow"
                                 />

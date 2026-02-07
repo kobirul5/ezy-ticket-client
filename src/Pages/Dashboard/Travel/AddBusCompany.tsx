@@ -1,12 +1,12 @@
-import React from 'react'
-import BusDetailsForm from './BusDetailsForm';
+// import React from "react"
+// import BusDetailsForm from "./BusDetailsForm";
 
-const AddBusCompany = () => {
-  return (
-    <div>
-        <BusDetailsForm/>
-    </div>
-  )
-}
+// const AddBusCompany = () => {
+//   return (
+//     <div>
+//         <BusDetailsForm/>
+//     </div>
+//   )
+// }
 
-export default AddBusCompany;
+// export default AddBusCompany;

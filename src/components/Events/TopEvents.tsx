@@ -1,7 +1,7 @@
 import Loading from "../shared/Loading/Loading";
-import useAuth from "../../Hooks/useAuth";
+import useAuth from "@/Hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useAxiosPublic from "@/Hooks/useAxiosPublic";
 import Heading from "../shared/Heading";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -103,7 +103,7 @@ const TopEvents = () => {
                     {events.slice(0, 3).map((event: any, index: number) => (
                         <motion.div
                             key={index}
-                            className={`relative overflow-hidden group rounded-md ${index % 2 === 0 ? '-translate-y-8' : ''}`}
+                            className={`relative overflow-hidden group rounded-md ${index % 2 === 0 ? "-translate-y-8" : ""}`}
                             initial={{ opacity: 0, y: 70 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             whileHover="hover"

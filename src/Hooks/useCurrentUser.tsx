@@ -7,7 +7,7 @@ const useCurrentUser = () => {
     const axiosPublic = useAxiosPublic();
     
     const { data: currentUser, isPending: currentUserLoading } = useQuery({
-        queryKey: [user?.email, 'user'],
+        queryKey: [user?.email, "user"],
         enabled: !!user?.email,
         queryFn: async () => {
             const res = await axiosPublic.get(`/users/${user?.email}`);

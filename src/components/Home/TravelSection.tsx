@@ -1,9 +1,9 @@
 import { FaPlane, FaTag, FaMapMarkerAlt, FaRegSmile, FaBus } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import dhaka from "../../assets/Home_image/dhaka.webp";
-import merinDrive from "../../assets/Home_image/marinDrive.webp";
-import sylhet from "../../assets/Home_image/sylhet.webp";
-import chittagong from "../../assets/Home_image/chittagong.jpg";
+import dhaka from "@/assets/Home_image/dhaka.webp";
+import merinDrive from "@/assets/Home_image/marinDrive.webp";
+import sylhet from "@/assets/Home_image/sylhet.webp";
+import chittagong from "@/assets/Home_image/chittagong.jpg";
 import { motion } from "framer-motion";
 import StatsCounter from "./StatsCounter";
 import Heading from "../shared/Heading";
@@ -20,8 +20,8 @@ const TravelSection = () => {
     return (
         <div className="w-11/12 mx-auto mb-8 md:mb-16 lg:mb-20">
             <Heading
-                subtitle={'Choose your Destination'}
-                title={'Make your journey hassle free'}
+                subtitle={"Choose your Destination"}
+                title={"Make your journey hassle free"}
             >
             </Heading>
 
@@ -29,7 +29,7 @@ const TravelSection = () => {
                 {destinations.map((destination, index) => (
                     <motion.div
                         key={index}
-                        className={`relative overflow-hidden group rounded-md ${index % 2 === 0 ? '-translate-y-8' : ''}`}
+                        className={`relative overflow-hidden group rounded-md ${index % 2 === 0 ? "-translate-y-8" : ""}`}
                         initial={{ opacity: 0, y: 70 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 + index * 0.2, ease: "easeInOut" }}

@@ -12,8 +12,8 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
-import useAuth from "../../Hooks/useAuth";
-import { useRegisterUserMutation } from "../../app/features/auth/authApi";
+import useAuth from "@/Hooks/useAuth";
+import { useRegisterUserMutation } from "@/app/features/auth/authApi";
 
 function RegisterPage() {
   const { createUser, signInWithGoogle, darkMode, setLoading } = useAuth()! as any;

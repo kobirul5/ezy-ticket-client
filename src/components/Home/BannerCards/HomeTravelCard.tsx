@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import useTravelContext from '../../../Hooks/TrevalHook/useTravelContext';
-import { useLocation, useNavigate } from 'react-router-dom';
-import useAxiosSecure from '../../../Hooks/useAxiosSecure';
-import useAuth from '../../../Hooks/useAuth';
-import { FaExchangeAlt, FaCalendarAlt, FaSearch } from 'react-icons/fa';
-import { motion } from 'framer-motion';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import useTravelContext from "@/Hooks/TrevalHook/useTravelContext";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import useAuth from "@/Hooks/useAuth";
+import { FaExchangeAlt, FaCalendarAlt, FaSearch } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 const HomeTravelCard = () => {
     const location = useLocation();
@@ -31,7 +31,7 @@ const HomeTravelCard = () => {
         const date = form.date.value;
 
         if (!fromDistrict || !toDistrict || !date) {
-            toast.warn('Please fill in all fields')
+            toast.warn("Please fill in all fields")
             return;
         }
 
@@ -51,7 +51,7 @@ const HomeTravelCard = () => {
             }
         } catch (err) {
             console.error("Search error:", err);
-            alert('Failed to search. Please try again.');
+            alert("Failed to search. Please try again.");
         }
     };
 

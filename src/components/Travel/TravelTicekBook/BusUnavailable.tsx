@@ -1,6 +1,6 @@
 import { FaBus } from "react-icons/fa";
 import { MdErrorOutline } from "react-icons/md";
-import useAuth from "../../../Hooks/useAuth";
+import useAuth from "@/Hooks/useAuth";
 
 const BusUnavailable = () => {
     const {darkMode} = useAuth() as any

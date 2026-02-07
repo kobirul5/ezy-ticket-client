@@ -1,14 +1,14 @@
 import { motion, useAnimation } from "framer-motion";
 import React, { useEffect, useState } from "react"; // Added React import
 import { useInView } from "react-intersection-observer";
-import useAuth from "../../Hooks/useAuth";
+import useAuth from "@/Hooks/useAuth";
 
 interface CounterItemProps {
     targetNumber: number;
-    // label: string; // Commented out as 'label' is not used in CounterItem
+    // label: string; // Commented out as "label" is not used in CounterItem
 }
 
-const CounterItem: React.FC<CounterItemProps> = ({ targetNumber }) => { // Removed 'label' from destructuring
+const CounterItem: React.FC<CounterItemProps> = ({ targetNumber }) => { // Removed "label" from destructuring
     const {darkMode} = useAuth()! as any;
     const [count, setCount] = useState(0);
     const controls = useAnimation();
@@ -45,7 +45,7 @@ const CounterItem: React.FC<CounterItemProps> = ({ targetNumber }) => { // Remov
         <motion.div
             ref={ref}
             animate={controls}
-            className={` flex   md:py-4 rounded-md  ${darkMode ? '' : ''}`}
+            className={` flex   md:py-4 rounded-md  ${darkMode ? "" : ""}`}
         >
             <div className="text-sm md:text-2xl font-semibold  mb-2 flex items-center gap-2">
                 <p>More than</p> <p className="text-main">{count}+</p> <p>people liked us!</p>

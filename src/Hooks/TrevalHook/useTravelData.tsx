@@ -1,12 +1,12 @@
 // reservation data image
-import BusImage1 from "../../assets/Travel_image/travel-service/image1.jpg"
-import BusImage3 from "../../assets/Travel_image/travel-service/image3.jpg"
-import BusImage4 from "../../assets/Travel_image/travel-service/image4.jpg"
-import BusImage5 from "../../assets/Travel_image/travel-service/image5.jpg"
-import BusImage6 from "../../assets/Travel_image/travel-service/image6.jpg"
-import BusImage2 from "../../assets/Travel_image/travel-service/image2.jpg"
+import BusImage1 from "@/assets/Travel_image/travel-service/image1.jpg"
+import BusImage3 from "@/assets/Travel_image/travel-service/image3.jpg"
+import BusImage4 from "@/assets/Travel_image/travel-service/image4.jpg"
+import BusImage5 from "@/assets/Travel_image/travel-service/image5.jpg"
+import BusImage6 from "@/assets/Travel_image/travel-service/image6.jpg"
+import BusImage2 from "@/assets/Travel_image/travel-service/image2.jpg"
 // icon
-import { FaPlane, FaCalendarAlt, FaSchool, FaMapMarkedAlt } from 'react-icons/fa';
+import { FaPlane, FaCalendarAlt, FaSchool, FaMapMarkedAlt } from "react-icons/fa";
 import { MdOutlineCorporateFare } from "react-icons/md";
 import { ReactNode } from "react";
 

@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import useAuth from "../../Hooks/useAuth";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useAuth from "@/Hooks/useAuth";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { IoInformationCircle } from "react-icons/io5";
 import { FaTicketAlt } from "react-icons/fa";
@@ -32,14 +32,14 @@ const Checkout = () => {
             managerImage: user?.photoURL,
             status: "pending"
         }
-        const eventRes = await axiosSecure.post('/events', eventInfo);
+        const eventRes = await axiosSecure.post("/events", eventInfo);
         if (eventRes.data.insertedId) {
             reset();
             //show success popup
             Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: 'Your Event has been added',
+                title: "Your Event has been added",
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -67,7 +67,7 @@ const Checkout = () => {
                                     <input
                                         type="text"
                                         placeholder="Enter event name here"
-                                        {...register('title', { required: true })}
+                                        {...register("title", { required: true })}
                                         className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow" />
                                 </div>
 
@@ -76,9 +76,9 @@ const Checkout = () => {
                                     <div className="label">
                                         <span className="label-text text-lg">Chose Event Type</span>
                                     </div>
-                                    <select defaultValue='default' {...register('eventType', { required: true })}
+                                    <select defaultValue="default" {...register("eventType", { required: true })}
                                         className="select select-bordered w-full focus:outline-none focus:border-supporting focus:shadow">
-                                        <option disabled value='default'>Select Event Type</option>
+                                        <option disabled value="default">Select Event Type</option>
                                         <option value="online">Online</option>
                                         <option value="venue">Venue</option>
                                     </select>
@@ -89,9 +89,9 @@ const Checkout = () => {
                                     <div className="label">
                                         <span className="label-text text-lg">Chose Event Category</span>
                                     </div>
-                                    <select defaultValue='default' {...register('eventCategory', { required: true })}
+                                    <select defaultValue="default" {...register("eventCategory", { required: true })}
                                         className="select select-bordered w-full focus:outline-none focus:border-supporting focus:shadow">
-                                        <option disabled value='default'>Select Event Category</option>
+                                        <option disabled value="default">Select Event Category</option>
                                         <option value="adventureTour">Adventure Tour</option>
                                         <option value="concert">Concert</option>
                                         <option value="theater">Theater</option>
@@ -113,7 +113,7 @@ const Checkout = () => {
                                         </div>
                                         <input
                                             type="date"
-                                            {...register('eventDate', { required: true })}
+                                            {...register("eventDate", { required: true })}
                                             className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow"
                                             placeholder="MM/DD/YYYY"
                                         />
@@ -128,7 +128,7 @@ const Checkout = () => {
                                     <input
                                         type="text"
                                         placeholder="Online / for venue Type Full Address"
-                                        {...register('location', { required: true })}
+                                        {...register("location", { required: true })}
                                         className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow" />
                                 </div>
 
@@ -140,7 +140,7 @@ const Checkout = () => {
                                     <textarea
                                         className="textarea textarea-bordered h-36 w-full focus:outline-none focus:border-supporting focus:shadow"
                                         placeholder="Details"
-                                        {...register('details')}
+                                        {...register("details")}
                                     >
                                     </textarea>
                                 </div>
@@ -150,7 +150,7 @@ const Checkout = () => {
                                     <input
                                         type="file"
                                         className="file-input w-full"
-                                        {...register('image', { required: true })}
+                                        {...register("image", { required: true })}
                                     />
                                 </div>
 
@@ -172,7 +172,7 @@ const Checkout = () => {
                                             type="number"
                                             min="0"
                                             placeholder="Total available tickets"
-                                            {...register('totalTickets', {
+                                            {...register("totalTickets", {
                                                 required: "Total tickets is required",
                                                 min: {
                                                     value: 0,
@@ -196,10 +196,10 @@ const Checkout = () => {
                                             type="number"
                                             min="0"
                                             placeholder="Max per customer"
-                                            {...register('maxTickets', {
+                                            {...register("maxTickets", {
                                                 required: "Max tickets is required",
                                                 validate: (value) => {
-                                                    const total = getValues('totalTickets');
+                                                    const total = getValues("totalTickets");
                                                     if (value < 0) return "Must be at least 0";
                                                     if (total !== undefined && value > total) {
                                                         return `Cannot exceed total tickets (${total})`;
@@ -223,7 +223,7 @@ const Checkout = () => {
                                         <input
                                             type="number"
                                             placeholder="Each ticket Price"
-                                            {...register('price', {
+                                            {...register("price", {
                                                 required: "Price is required",
                                                 valueAsNumber: true,
                                                 validate: (value) => value >= 10 || "Minimum price should be at least 10",
