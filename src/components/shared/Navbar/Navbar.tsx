@@ -14,10 +14,10 @@ import { RiCompassDiscoverLine } from "react-icons/ri";
 import { GoInfo } from "react-icons/go";
 import { IoHomeOutline } from "react-icons/io5";
 import { ImEnter } from "react-icons/im";
-import useAuth from "../../Hooks/useAuth";
-import noImage from "../../assets/Common_image/noImage.png";
+import useAuth from "../../../Hooks/useAuth";
+import noImage from "../../../assets/Common_image/noImage.png";
 import { CgProfile } from "react-icons/cg";
-import useScrollToTop from "../../Hooks/useScrollToTop";
+import useScrollToTop from "../../../Hooks/useScrollToTop";
 
 const Navbar: React.FC = () => {
   const { darkMode, setDarkMode, user, userInfo, logOut, setUser } = useAuth() as any;

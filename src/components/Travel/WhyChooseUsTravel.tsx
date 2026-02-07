@@ -1,6 +1,6 @@
 import { FaTools, FaSmile, FaBus, FaHandsHelping, FaStar, FaMoneyCheckAlt } from "react-icons/fa";
-import BusImage from "../../../assets/Travel_image/luxury.jpg"
-import useAuth from "../../../Hooks/useAuth";
+import BusImage from "../../assets/Travel_image/luxury.jpg"
+import useAuth from "../../Hooks/useAuth";
 
 const featuresLeft = [
     {

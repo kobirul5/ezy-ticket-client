@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import useTravelContext from '../../../../Hooks/TrevalHook/useTravelContext';
+import useTravelContext from '../../../Hooks/TrevalHook/useTravelContext';
 import { useLocation, useNavigate } from 'react-router-dom';
-import useAxiosSecure from '../../../../Hooks/useAxiosSecure';
-import useAuth from '../../../../Hooks/useAuth';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import useAuth from '../../../Hooks/useAuth';
 import { FaExchangeAlt, FaCalendarAlt, FaSearch } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';

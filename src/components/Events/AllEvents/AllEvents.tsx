@@ -1,5 +1,6 @@
 import { MdDateRange } from "react-icons/md";
-import Loading from "../../../Shared/Loading/Loading";
+import Loading from "../../shared/Loading/Loading";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAuth from "../../../Hooks/useAuth";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -7,8 +8,7 @@ import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useState } from "react";
 import { FaBangladeshiTakaSign, FaRegClock } from "react-icons/fa6";
 import { GiTicket } from "react-icons/gi";
-// import Heading from "../../../components/Heading";
-import EventOffer from "../EventsComponents/EventOffer";
+import EventOffer from "../EventOffer";
 
 const AllEvents = () => {
   const { darkMode } = useAuth() as any;

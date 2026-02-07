@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
-import useTravelContext from "../../../Hooks/TrevalHook/useTravelContext";
-import useAuth from "../../../Hooks/useAuth";
+import useTravelContext from "../../Hooks/TrevalHook/useTravelContext";
+import useAuth from "../../Hooks/useAuth";
 import { PiBusBold } from "react-icons/pi";
 import { FaLocationDot, FaClock, FaChair, FaBangladeshiTakaSign } from "react-icons/fa6";
 

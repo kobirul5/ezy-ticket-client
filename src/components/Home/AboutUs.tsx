@@ -1,8 +1,8 @@
 import { FaCheck, FaShippingFast, FaHeadset } from "react-icons/fa";
-import busTicket from '../../../assets/Home_image/busTicket.webp';
-import concertTicket from '../../../assets/Home_image/concertTicket.webp';
+import busTicket from '../../assets/Home_image/busTicket.webp';
+import concertTicket from '../../assets/Home_image/concertTicket.webp';
 import { motion, useAnimation } from "framer-motion";
-import useAuth from "../../../Hooks/useAuth";
+import useAuth from "../../Hooks/useAuth";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 

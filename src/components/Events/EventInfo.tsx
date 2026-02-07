@@ -6,8 +6,8 @@ import {
   FaRegHandshake,
 } from "react-icons/fa";
 import { IoMusicalNoteSharp } from "react-icons/io5";
-import useAuth from "../../../Hooks/useAuth";
-import Heading from "../../../components/Heading";
+import useAuth from "../../Hooks/useAuth";
+import Heading from "../shared/Heading";
 
 const EventInfo = () => {
   const { darkMode } = useAuth() as any;

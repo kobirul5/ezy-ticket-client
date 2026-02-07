@@ -1,5 +1,5 @@
 import React from 'react'
-import useAuth from '../Hooks/useAuth'
+import useAuth from '../../Hooks/useAuth'
 
 interface HeadingProps {
   title: string;

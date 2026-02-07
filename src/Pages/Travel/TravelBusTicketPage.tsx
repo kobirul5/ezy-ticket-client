@@ -1,12 +1,12 @@
 
-import travelBannerImage from "../../../assets/Travel_image/travel-service/bg-bus.jpg"
-import useTravelContext from "../../../Hooks/TrevalHook/useTravelContext"
-import BusCard from "../TravelComponents/BusCard"
-import BusFilter from "./BusFilter";
-import SelectPlaceTime from "./SelectPlaceTime"
-import { useEffect } from "react";
-import { useGetBusesQuery } from "../../../app/features/travel/travelApi";
-import BusUnavailable from "./BusUnavailable";
+import travelBannerImage from "../../assets/Travel_image/travel-service/bg-bus.jpg"
+import { useGetBusesQuery } from "../../app/features/travel/travelApi";
+import BusCard from "../../components/Travel/BusCard";
+import BusFilter from "../../components/Travel/TravelTicekBook/BusFilter";
+import BusUnavailable from "../../components/Travel/TravelTicekBook/BusUnavailable";
+import SelectPlaceTime from "../../components/Travel/TravelTicekBook/SelectPlaceTime";
+import useTravelContext from "../../Hooks/TrevalHook/useTravelContext";
+
 
 const TravelBusTicketPage = () => {
   const { data: allBus, isLoading } = useGetBusesQuery(undefined);

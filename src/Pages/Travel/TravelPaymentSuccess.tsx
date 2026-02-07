@@ -4,8 +4,9 @@ import { FaCircleCheck, FaReceipt } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { FiPackage, FiHash } from "react-icons/fi";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import useAuth from "../../../Hooks/useAuth";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+
 
 const TravelPaymentSuccess = () => {
     const { darkMode } = useAuth() as any
@@ -212,7 +213,7 @@ const TravelPaymentSuccess = () => {
                 </div>
                 <div className="px-6 py-8  text-center">
                     <button
-                        onClick={handlePrint}
+                        // onClick={handlePrint}
                         className="ezy-button-primary"
                     >
                         Print Receipt

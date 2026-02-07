@@ -1,8 +1,8 @@
 // import { Link } from "react-router-dom";
-import travelBannerImage from "../../../assets/Travel_image/Bus3.jpg"
+import travelBannerImage from "../../assets/Travel_image/Bus3.jpg"
 import BannerCard from "./BannerCard";
 // import useCardData from "./useCardData";
-import SelectPlaceTime from "../TravelTicekBook/SelectPlaceTime";
+import SelectPlaceTime from "./TravelTicekBook/SelectPlaceTime";
 import { motion } from "framer-motion";
 
 const TravelBanner = () => {

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { motion } from "framer-motion";
 import HomeTravelCard from './BannerCards/HomeTravelCard';
-import travelVideo from "../../../assets/Home_image/travelVideo2.mp4";
+import travelVideo from "../../assets/Home_image/travelVideo2.mp4";
 
 const HomeBanner = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -13,12 +13,13 @@ const HomeBanner = () => {
             // Handle autoplay with fallback
             const playPromise = videoRef.current.play();
             
-            if (playPromise !== undefined) {
+            if (playPromise !== undefined && videoRef.current) {
+                const currentVideo = videoRef.current;
                 playPromise.catch((error: any) => {
                     console.log("Autoplay prevented:", error);
                     // Fallback: mute the video if autoplay was prevented
-                    videoRef.current.muted = true;
-                    videoRef.current.play();
+                    currentVideo.muted = true;
+                    currentVideo.play();
                 });
             }
         }

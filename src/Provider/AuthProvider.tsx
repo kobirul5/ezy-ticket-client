@@ -11,7 +11,7 @@ import {
   User,
   UserCredential,
 } from "firebase/auth";
-import app from "../Pages/Authentication/Firebase";
+import app from "../components/Authentication/Firebase";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import { useGetUserInfoQuery, useLoginUserMutation, useLogoutUserMutation } from "../app/features/auth/authApi";
 

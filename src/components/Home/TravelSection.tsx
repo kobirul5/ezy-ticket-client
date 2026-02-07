@@ -1,12 +1,12 @@
 import { FaPlane, FaTag, FaMapMarkerAlt, FaRegSmile, FaBus } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import dhaka from "../../../assets/Home_image/dhaka.webp";
-import merinDrive from "../../../assets/Home_image/marinDrive.webp";
-import sylhet from "../../../assets/Home_image/sylhet.webp";
-import chittagong from "../../../assets/Home_image/chittagong.jpg";
+import dhaka from "../../assets/Home_image/dhaka.webp";
+import merinDrive from "../../assets/Home_image/marinDrive.webp";
+import sylhet from "../../assets/Home_image/sylhet.webp";
+import chittagong from "../../assets/Home_image/chittagong.jpg";
 import { motion } from "framer-motion";
 import StatsCounter from "./StatsCounter";
-import Heading from "../../../components/Heading";
+import Heading from "../shared/Heading";
 
 const TravelSection = () => {
 

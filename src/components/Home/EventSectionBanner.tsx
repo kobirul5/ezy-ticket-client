@@ -1,4 +1,4 @@
-import tanoura from "../../../assets/Home_image/tanoura.jpg";
+import tanoura from "../../assets/Home_image/tanoura.jpg";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useInView } from "react-intersection-observer";

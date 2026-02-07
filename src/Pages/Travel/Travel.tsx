@@ -1,11 +1,8 @@
 import TravelBanner from "../../components/Travel/TravelBanner"
-// import TravelService from '../../components/Travel/TravelServiceSeciton/TravelService'
-import AddTravelService from "../../components/Travel/AddTravelService/AddTravelService"
 import FlashDeals from "../../components/Travel/FlashDeals/FlashDeals"
 import useAuth from '../../Hooks/useAuth'
 import TravelFAQ from "../../components/Travel/TravelFAQ/TravelFAQ"
 import WhyChooseUsTravel from "../../components/Travel/WhyChooseUsTravel"
-// import TravelTestimonials from '../../components/Travel/TravelTestimonials'
 import BusCompaniesSection from "../../components/Travel/BusCompaniesSection/BusCompaniesSection"
 import PopularBusRoutes from "../../components/Travel/BusCompaniesSection/PopularBusRoutes"
 
@@ -25,7 +22,7 @@ const Travel = () => {
         <TravelService />
       </div> */}
 
-      <AddTravelService />
+      {/* <AddTravelService /> */}
       <BusCompaniesSection></BusCompaniesSection>
 
       {/* set form */}

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import useAuth from "../../../Hooks/useAuth";
+import useAuth from "../../Hooks/useAuth";
 import useCardData from "./useCardData";
 
 const BannerCard = () => {

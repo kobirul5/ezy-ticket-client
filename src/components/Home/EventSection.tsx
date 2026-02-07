@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import useAuth from "../../../Hooks/useAuth";
-import groupTour from "../../../assets/Home_image/groupTour.webp";
-import concert from "../../../assets/Home_image/concert.webp";
-import seminar from "../../../assets/Home_image/seminar.webp";
-import rides from "../../../assets/Home_image/rides.webp";
-import park from "../../../assets/Home_image/park.webp";
+import useAuth from "../../Hooks/useAuth";
+import groupTour from "../../assets/Home_image/groupTour.webp";
+import concert from "../../assets/Home_image/concert.webp";
+import seminar from "../../assets/Home_image/seminar.webp";
+import rides from "../../assets/Home_image/rides.webp";
+import park from "../../assets/Home_image/park.webp";
 
 const EventSection = () => {
     const { darkMode } = useAuth()! as any;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import travelBannerImage from "../../../assets/Travel_image/travel-service/bg-bus.jpg"
-import useTravelData from '../../../Hooks/TrevalHook/useTravelData';
+import travelBannerImage from "../../assets/Travel_image/travel-service/bg-bus.jpg"
 import Swal from 'sweetalert2'
+import useTravelData from '../../Hooks/TrevalHook/useTravelData';
 
 const BusReservationPage = () => {
   const { busServices } = useTravelData() as any

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import useAuth from "../../../Hooks/useAuth";
+import useAuth from "../../Hooks/useAuth";
 
 // Fake review data with star ratings
 const reviews = [

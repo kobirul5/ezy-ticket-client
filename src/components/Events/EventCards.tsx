@@ -1,9 +1,9 @@
 import { MdDateRange } from "react-icons/md";
-import Loading from "../../../Shared/Loading/Loading";
-import useAuth from "../../../Hooks/useAuth";
+import Loading from "../shared/Loading/Loading";
+import useAuth from "../../Hooks/useAuth";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { FaBangladeshiTakaSign, FaRegClock } from "react-icons/fa6";
 import { GiTicket } from "react-icons/gi";
 

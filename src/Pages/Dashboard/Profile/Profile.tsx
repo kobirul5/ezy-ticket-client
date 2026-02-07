@@ -1,9 +1,9 @@
-import AdminProfile from "./ProfileComponents/AdminProfile";
-import EventManagerProfile from "./ProfileComponents/EventManagerProfile";
-import TravelManagerProfile from "./ProfileComponents/TravelManagerProfile";
-import UserProfile from "./ProfileComponents/UserProfile";
+import AdminProfile from "../../../components/Dashboard/Profile/AdminProfile";
+import EventManagerProfile from "../../../components/Dashboard/Profile/EventManagerProfile";
+import TravelManagerProfile from "../../../components/Dashboard/Profile/TravelManagerProfile";
+import UserProfile from "../../../components/Dashboard/Profile/UserProfile";
 import useAuth from "../../../Hooks/useAuth";
-import Loading from "../../../Shared/Loading/Loading";
+import Loading from "../../../components/shared/Loading/Loading";
 
 const Profile = () => {
     const { userInfo, userInfoLoading } = useAuth()! as any;

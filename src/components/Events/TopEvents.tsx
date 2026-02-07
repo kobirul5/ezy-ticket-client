@@ -1,8 +1,8 @@
-import Loading from "../../../Shared/Loading/Loading";
-import useAuth from "../../../Hooks/useAuth";
+import Loading from "../shared/Loading/Loading";
+import useAuth from "../../Hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
-import Heading from "../../../components/Heading";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import Heading from "../shared/Heading";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 

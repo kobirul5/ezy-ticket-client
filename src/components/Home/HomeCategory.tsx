@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
-import Heading from "../../../components/Heading";
-import useAuth from "../../../Hooks/useAuth";
-import bus from "../../../assets/Home_image/bus.webp";
-import dance from "../../../assets/Home_image/dance.webp";
+import Heading from "../shared/Heading";
+import useAuth from "../../Hooks/useAuth";
+import bus from "../../assets/Home_image/bus.webp";
+import dance from "../../assets/Home_image/dance.webp";
 
 const HomeCategory: React.FC = () => {
   const { darkMode } = useAuth()! as any;

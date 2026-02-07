@@ -1,7 +1,7 @@
 import { motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import useAuth from "../../../Hooks/useAuth";
+import useAuth from "../../Hooks/useAuth";
 
 const CounterItem = ({ targetNumber, label }: { targetNumber: number, label: string }) => {
     const {darkMode} = useAuth()! as any;
