@@ -31,7 +31,7 @@ const UserProfile = () => {
           <div className="bg-gradient-to-r from-main to-green-500 h-46 relative">
             <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">
               <img
-                src={userInfo?.photoURL || user?.photoURL || noImage}
+                src={userInfo?.picture || noImage}
                 alt="User"
                 className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
               />

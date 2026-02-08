@@ -35,18 +35,13 @@ function RegisterPage() {
   const onSubmit = async (data: any) => {
     const { email, password } = data;
     try {
-      const result = await createUser(email, password);
-      const user = result?.user;
+    
       await registerUser({
         name: data.name,
         email: data.email,
-        displayName: data.name,
-        status: "",
-        phone: "",
-        address: "",
-        role: "user",
         password: data.password,
       }).unwrap();
+        const result =  createUser(email, password);
       Swal.fire({
         icon: "success",
         title: "Registration Successful",
