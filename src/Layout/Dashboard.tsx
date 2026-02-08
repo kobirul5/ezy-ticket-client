@@ -19,6 +19,7 @@ const Dashboard = () => {
     const [isEventManager] = useEventManager();
     const [isTravelManager] = useTravelManager();
     const { user, userInfo } = useAuth() as any;
+    console.log(isAdmin, isEventManager, isTravelManager);
 
     // Active link style function
     const getNavLinkClass = ({ isActive }: { isActive: boolean }) => 
