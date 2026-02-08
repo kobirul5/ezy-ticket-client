@@ -6,6 +6,7 @@ import useAuth from "@/Hooks/useAuth";
 import { FaExchangeAlt, FaCalendarAlt, FaSearch } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
+import SearchableSelect from "@/components/shared/SearchableSelect";
 
 const HomeTravelCard = () => {
     const location = useLocation();
@@ -40,12 +41,12 @@ const HomeTravelCard = () => {
             return;
         }
 
-        const placeTimeData = { stand1: fromDistrict, stand2: toDistrict, date };
+        const placeTimeData = { from: fromDistrict, to: toDistrict, date };
         setSearchData(placeTimeData);
 
         try {
-            const { data } = await axiosSecure.get("/api/stand", { params: placeTimeData });
-            setFilterBus(data);
+            const { data } = await axiosSecure.get("/travel/bus-ticket", { params: placeTimeData });
+            setFilterBus(data.data);
             if (location.pathname === "/travel" || location.pathname === "/") {
                 navigate("/travel/bus-ticket-book");
             }
@@ -62,7 +63,7 @@ const HomeTravelCard = () => {
             transition={{ duration: 0.5 }}
             className=""
         >
-            <section className={`rounded-xl shadow-xl overflow-hidden ${darkMode ? "bg-gray-800" : "bg-white"}`}>
+            <section className={`rounded-xl shadow-xl ${darkMode ? "bg-gray-800" : "bg-white"}`}>
                 <div className="p-1 bg-gradient-to-r from-green-700 to-green-400"></div>
 
                 <div className="p-6 md:p-8">
@@ -73,26 +74,17 @@ const HomeTravelCard = () => {
                     <form onSubmit={handleSearchData} className="grid grid-cols-12 gap-4 items-end">
                         {/* From Location */}
                         <div className="col-span-12 md:col-span-3">
-                            <label className={`block mb-2 text-sm font-medium ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
-                                From
-                            </label>
-                            <select
+                            <SearchableSelect
                                 name="fromDistrict"
-                                defaultValue={searchData?.stand1 || ""}
-                                className={`w-full p-3 rounded-lg border ${darkMode ?
-                                    "bg-gray-700 border-gray-600 text-white" :
-                                    "bg-gray-50 border-gray-300 text-gray-900"}`}
+                                label="From"
+                                placeholder="Select departure"
+                                defaultValue={searchData?.from || ""}
                                 required
-                            >
-                                <option value="" disabled>Select departure</option>
-                                {districts.map((stand: any, idx: number) => (
-                                    <option key={idx} value={stand}>{stand}</option>
-                                ))}
-                            </select>
+                            />
                         </div>
 
                         {/* Swap Button */}
-                        <div className="col-span-12 md:col-span-1 flex justify-center">
+                        <div className="col-span-12 md:col-span-1 flex justify-center pb-0 md:pb-2">
                             <button
                                 type="button"
                                 onClick={handleSwapLocations}
@@ -110,22 +102,13 @@ const HomeTravelCard = () => {
 
                         {/* To Location */}
                         <div className="col-span-12 md:col-span-3">
-                            <label className={`block mb-2 text-sm font-medium ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
-                                To
-                            </label>
-                            <select
+                            <SearchableSelect
                                 name="toDistrict"
-                                defaultValue={searchData?.stand2 || ""}
-                                className={`w-full p-3 rounded-lg border ${darkMode ?
-                                    "bg-gray-700 border-gray-600 text-white" :
-                                    "bg-gray-50 border-gray-300 text-gray-900"}`}
+                                label="To"
+                                placeholder="Select destination"
+                                defaultValue={searchData?.to || ""}
                                 required
-                            >
-                                <option value="" disabled>Select destination</option>
-                                {districts.map((stand: any, idx: number) => (
-                                    <option key={idx} value={stand}>{stand}</option>
-                                ))}
-                            </select>
+                            />
                         </div>
 
                         {/* Date */}

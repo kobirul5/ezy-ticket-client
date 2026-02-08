@@ -14,7 +14,7 @@ const TravelSelectSet = () => {
     const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
     const { setBusPassengerData } = useTravelContext() as any
     const location = useLocation()
-    const seatPrice = location?.state?.ticketPrice;
+    const seatPrice = location?.state?.price;
     const { darkMode } = useAuth() as any
     const [bookedSeat] = useState<string[]>(location?.state?.bookedSeats || [])
     
@@ -37,9 +37,9 @@ const TravelSelectSet = () => {
         const number = form.number.value;
         const address = form.address.value;
         const totalPrices = selectedSeats.length * seatPrice * 0.05 + selectedSeats.length * seatPrice;
-        const busPostId = location?.state?._id
+        const busPostId = location?.state?.id
         const verifyData = "bus"
-        const routeAndDateAndTime = { from: location?.state?.from, to: location?.state?.to, date: location?.state?.date, time: location?.state?.busTimes }
+        const routeAndDateAndTime = { from: location?.state?.from, to: location?.state?.to, date: location?.state?.date, time: location?.state?.departure }
         const buyDate = new Date()
 
         const passengerData = {

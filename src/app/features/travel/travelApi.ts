@@ -38,7 +38,11 @@ export const travelApi = baseApi.injectEndpoints({
       providesTags: ["Bus"],
     }),
     getTravelLocations: builder.query({
-      query: () => "/travel",
+      query: (searchTerm) => ({
+        url: "/travel",
+        method: "GET",
+        params: searchTerm ? { searchTerm } : {},
+      }),
       providesTags: ["Bus"],
     }),
     getBusTickets: builder.query({
@@ -57,7 +61,7 @@ export const travelApi = baseApi.injectEndpoints({
       },
       providesTags: ["Bus"],
     }),
-    createBusTicket: builder.mutation({
+    createBusSchedule: builder.mutation({
       query: (data) => ({
         url: "/travel/bus-ticket",
         method: "POST",
@@ -84,7 +88,7 @@ export const {
   useDeleteBusServiceMutation,
   useGetBusTicketsQuery,
   useLazyGetBusTicketsQuery,
-  useCreateBusTicketMutation,
+  useCreateBusScheduleMutation,
   useGetBusStandsQuery,
   useGetTravelLocationsQuery,
   useCreateTravelLocationMutation

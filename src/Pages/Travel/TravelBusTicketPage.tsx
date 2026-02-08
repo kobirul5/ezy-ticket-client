@@ -9,7 +9,8 @@ import useTravelContext from "@/Hooks/TrevalHook/useTravelContext";
 
 
 const TravelBusTicketPage = () => {
-  const { data: allBus, isLoading } = useGetBusTicketsQuery(undefined);
+  const { data: allBusRes, isLoading } = useGetBusTicketsQuery(undefined);
+  const { filterBus } = useTravelContext() as any;
 
   if (isLoading) {
     return (
@@ -19,8 +20,7 @@ const TravelBusTicketPage = () => {
     );
   }
 
-
-  const { filterBus, } = useTravelContext() as any
+  const allBus = allBusRes?.data || [];
 
 
 
@@ -55,7 +55,7 @@ const TravelBusTicketPage = () => {
               filterBus?.length < 1 ? <BusUnavailable/> :
                 filterBus.map((bus: any, idx: number) => <BusCard key={idx} bus={bus} />)
               :
-              allBus?.map((bus: any, idx: number) => <BusCard key={idx} bus={bus} />)
+              allBus.map((bus: any, idx: number) => <BusCard key={idx} bus={bus} />)
           }
         </div>
       </section>

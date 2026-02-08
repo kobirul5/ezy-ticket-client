@@ -6,6 +6,7 @@ import useAuth from "@/Hooks/useAuth";
 import { motion } from "framer-motion";
 import { FaExchangeAlt, FaCalendarAlt, FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
+import SearchableSelect from "@/components/shared/SearchableSelect";
 
 
 const SelectPlaceTime = () => {
@@ -27,7 +28,7 @@ const SelectPlaceTime = () => {
         const fromDistrict = form.fromDistrict.value;
         const toDistrict = form.toDistrict.value;
         const date = form.date.value;
-        const placeTimeData = { stand1: fromDistrict, stand2: toDistrict, date: date }
+        const placeTimeData = { from: fromDistrict, to: toDistrict, date: date }
         if (!fromDistrict || !toDistrict || !date) {
             toast.warn("Please fill in all fields")
             return;
@@ -71,7 +72,7 @@ const SelectPlaceTime = () => {
             transition={{ duration: 0.5 }}
             className=""
         >
-            <div className={`rounded-xl shadow-xl overflow-hidden ${darkMode ? "bg-[#1d1d1d]" : "bg-white"}`}>
+            <div className={`rounded-xl shadow-xl ${darkMode ? "bg-[#1d1d1d]" : "bg-white"}`}>
                 <div className="p-1 bg-gradient-to-r from-green-700 to-green-400"></div>
 
                 <div className="p-6 md:p-8">
@@ -82,26 +83,17 @@ const SelectPlaceTime = () => {
                     <form onSubmit={handleSearchData} className="grid grid-cols-12 gap-4 items-end">
                         {/* From Location */}
                         <div className="col-span-12 md:col-span-3">
-                            <label className={`block mb-2 text-sm font-medium ${darkMode ? "text-gray-300" : "text-dark-surface"}`}>
-                                From
-                            </label>
-                            <select
+                            <SearchableSelect
                                 name="fromDistrict"
-                                defaultValue={searchData?.stand1 || ""}
-                                className={`w-full p-3 rounded-lg border ${darkMode ?
-                                    "bg-dark-surface border-gray-600 text-white" :
-                                    "bg-gray-50 border-gray-300 text-gray-900"}`}
+                                label="From"
+                                placeholder="Select departure"
+                                defaultValue={searchData?.from || ""}
                                 required
-                            >
-                                <option value="" disabled>Select departure</option>
-                                {districts?.map((stand: string, idx: number) => (
-                                    <option key={idx} value={stand}>{stand}</option>
-                                ))}
-                            </select>
+                            />
                         </div>
 
                         {/* Swap Button */}
-                        <div className="col-span-12 md:col-span-1 flex justify-center">
+                        <div className="col-span-12 md:col-span-1 flex justify-center pb-0 md:pb-2">
                             <button
                                 type="button"
                                 onClick={handleSwapLocations}
@@ -119,22 +111,13 @@ const SelectPlaceTime = () => {
 
                         {/* To Location */}
                         <div className="col-span-12 md:col-span-3">
-                            <label className={`block mb-2 text-sm font-medium ${darkMode ? "text-gray-300" : "text-dark-surface"}`}>
-                                To
-                            </label>
-                            <select
+                            <SearchableSelect
                                 name="toDistrict"
-                                defaultValue={searchData?.stand2 || ""}
-                                className={`w-full p-3 rounded-lg border ${darkMode ?
-                                    "bg-dark-surface border-gray-600 text-white" :
-                                    "bg-gray-50 border-gray-300 text-gray-900"}`}
+                                label="To"
+                                placeholder="Select destination"
+                                defaultValue={searchData?.to || ""}
                                 required
-                            >
-                                <option value="" disabled>Select destination</option>
-                                {districts?.map((stand: string, idx: number) => (
-                                    <option key={idx} value={stand}>{stand}</option>
-                                ))}
-                            </select>
+                            />
                         </div>
 
                         {/* Date */}

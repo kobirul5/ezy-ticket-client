@@ -26,8 +26,8 @@ const HomeBanner = () => {
     }, []);
 
     return (
-        <div className="h-[70vh] md:h-[50vh] lg:h-[70vh] relative shadow-md mb-8 md:mb-16 lg:mb-20">
-            {/* Video Background with slower playback */}
+        <div className="h-[70vh] md:h-[50vh] lg:h-[70vh] relative shadow-md mb-80 md:mb-16 lg:mb-20">
+            {/* ... existing video background ... */}
             <div className="absolute inset-0 z-0">
                 <video 
                     ref={videoRef}
@@ -66,9 +66,9 @@ const HomeBanner = () => {
             </div>
 
             {/* Travel Card */}
-            <div className="flex justify-center items-center absolute -bottom-72 md:-bottom-24 lg:-bottom-30 z-20 w-full">
+            <div className="flex justify-center items-center absolute -bottom-64 md:-bottom-24 lg:-bottom-30 z-20 w-full">
                 <motion.div 
-                    className="w-11/12"
+                    className="w-11/12 max-w-7xl"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}

@@ -151,7 +151,7 @@ const BusCard = ({ bus }: { bus: any; time?: any }) => {
                         </div>
                     </div>
                     <Link
-                        to={`/travel/bus-set/${bus?._id}`}
+                        to={`/travel/bus-set/${bus?.id}`}
                         state={bus}
                         className="w-full sm:w-auto bg-main hover:bg-emerald-700 text-white px-8 py-3 rounded-xl font-semibold transition-colors duration-200 text-center"
                     >
