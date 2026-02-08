@@ -24,7 +24,9 @@ import Profile from "../Pages/Dashboard/Profile/Profile";
 import PaymentSuccess from "../Pages/PaymentSuccess/PaymentSuccess";
 import PaymentFail from "../Pages/PaymentFail/PaymentFail";
 import MyAddedEvents from "../Pages/Dashboard/Events/MyAddedEvents";
-import AddBusService from "../Pages/Dashboard/Travel/AddBusService";
+import CreateBus from "../Pages/Dashboard/Travel/CreateBus";
+import UpdateBus from "../Pages/Dashboard/Travel/UpdateBus";
+import CreateTravelLocation from "../Pages/Dashboard/Travel/CreateTravelLocation";
 import ManageReviews from "../Pages/Dashboard/Travel/ManageReviews";
 import MyBusServices from "../Pages/Dashboard/Travel/MyBusServices";
 import SoldTickets from "../Pages/Dashboard/Travel/SoldTickets";
@@ -171,7 +173,15 @@ const Route = createBrowserRouter([
       //add bus service page, review manage, added by susanto
       {
         path: "add-bus-service",
-        element: <AddBusService></AddBusService>,
+        element: <CreateBus></CreateBus>,
+      },
+      {
+        path: "update-bus-service/:id",
+        element: <UpdateBus />,
+      },
+      {
+        path: "create-travel-location",
+        element: <CreateTravelLocation />,
       },
       {
         path: "manageReview",

@@ -1,46 +1,47 @@
 import { useState, useEffect } from "react";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaPlus } from "react-icons/fa";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { TbListDetails } from "react-icons/tb";
 import Swal from "sweetalert2";
-import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import useAuth from "@/Hooks/useAuth";
 import { IoBus, IoLocationSharp, IoTime } from "react-icons/io5";
 import { MdOutlineTour, MdDirectionsBusFilled } from "react-icons/md";
 import { FaBus, FaMoneyBillWave, FaRegMoneyBillAlt, FaUserCircle, FaCalendarAlt } from "react-icons/fa";
-import { useGetBusServicesQuery } from "@/app/features/travel/travelApi";
+import { useGetBusServicesQuery, useDeleteBusServiceMutation } from "@/app/features/travel/travelApi";
+import { Link, useNavigate } from "react-router-dom";
 
 const MyBusServices = () => {
+  const navigate = useNavigate();
   const [selectedBus, setSelectedBus] = useState<any>(null);
   const { user } = useAuth()! as any;
-  const axiosSecure = useAxiosSecure();
 
-  const { data: busServicesRes, isLoading, refetch } = useGetBusServicesQuery(undefined);
+  const { data: busServicesRes, isLoading } = useGetBusServicesQuery(undefined);
+  const [deleteBus] = useDeleteBusServiceMutation();
   const buses = busServicesRes?.data || [];
 
-  const handleDelete = async () => {
+  const handleDelete = async (id: number) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You wont be able to revert this!",
+      text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#10b981",
+      cancelButtonColor: "#ef4444",
       confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        // TODO: API call for delete here
-        Swal.fire("Deleted!", "Your bus has been deleted.", "success");
+        try {
+          await deleteBus(id).unwrap();
+          Swal.fire("Deleted!", "Bus service has been removed.", "success");
+        } catch (err: any) {
+          Swal.fire("Error", err?.data?.message || "Failed to delete bus", "error");
+        }
       }
     });
   };
 
-  const handleUpdate = () => {
-    Swal.fire({
-      title: "Coming Soon...!",
-      text: "This Feature is coming soon.",
-      icon: "info"
-    });
+  const handleUpdate = (id: number) => {
+      navigate(`/dashboard/update-bus-service/${id}`);
   };
 
   const handleOpenModal = (bus: any) => {
@@ -56,167 +57,208 @@ const MyBusServices = () => {
     }
   }, [selectedBus]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return (
+      <div className="flex justify-center items-center min-h-[400px]">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
+      </div>
+  );
 
   return (
-    <div className="max-w-6xl mx-auto mt-2 p-6 bg-green-50 rounded-lg shadow-md">
-      <h2 className="text-3xl font-bold text-center mb-6">My Added Bus Services</h2>
+    <div className="max-w-7xl mx-auto p-6 bg-slate-50 min-h-screen">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+          <div>
+              <h2 className="text-3xl font-bold text-slate-800">My Bus Services</h2>
+              <p className="text-slate-500">Manage and monitor your active bus routes</p>
+          </div>
+          <Link 
+            to="/dashboard/add-bus-service"
+            className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-emerald-100 transition-all hover:scale-[1.02] active:scale-[0.98]"
+          >
+              <FaPlus /> Add New Bus
+          </Link>
+      </div>
 
       {buses?.length === 0 ? (
-        <p className="text-center text-gray-500">No bus services added yet.</p>
+        <div className="text-center bg-white p-12 rounded-3xl border border-slate-100 shadow-sm">
+            <IoBus className="text-6xl text-slate-200 mx-auto mb-4" />
+            <p className="text-slate-500 text-lg">No bus services added yet.</p>
+            <Link to="/dashboard/add-bus-service" className="text-emerald-500 font-semibold hover:underline mt-2 inline-block">Start by adding your first bus</Link>
+        </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="table w-full">
-            <thead className="bg-green-200">
-              <tr>
-                <th>Bus Name</th>
-                <th>Time</th>
-                <th>Date</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Type</th>
-                <th>Price</th>
-                <th>Refundable</th>
-                <th>Trip</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {buses.map((bus: any) => (
-                <tr key={bus.id || bus._id} className="hover:bg-green-100 transition">
-                  <td>{bus.busName}</td>
-                  <td>{bus.busTimes}</td>
-                  <td>{bus.date}</td>
-                  <td>{bus.from}</td>
-                  <td>{bus.to}</td>
-                  <td>{bus.type}</td>
-                  <td>{bus.ticketPrice}৳</td>
-                  <td>{bus.refund ? "Yes" : "No"}</td>
-                  <td>{bus.tripName}</td>
-                  <td className="flex gap-1">
-                    <button
-                      onClick={() => handleOpenModal(bus)}
-                      className="btn btn-sm bg-blue-500 hover:bg-blue-600 text-white"
-                    >
-                      <TbListDetails />
-                    </button>
-                    <button
-                      onClick={handleUpdate}
-                      className="btn btn-sm bg-green-500 hover:bg-green-600 text-white"
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      onClick={handleDelete}
-                      className="btn btn-sm bg-red-500 hover:bg-red-600 text-white"
-                    >
-                      <RiDeleteBin5Fill />
-                    </button>
-                  </td>
+        <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="table w-full">
+              <thead className="bg-slate-50/50">
+                <tr className="text-slate-600 border-b border-slate-100">
+                  <th className="py-5 px-6">Bus Info</th>
+                  <th>Route</th>
+                  <th>Type</th>
+                  <th>Price</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-slate-50">
+                {buses.map((bus: any) => (
+                  <tr key={bus.id} className="hover:bg-slate-50/50 transition-colors">
+                    <td className="py-4 px-6">
+                        <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600">
+                                <FaBus className="text-xl" />
+                            </div>
+                            <div>
+                                <div className="font-bold text-slate-800">{bus.name}</div>
+                                <div className="text-xs text-slate-500">{bus.email}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div className="text-sm">
+                            <div className="flex items-center gap-1 text-slate-700">
+                                <span className="font-semibold">{bus.departureLocation?.[0] || "N/A"}</span>
+                                <span className="text-slate-400">→</span>
+                                <span className="font-semibold">{bus.destinationLocation?.[0] || "N/A"}</span>
+                            </div>
+                            <div className="text-xs text-slate-500 mt-1 flex items-center gap-1">
+                                <IoTime className="text-[10px]" /> {bus.travelTime?.[0] || "No time set"}
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span className={`px-3 py-1 rounded-lg text-xs font-bold ${bus.busType === 'AC' ? 'bg-indigo-50 text-indigo-600' : 'bg-slate-100 text-slate-600'}`}>
+                            {bus.busType}
+                        </span>
+                    </td>
+                    <td>
+                        <div className="font-bold text-emerald-600 text-lg">{bus.price}৳</div>
+                        <div className="text-[10px] text-slate-400">per seat</div>
+                    </td>
+                    <td>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleOpenModal(bus)}
+                          className="p-2 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition-colors title='Details'"
+                        >
+                          <TbListDetails className="text-lg" />
+                        </button>
+                        <button
+                          onClick={() => handleUpdate(bus.id)}
+                          className="p-2 bg-emerald-50 text-emerald-600 rounded-xl hover:bg-emerald-100 transition-colors title='Edit'"
+                        >
+                          <FaEdit className="text-lg" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(bus.id)}
+                          className="p-2 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-100 transition-colors title='Delete'"
+                        >
+                          <RiDeleteBin5Fill className="text-lg" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
       {/* Modal */}
-      <dialog id="busDetailsModal" className="modal">
+      <dialog id="busDetailsModal" className="modal modal-bottom sm:modal-middle">
         {selectedBus && (
-          <div className="modal-box max-w-5xl w-full bg-white rounded-2xl p-0 overflow-hidden shadow-2xl border border-green-200 animate__animated animate__zoomIn">
-
+          <div className="modal-box max-w-4xl p-0 overflow-hidden bg-white rounded-3xl shadow-2xl">
             {/* Header */}
-            <div className="relative bg-gradient-to-r from-green-100 to-green-200 px-8 py-6 flex justify-between items-center">
-              <h3 className="text-green-700 text-2xl font-bold flex items-center gap-2">
-                <IoBus className="text-3xl" /> Bus Service Details
-              </h3>
+            <div className="bg-emerald-500 p-8 text-white relative">
               <form method="dialog">
-                <button className="text-green-600 hover:text-green-800 text-2xl font-bold absolute top-4 right-6">✖</button>
+                <button className="absolute top-6 right-6 text-white/80 hover:text-white transition-colors">✕</button>
               </form>
-            </div>
-
-            {/* Bus Image */}
-            <div className="w-full h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
-              <img
-                src={selectedBus?.image || "https://via.placeholder.com/500x200?text=Bus+Image"}
-                alt="Bus"
-                className="object-cover w-full h-full"
-              />
-            </div>
-
-            {/* Content */}
-            <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-8 bg-white text-gray-700 text-[15px]">
-              <div className="space-y-5">
-                <div className="flex items-center gap-3">
-                  <FaBus className="text-green-500" />
-                  <span className="font-semibold">Bus Name:</span>
-                  <span>{selectedBus.busName}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <MdOutlineTour className="text-green-500" />
-                  <span className="font-semibold">Trip Name:</span>
-                  <span>{selectedBus.tripName}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <IoLocationSharp className="text-green-500" />
-                  <span className="font-semibold">From:</span>
-                  <span>{selectedBus.from}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <IoLocationSharp className="text-green-500 rotate-180" />
-                  <span className="font-semibold">To:</span>
-                  <span>{selectedBus.to}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <FaCalendarAlt className="text-green-500" />
-                  <span className="font-semibold">Date:</span>
-                  <span>{selectedBus.date}</span>
-                </div>
-              </div>
-
-              <div className="space-y-5">
-                <div className="flex items-center gap-3">
-                  <IoTime className="text-green-500" />
-                  <span className="font-semibold">Time:</span>
-                  <span>{selectedBus.busTimes}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <FaMoneyBillWave className="text-green-500" />
-                  <span className="font-semibold">Price:</span>
-                  <span>{selectedBus.ticketPrice}৳</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <MdDirectionsBusFilled className="text-green-500" />
-                  <span className="font-semibold">Type:</span>
-                  <span>{selectedBus.type}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <FaRegMoneyBillAlt className="text-green-500" />
-                  <span className="font-semibold">Refundable:</span>
-                  <span>{selectedBus.refund ? "Yes ✅" : "No ❌"}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <FaUserCircle className="text-green-500" />
-                  <span className="font-semibold">Added By:</span>
-                  <span>{user?.displayName} ({user?.email})</span>
-                </div>
+              <div className="flex items-center gap-4">
+                  <div className="p-4 bg-white/20 rounded-2xl backdrop-blur-sm">
+                      <IoBus className="text-3xl" />
+                  </div>
+                  <div>
+                      <h3 className="text-2xl font-bold">{selectedBus.name}</h3>
+                      <p className="opacity-80 flex items-center gap-2 mt-1">
+                          <FaUserCircle /> {selectedBus.email}
+                      </p>
+                  </div>
               </div>
             </div>
 
-            {/* Footer */}
-            <div className="px-8 py-5 bg-green-50 flex justify-end">
-              <form method="dialog">
-                <button className="btn btn-sm bg-green-500 hover:bg-green-600 text-white font-semibold px-8 rounded-full shadow-md transition">
-                  Close
-                </button>
-              </form>
+            <div className="grid grid-cols-1 lg:grid-cols-2">
+                {/* Left side - Image */}
+                <div className="h-64 lg:h-full bg-slate-100 relative">
+                  <img
+                    src={selectedBus?.image || "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800"}
+                    alt="Bus"
+                    className="object-cover w-full h-full"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                  <div className="absolute bottom-6 left-6 flex gap-2">
+                      <span className="px-3 py-1 bg-white/90 backdrop-blur rounded-lg text-emerald-600 text-xs font-bold flex items-center gap-1">
+                          <FaBus /> {selectedBus.busType}
+                      </span>
+                      <span className="px-3 py-1 bg-white/90 backdrop-blur rounded-lg text-indigo-600 text-xs font-bold flex items-center gap-1">
+                          <IoTime /> {selectedBus.totalSeats} Seats
+                      </span>
+                  </div>
+                </div>
+
+                {/* Right side - Details */}
+                <div className="p-8 space-y-6">
+                    <div className="space-y-4">
+                        <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Route Overview</h4>
+                        <div className="flex items-start gap-4 p-4 bg-slate-50 rounded-2xl relative overflow-hidden">
+                            <div className="flex flex-col items-center gap-1 pt-1">
+                                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                                <div className="w-0.5 h-10 border-l-2 border-dashed border-emerald-200"></div>
+                                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                            </div>
+                            <div className="flex-1 space-y-6 pt-0.5">
+                                <div>
+                                    <p className="text-[10px] text-slate-400 font-bold uppercase">From</p>
+                                    <p className="font-bold text-slate-800">{selectedBus.departureLocation?.[0] || 'Unknown'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-[10px] text-slate-400 font-bold uppercase">To</p>
+                                    <p className="font-bold text-slate-800">{selectedBus.destinationLocation?.[0] || 'Unknown'}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="p-4 bg-slate-50 rounded-2xl">
+                            <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Price</p>
+                            <p className="text-xl font-bold text-emerald-600">{selectedBus.price}৳</p>
+                        </div>
+                        <div className="p-4 bg-slate-50 rounded-2xl">
+                            <p className="text-[10px] text-slate-400 font-bold uppercase mb-1">Contact</p>
+                            <p className="text-sm font-bold text-slate-800">{selectedBus.contact}</p>
+                        </div>
+                    </div>
+
+                    <div className="space-y-3 pt-4 border-t border-slate-100">
+                        <div className="flex flex-wrap gap-2">
+                            {selectedBus.travelTime?.map((time: string, i: number) => (
+                                <span key={i} className="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-xs font-medium flex items-center gap-1">
+                                    <IoTime className="text-[10px]" /> {time}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
 
+            <div className="p-6 bg-slate-50/50 flex justify-end">
+                <form method="dialog">
+                    <button className="px-8 py-3 bg-slate-800 text-white rounded-xl font-bold text-sm hover:bg-slate-900 transition-colors shadow-lg shadow-slate-200">
+                        Close Details
+                    </button>
+                </form>
+            </div>
           </div>
         )}
       </dialog>
-
-
     </div>
   );
 };

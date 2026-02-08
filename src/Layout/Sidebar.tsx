@@ -1,4 +1,4 @@
-import { FaBus, FaHome, FaList, FaUsers, FaWallet } from "react-icons/fa";
+import { FaBus, FaHome, FaList, FaUsers, FaWallet, FaMapMarkerAlt } from "react-icons/fa";
 import { TbHomePlus } from "react-icons/tb";
 import { IoPerson } from "react-icons/io5";
 import { HiCurrencyDollar } from "react-icons/hi";
@@ -94,9 +94,11 @@ const Sidebar = ({ isMobileMenuOpen, closeMenu }: SidebarProps) => {
                         <>
                             <li onClick={closeMenu}><NavLink to="/dashboard/profile" className={getNavLinkClass}><IoPerson /> My Profile</NavLink></li>
 
-                            <li onClick={closeMenu}><NavLink to="/dashboard/add-bus-service" className={getNavLinkClass}><TbHomePlus /> Add Bus Service</NavLink></li>
+                            <li onClick={closeMenu}><NavLink to="/dashboard/MyBusServices" className={getNavLinkClass}><FaBus /> My Buses</NavLink></li>
 
-                            <li onClick={closeMenu}><NavLink to="/dashboard/MyBusServices" className={getNavLinkClass}><FaList /> My Bus Services</NavLink></li>
+                            <li onClick={closeMenu}><NavLink to="/dashboard/add-bus-service" className={getNavLinkClass}><TbHomePlus /> Add New Bus</NavLink></li>
+
+                            <li onClick={closeMenu}><NavLink to="/dashboard/create-travel-location" className={getNavLinkClass}><FaMapMarkerAlt /> Create Location</NavLink></li>
 
                             <li onClick={closeMenu}><NavLink to="/dashboard/soldTickets" className={getNavLinkClass}><HiCurrencyDollar /> Ticket Sold</NavLink></li>
                         </>

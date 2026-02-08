@@ -3,14 +3,33 @@ import { baseApi } from "../../baseApi";
 export const travelApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getBusServices: builder.query({
-      query: () => "/travel/services",
+      query: () => "/travel/bus",
+      providesTags: ["Bus"],
+    }),
+    getBusById: builder.query({
+      query: (id) => `/travel/bus/${id}`,
       providesTags: ["Bus"],
     }),
     createBusService: builder.mutation({
       query: (data) => ({
-        url: "/travel/services",
+        url: "/travel/bus-create",
         method: "POST",
         body: data,
+      }),
+      invalidatesTags: ["Bus"],
+    }),
+    updateBusService: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/travel/bus/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Bus"],
+    }),
+    deleteBusService: builder.mutation({
+      query: (id) => ({
+        url: `/travel/bus/${id}`,
+        method: "DELETE",
       }),
       invalidatesTags: ["Bus"],
     }),
@@ -31,7 +50,7 @@ export const travelApi = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "/travel/tickets",
+          url: "/travel/bus-ticket",
           method: "GET",
           params: params,
         };
@@ -40,7 +59,15 @@ export const travelApi = baseApi.injectEndpoints({
     }),
     createBusTicket: builder.mutation({
       query: (data) => ({
-        url: "/travel/tickets",
+        url: "/travel/bus-ticket",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Bus"],
+    }),
+    createTravelLocation: builder.mutation({
+      query: (data) => ({
+        url: "/travel",
         method: "POST",
         body: data,
       }),
@@ -51,10 +78,14 @@ export const travelApi = baseApi.injectEndpoints({
 
 export const {
   useGetBusServicesQuery,
+  useGetBusByIdQuery,
   useCreateBusServiceMutation,
+  useUpdateBusServiceMutation,
+  useDeleteBusServiceMutation,
   useGetBusTicketsQuery,
   useLazyGetBusTicketsQuery,
   useCreateBusTicketMutation,
   useGetBusStandsQuery,
-  useGetTravelLocationsQuery
+  useGetTravelLocationsQuery,
+  useCreateTravelLocationMutation
 } = travelApi;
