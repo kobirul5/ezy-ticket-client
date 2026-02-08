@@ -7,18 +7,50 @@ import useTravelContext from "@/Hooks/TrevalHook/useTravelContext";
 import { useCreateOrderMutation } from "@/app/features/order/orderApi";
 import Swal from "sweetalert2";
 
+import { useParams } from "react-router-dom";
+import { useGetScheduleByIdQuery } from "@/app/features/travel/travelApi";
+
 const TravelSelectSet = () => {
-    // const axiosSecure = useAxiosSecure()
+    const { tran_id } = useParams();
+    const isVirtual = tran_id?.startsWith("virtual-");
+    
+    // Fetch data if it's a real ID
+    const { data: scheduleRes, isLoading: isScheduleLoading } = useGetScheduleByIdQuery(tran_id, {
+        skip: !tran_id || isVirtual
+    });
+
     const { user } = useAuth() as any
     const [currentUser] = useCurrentUser() as any
     const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
     const { setBusPassengerData } = useTravelContext() as any
     const location = useLocation()
-    const seatPrice = location?.state?.price;
+
+    // Priority: Fetched Data > Location State
+    const scheduleData = scheduleRes?.data; // scheduleRes is the { success, data, ... } object, so scheduleRes.data is the schedule
+
+    const busData = scheduleData ? {
+        ...scheduleData.busService,
+        ...scheduleData,
+        busName: scheduleData.busService.name,
+        departure: scheduleData.time,
+        from: location?.state?.from || scheduleData.busService.departureLocation?.[0],
+        to: location?.state?.to || scheduleData.busService.destinationLocation?.[0],
+        date: location?.state?.date || ""
+    } : location?.state;
+
+    const seatPrice = busData?.price;
     const { darkMode } = useAuth() as any
-    const [bookedSeat] = useState<string[]>(location?.state?.bookedSeats || [])
+    const bookedSeat = busData?.bookedSeats || [];
     
     const [createOrder] = useCreateOrderMutation();
+
+    if (!isVirtual && isScheduleLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <span className="loading loading-spinner loading-lg"></span>
+            </div>
+        );
+    }
 
     const handleSeatSelect = (seat: string) => {
         setSelectedSeats((prevSeats) => {
@@ -37,9 +69,9 @@ const TravelSelectSet = () => {
         const number = form.number.value;
         const address = form.address.value;
         const totalPrices = selectedSeats.length * seatPrice * 0.05 + selectedSeats.length * seatPrice;
-        const busPostId = location?.state?.id
+        const busPostId = busData?.id
         const verifyData = "bus"
-        const routeAndDateAndTime = { from: location?.state?.from, to: location?.state?.to, date: location?.state?.date, time: location?.state?.departure }
+        const routeAndDateAndTime = { from: busData?.from, to: busData?.to, date: busData?.date, time: busData?.departure }
         const buyDate = new Date()
 
         const passengerData = {
@@ -60,7 +92,7 @@ const TravelSelectSet = () => {
             cus_email: email,
             cus_phone: number,
             cus_add1: address,
-            productName: `Bus Ticket: ${location?.state?.busName}`
+            productName: `Bus Ticket: ${busData?.busName}`
         }
 
         try {
@@ -89,9 +121,9 @@ const TravelSelectSet = () => {
                 <div className=" relative z-10 container mx-auto">
                     <div className="flex flex-col lg:flex-row justify-center gap-10 lg:justify-between px-5 mt-10">
                         <div className="text-left ">
-                            <h1 className="text-main mt-8 text-2xl md:text-3xl lg:text-5xl mb-5  font-bold">{location?.state?.busName}</h1>
-                            <p className="text-white">From: {location?.state?.from}</p>
-                            <p className="text-white">To: {location?.state?.to}</p>
+                            <h1 className="text-main mt-8 text-2xl md:text-3xl lg:text-5xl mb-5  font-bold">{busData?.busName}</h1>
+                            <p className="text-white">From: {busData?.from}</p>
+                            <p className="text-white">To: {busData?.to}</p>
                         </div>
                         <div>
                             <Link to={"/travel/bus-ticket-book"} className="btn bg-main shadow-none border-none text-white">Modify Search</Link>

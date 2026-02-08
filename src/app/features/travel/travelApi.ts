@@ -10,6 +10,10 @@ export const travelApi = baseApi.injectEndpoints({
       query: (id) => `/travel/bus/${id}`,
       providesTags: ["Bus"],
     }),
+    getScheduleById: builder.query({
+      query: (id) => `/travel/schedule/${id}`,
+      providesTags: ["Bus"],
+    }),
     createBusService: builder.mutation({
       query: (data) => ({
         url: "/travel/bus-create",
@@ -83,6 +87,7 @@ export const travelApi = baseApi.injectEndpoints({
 export const {
   useGetBusServicesQuery,
   useGetBusByIdQuery,
+  useGetScheduleByIdQuery,
   useCreateBusServiceMutation,
   useUpdateBusServiceMutation,
   useDeleteBusServiceMutation,
