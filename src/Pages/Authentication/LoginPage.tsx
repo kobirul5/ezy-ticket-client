@@ -13,10 +13,12 @@ import Swal from "sweetalert2";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth"; // ✅ Import for reset
 import useAuth from "@/Hooks/useAuth";
 import { saveUserInformation } from "../../API/Utils";
+import { useLoginUserMutation } from "@/app/features/auth/authApi";
 
 function LoginPage() {
   const { signIn, signInWithGoogle, setLoading, darkMode } = useAuth()! as any;
   const navigate = useNavigate();
+  const [loginUser] = useLoginUserMutation();
 
   const {
     register,
@@ -25,12 +27,13 @@ function LoginPage() {
   } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [resetEmail, setResetEmail] = useState(""); // ✅ State to hold email for password reset
+  const [resetEmail, setResetEmail] = useState(""); //  State to hold email for password reset
 
   const onSubmit = async (data: any) => {
     const { email, password } = data;
     try {
       await signIn(email, password);
+      await loginUser({ email, password }).unwrap();
       Swal.fire({
         icon: "success",
         title: "Login Successful",
@@ -62,7 +65,7 @@ function LoginPage() {
     }
   };
 
-  // ✅ Handle Forgot Password
+  //  Handle Forgot Password
   const handleForgotPassword = async () => {
     if (!resetEmail) {
       Swal.fire({

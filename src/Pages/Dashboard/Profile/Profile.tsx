@@ -2,33 +2,32 @@ import AdminProfile from "@/components/Dashboard/Profile/AdminProfile";
 import EventManagerProfile from "@/components/Dashboard/Profile/EventManagerProfile";
 import TravelManagerProfile from "@/components/Dashboard/Profile/TravelManagerProfile";
 import UserProfile from "@/components/Dashboard/Profile/UserProfile";
-import useAuth from "@/Hooks/useAuth";
 import Loading from "@/components/shared/Loading/Loading";
+import { useGetMyProfileQuery } from "@/app/features/user/userApi";
 
 const Profile = () => {
-    const { userInfo, userInfoLoading } = useAuth()! as any;
+  const { data: profileData, isLoading } = useGetMyProfileQuery(undefined);
+  const userInfo = profileData?.data;
 
-    if (userInfoLoading) {
-        return (
-            <div className="my-36 w-full flex-col justify-center text-center items-center">
-                <p className="mt-4 text-gray-600">Data is Loading...</p>
-            </div>
-        );
-    }
+  // console.log("Profile Page - Role:", userInfo?.role);
 
-    return (
-        <div>
-            {
-                userInfo?.role === "admin" ? <AdminProfile></AdminProfile>
-                    :
-                    userInfo?.role === "travelManager" ? <TravelManagerProfile></TravelManagerProfile>
-                        :
-                        userInfo?.role === "eventManager" ? <EventManagerProfile></EventManagerProfile>
-                            :
-                                <UserProfile></UserProfile>
-            }
-        </div>
-    )
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  return (
+    <div>
+      {userInfo?.role === "ADMIN" || userInfo?.role === "SUPER_ADMIN" ? (
+        <AdminProfile />
+      ) : userInfo?.role === "TRAVEL_MANAGER" ? (
+        <TravelManagerProfile />
+      ) : userInfo?.role === "EVENT_MANAGER" ? (
+        <EventManagerProfile />
+      ) : (
+        <UserProfile />
+      )}
+    </div>
+  );
 };
 
 export default Profile;

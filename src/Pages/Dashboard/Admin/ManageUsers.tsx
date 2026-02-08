@@ -142,19 +142,19 @@ const ManageUsers = () => {
                                                     <FaUserEdit /> Role
                                                 </div>
                                                 {!isCurrentUser && (
-                                                    <ul tabIndex={0} className={`dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 ${savedUser?.role === "admin" && "tooltip"}`}
+                                                    <ul tabIndex={0} className={`dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 ${savedUser?.role === "ADMIN" && "tooltip"}`}
                                                         data-tip="Cannot modify your own account"
                                                     >
                                                         {
-                                                            savedUser?.role !== "admin" &&
-                                                            <li><button onClick={() => handleChangeRole(savedUser, "admin")}>Make Admin</button></li>
+                                                            savedUser?.role !== "ADMIN" &&
+                                                            <li><button onClick={() => handleChangeRole(savedUser, "ADMIN")}>Make Admin</button></li>
                                                         }
 
-                                                        <li><button onClick={() => handleChangeRole(savedUser, "travelManager")}>Travel Manager</button></li>
+                                                        <li><button onClick={() => handleChangeRole(savedUser, "TRAVEL_MANAGER")}>Travel Manager</button></li>
 
-                                                        <li><button onClick={() => handleChangeRole(savedUser, "eventManager")}>Event Manager</button></li>
+                                                        <li><button onClick={() => handleChangeRole(savedUser, "EVENT_MANAGER")}>Event Manager</button></li>
 
-                                                        <li><button onClick={() => handleChangeRole(savedUser, "user")}>Make Regular User</button></li>
+                                                        <li><button onClick={() => handleChangeRole(savedUser, "USER")}>Make Regular User</button></li>
                                                     </ul>
                                                 )}
                                             </div>

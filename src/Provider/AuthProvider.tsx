@@ -53,8 +53,8 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [darkMode, setDarkMode] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const [userInfo, setUserInfo] = useState<UserInfo | any>([]);
-  // console.log(user);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  console.log("AuthProvider - userInfo state:", userInfo);
   const [loading, setLoading] = useState(true);
   const axiosPublic = useAxiosPublic();
   const [loginUser] = useLoginUserMutation();
@@ -90,30 +90,16 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  // onAuthStateChange
+  // onAuthStateChanged
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser?.email) {
-        setUser(currentUser);
-        await loginUser(currentUser.email).unwrap()
-          .then(res => {
-            console.log("login token", res.data);
-            setLoading(false)
-          })
-      } else {
-        setUser(currentUser);
-        await logoutUserMutation(undefined).unwrap()
-          .then(res => {
-            console.log("logout", res.data)
-            setLoading(false)
-          })
-      }
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
       setLoading(false);
     });
     return () => {
       return unsubscribe();
     };
-  }, [user?.displayName, user?.photoURL, axiosPublic]);
+  }, []);
 
   //get user info from backend
   const { data: userProfileData, isLoading: userInfoLoading, refetch: refetchUserInfo } = useGetMyProfileQuery(undefined, {

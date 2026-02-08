@@ -6,51 +6,21 @@ import { Link } from "react-router-dom";
 
 import useAuth from "@/Hooks/useAuth";
 import { useEffect } from "react";
-import { AuthContext } from "@/Provider/AuthProvider";
-import useAxiosSecure from "@/Hooks/useAxiosSecure";
-import Swal from "sweetalert2";  // Import SweetAlert
+import { useGetMyProfileQuery } from "@/app/features/user/userApi";
+import Swal from "sweetalert2";
 import EditButton from "./EditButton";
-// import { motion } from "framer-motion";  // Import motion for animations
 
 const UserProfile = () => {
-  const { userInfo, user, refetchUserInfo } = useAuth()! as any;
-  // const [orders, setOrders] = useState<any[]>([]);
-  // const [loading, setLoading] = useState(true);
-  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth()! as any;
+  
+  const { data: profileData, isLoading, refetch } = useGetMyProfileQuery(undefined);
+  const userInfo = profileData?.data;
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      if (!user?.email) {
-        // setLoading(false); // Commented out as loading state is commented out
-        return;
-      }
-      
-      try {
-        // const response = await axiosSecure.get("/order");
-        // // Filter orders for current user and where paidStatus is true
-        // const userOrders = response.data.filter(
-        //   (order: any) => order.order.email === user.email && order.paidStatus === true
-        // );
-        // setOrders(userOrders); // Commented out as orders state is commented out
-        // setLoading(false); // Commented out as loading state is commented out
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Failed to load your tickets. Please try again later.",
-        });
-        // setLoading(false); // Commented out as loading state is commented out
-      }
-    };
+  console.log("UserProfile - userInfo:", userInfo);
 
-    fetchOrders();
-  }, [user?.email, axiosSecure]);
-
-  // const formatDate = (dateString: string) => {
-  //   const options: Intl.DateTimeFormatOptions = { year: "numeric", month: "long", day: "numeric" };
-  //   return new Date(dateString).toLocaleDateString(undefined, options);
-  // };
+  if (isLoading) {
+      return <div className="min-h-screen flex justify-center items-center">Loading profile...</div>;
+  }
 
   return (
     <div className="min-h-screen mt-5 mb-10">
@@ -71,7 +41,7 @@ const UserProfile = () => {
           {/* Profile Content */}
           <div className="pt-20 pb-8 px-6 sm:px-8 text-center">
             <h1 className="text-3xl font-bold text-gray-800 mb-1">
-              {userInfo?.name || "Anonymous User"}
+              {userInfo?.name || user?.displayName || "Anonymous User"}
             </h1>
 
             <div className="flex justify-center gap-2  md:gap-4 lg:gap-8 mt-6 mb-8">
@@ -104,7 +74,7 @@ const UserProfile = () => {
                 <div>
                   <p className="text-sm text-gray-500">Email</p>
                   <p className="font-medium text-gray-800">
-                    {userInfo?.email || "Not provided"}
+                    {userInfo?.email || user?.email || "Not provided"}
                   </p>
                 </div>
               </div>
@@ -135,7 +105,7 @@ const UserProfile = () => {
             </div>
 
             {/* Edit Button */}
-            <EditButton user={userInfo} refetch={refetchUserInfo}></EditButton>
+            <EditButton user={userInfo} refetch={refetch}></EditButton>
           </div>
         </div>
 

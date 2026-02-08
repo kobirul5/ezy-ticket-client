@@ -35,9 +35,8 @@ function RegisterPage() {
   const onSubmit = async (data: any) => {
     const { email, password } = data;
     try {
-      // const result = await createUser(email, password);
-      // const user = result?.user;
-      console.log(data, "------------------");
+      const result = await createUser(email, password);
+      const user = result?.user;
       await registerUser({
         name: data.name,
         email: data.email,
