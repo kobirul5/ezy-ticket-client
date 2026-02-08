@@ -1,13 +1,15 @@
-import { useCheckAdminQuery } from "../app/features/auth/authApi";
+import { useGetMyProfileQuery } from "../app/features/user/userApi";
 import useAuth from "./useAuth";
 
 const useAdmin = () => {
     const { user, loading } = useAuth() as any;
-    const { data: adminData, isLoading: isAdminLoading } = useCheckAdminQuery(user?.email, {
+    const { data: profileData, isLoading: isProfileLoading } = useGetMyProfileQuery(undefined, {
         skip: loading || !user?.email,
     });
 
-    return [adminData?.admin, isAdminLoading];
+    const isAdmin = profileData?.data?.role === "ADMIN";
+    
+    return [isAdmin, isProfileLoading];
 };
 
 export default useAdmin;

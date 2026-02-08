@@ -13,7 +13,8 @@ import {
 } from "firebase/auth";
 import app from "../components/Authentication/Firebase";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
-import { useGetUserInfoQuery, useLoginUserMutation, useLogoutUserMutation } from "../app/features/auth/authApi";
+import { useLoginUserMutation, useLogoutUserMutation } from "../app/features/auth/authApi";
+import { useGetMyProfileQuery } from "../app/features/user/userApi";
 
 const googleProvider = new GoogleAuthProvider();
 const auth = getAuth(app);
@@ -114,16 +115,16 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
   }, [user?.displayName, user?.photoURL, axiosPublic]);
 
-  //get user info from mongodb
-  const { data: userData, isLoading: userInfoLoading, refetch: refetchUserInfo } = useGetUserInfoQuery(user?.email, {
+  //get user info from backend
+  const { data: userProfileData, isLoading: userInfoLoading, refetch: refetchUserInfo } = useGetMyProfileQuery(undefined, {
     skip: !user?.email,
   });
 
   useEffect(() => {
-    if (userData) {
-      setUserInfo(userData[0] || userData);
+    if (userProfileData?.data) {
+      setUserInfo(userProfileData.data);
     }
-  }, [userData]);
+  }, [userProfileData]);
 
   const authInfo: AuthContextType = {
     user,
@@ -138,7 +139,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     signInWithGoogle,
     logOut,
     updateUserProfile,
-    userInfo: userData || userInfo,
+    userInfo: userProfileData?.data || userInfo,
     setUserInfo,
     refetchUserInfo,
   };

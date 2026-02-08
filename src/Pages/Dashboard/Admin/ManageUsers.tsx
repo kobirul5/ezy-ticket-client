@@ -1,14 +1,15 @@
 import useAuth from "@/Hooks/useAuth";
-import { useDeleteUserMutation, useGetUsersQuery, useUpdateUserRoleMutation } from "@/app/features/auth/authApi";
+import { useGetAllUsersQuery, useRemoveUserByAdminMutation, useChangeUserRoleMutation } from "@/app/features/user/userApi";
 import Swal from "sweetalert2";
 import { FaTrashAlt, FaUserEdit } from "react-icons/fa";
 import noImage from "@/assets/Common_image/noImage.png";
 
 const ManageUsers = () => {
     const { user } = useAuth()! as any;
-    const { data: savedUsers = [], isLoading: usersLoading } = useGetUsersQuery(undefined);
-    const [deleteUser] = useDeleteUserMutation();
-    const [updateUserRole] = useUpdateUserRoleMutation();
+    const { data: usersResponse, isLoading: usersLoading } = useGetAllUsersQuery({});
+    const savedUsers = usersResponse?.data || [];
+    const [removeUser] = useRemoveUserByAdminMutation();
+    const [changeRole] = useChangeUserRoleMutation();
 
     // Handle user deletion
     const handleDeleteUser = (user: any) => {
@@ -23,8 +24,8 @@ const ManageUsers = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res = await deleteUser(user._id).unwrap();
-                    if (res.deletedCount > 0) {
+                    const res = await removeUser(user.id).unwrap();
+                    if (res.success) {
                         Swal.fire({
                             title: "Deleted!",
                             text: `${user.name} has been deleted.`,
@@ -55,8 +56,8 @@ const ManageUsers = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res = await updateUserRole({ id: user._id, role: newRole }).unwrap();
-                    if (res.modifiedCount > 0) {
+                    const res = await changeRole({ role: newRole }).unwrap();
+                    if (res.success) {
                         Swal.fire({
                             title: "Updated!",
                             text: `${user.name}"s role has been updated to ${newRole}.`,
@@ -104,12 +105,12 @@ const ManageUsers = () => {
                         {savedUsers.map((savedUser: any) => {
                             const isCurrentUser = savedUser.email === user?.email;
                             return (
-                                <tr key={savedUser._id} className="hover:bg-gray-50">
+                                <tr key={savedUser.id} className="hover:bg-gray-50">
                                     <td>
                                         <div className="avatar">
                                             <div className="w-16 h-16 rounded-full">
                                                 <img
-                                                    src={savedUser?.photoURL || noImage}
+                                                    src={savedUser?.picture || noImage}
                                                     alt={savedUser.name}
                                                     className="object-cover"
                                                 />

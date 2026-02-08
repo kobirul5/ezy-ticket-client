@@ -1,13 +1,16 @@
-import { useCheckEventManagerQuery } from "../app/features/auth/authApi";
+import { useGetMyProfileQuery } from "../app/features/user/userApi";
 import useAuth from "./useAuth";
 
 const useEventManager = () => {
     const { user, loading } = useAuth() as any;
-    const { data: eventManagerData, isLoading: isEventManagerLoading } = useCheckEventManagerQuery(user?.email, {
+    const { data: profileData, isLoading: isProfileLoading } = useGetMyProfileQuery(undefined, {
         skip: loading || !user?.email,
     });
 
-    return [eventManagerData?.eventManager, isEventManagerLoading];
+    // Check if user role contains "EVENT" or is specifically an event manager
+    const isEventManager = profileData?.data?.role === "EVENT_MANAGER";
+    
+    return [isEventManager, isProfileLoading];
 };
 
 export default useEventManager;
