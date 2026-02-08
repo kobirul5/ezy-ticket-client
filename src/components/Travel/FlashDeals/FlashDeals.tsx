@@ -18,8 +18,8 @@ const FlashDeals = () => {
     const { data: flashDeals = []} = useQuery({
         queryKey: ["flashDeals"],
         queryFn: async () => {
-            const res = await axiosPublic.get("/bus-flash-deal");
-            return res.data;
+            const res = await axiosPublic.get("/travel/tickets");
+            return res.data.data;
         }
     })
 

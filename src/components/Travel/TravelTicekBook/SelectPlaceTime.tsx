@@ -40,7 +40,7 @@ const SelectPlaceTime = () => {
 
         try {
             setSearchData(placeTimeData)
-            axiosSecure.get("/api/stand", {
+            axiosSecure.get("/travel/tickets", {
                 params: placeTimeData,
             })
                 .then(data => {

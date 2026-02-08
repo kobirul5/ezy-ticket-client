@@ -21,7 +21,8 @@ export const TravelContext = createContext<TravelContextType | null>(null);
 const TravelProvider = ({ children }: { children: ReactNode }) => {
   const [searchData, setSearchData] = useState<any>();
   const [districts] = useBusStandName() as [string[]];
-  const { data: allBusData = [] } = useGetBusTicketsQuery(undefined);
+  const { data: busTicketResponse } = useGetBusTicketsQuery(undefined);
+  const allBusData = busTicketResponse?.data || [];
   const [filterBus, setFilterBus] = useState<any>();
   const [busPassengerData, setBusPassengerData] = useState<any>();
   const [createOrder] = useCreateOrderMutation();

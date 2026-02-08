@@ -43,7 +43,7 @@ const PopularBusRoutes = () => {
 
 
       try {
-        axiosSecure.get("/api/stand", {
+        axiosSecure.get("/travel/tickets", {
             params: placeTimeData,
         })
             .then(data => {
