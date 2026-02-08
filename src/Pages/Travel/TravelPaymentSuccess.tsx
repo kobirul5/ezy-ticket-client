@@ -6,21 +6,26 @@ import { useQuery } from "@tanstack/react-query";
 import { FiPackage, FiHash } from "react-icons/fi";
 import useAuth from "@/Hooks/useAuth";
 import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import { useGetOrderByTranIdQuery } from "@/app/features/order/orderApi";
 
 
 const TravelPaymentSuccess = () => {
     const { darkMode } = useAuth() as any
     const { tran_id } = useParams();
-    const axiosSecure = useAxiosSecure();
+    // const axiosSecure = useAxiosSecure();
 
-    const { data: payment, isLoading, isError } = useQuery({
-        queryKey: ["payment", tran_id],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/payment/${tran_id}`);
-            console.log(res?.data)
-            return res.data;
-        }
-    });
+    const { data: orderRes, isLoading, isError } = useGetOrderByTranIdQuery(tran_id);
+    const order = orderRes?.data;
+    const payment = order?.orderData; 
+    
+    // const { data: payment, isLoading, isError } = useQuery({
+    //     queryKey: ["payment", tran_id],
+    //     queryFn: async () => {
+    //         const res = await axiosSecure.get(`/payment/${tran_id}`);
+    //         console.log(res?.data)
+    //         return res.data;
+    //     }
+    // });
 
     const contentRef = useRef<HTMLDivElement>(null);
     const handlePrint = useReactToPrint({ contentRef } as any);

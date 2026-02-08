@@ -17,9 +17,9 @@ const TopEvents = () => {
     } = useQuery({
         queryKey: ["topEvents"],
         queryFn: async () => {
-            const res = await axiosPublic.get("/topEvents");
-            return (res.data as any[]).sort(
-                (a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime()
+            const res = await axiosPublic.get("/events");
+            return (res.data.data as any[]).sort(
+                (a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()
             );
         },
     });
@@ -55,11 +55,11 @@ const TopEvents = () => {
                             viewport={{ once: true, margin: "0px 0px -100px 0px" }}
                         >
                             <Link
-                                to={`/eventdetailspublic/${event._id}`}
+                                to={`/eventdetailspublic/${event.id}`}
                                 className="block h-full"
                             >
                                 <motion.img
-                                    src={event.image}
+                                    src={event.image || "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80"}
                                     alt={event.title}
                                     className="object-cover w-full h-[300px]"
                                     whileHover={{ scale: 1.05 }}
@@ -110,12 +110,12 @@ const TopEvents = () => {
                             transition={{ duration: 0.5 + index * 0.2, ease: "easeInOut" }}
                             viewport={{ once: true }}
                         >
-                            <Link to={`/eventdetailspublic/${event._id}`}
+                            <Link to={`/eventdetailspublic/${event.id}`}
                                 className="block h-full"
                             >
                                 {/* Image with hover scale */}
                                 <motion.img
-                                    src={event.image}
+                                    src={event.image || "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80"}
                                     alt={event.title}
                                     className="object-cover w-full h-[300px] md:h-[450px]"
                                     whileHover={{ scale: 1.05 }}

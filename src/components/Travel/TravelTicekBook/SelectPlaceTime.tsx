@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import { useLazyGetBusTicketsQuery } from "@/app/features/travel/travelApi";
 import useTravelContext from "@/Hooks/TrevalHook/useTravelContext";
 import useAuth from "@/Hooks/useAuth";
 import { motion } from "framer-motion";
@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 const SelectPlaceTime = () => {
     const location = useLocation()
     const navigate = useNavigate()
-    const axiosSecure = useAxiosSecure()
+    const [trigger] = useLazyGetBusTicketsQuery()
     const { darkMode } = useAuth() as any
     const [isSwapped, setIsSwapped] = useState(false);
 
@@ -40,16 +40,16 @@ const SelectPlaceTime = () => {
 
         try {
             setSearchData(placeTimeData)
-            axiosSecure.get("/travel/tickets", {
-                params: placeTimeData,
-            })
-                .then(data => {
-                    setFilterBus(data.data)
+            trigger(placeTimeData)
+                .unwrap()
+                .then((response:any) => {
+                    const data = response.data;
+                    setFilterBus(data)
                     if (location.pathname === "/travel") {
                         navigate("/travel/bus-ticket-book")
                     }
                 })
-                .catch(err => console.log(err))
+                .catch((err:any) => console.log(err))
         } catch (err) {
             console.error("Search error:", err);
             alert("Failed to search. Please try again.");

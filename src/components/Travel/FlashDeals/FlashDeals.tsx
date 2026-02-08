@@ -10,18 +10,11 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 // import "swiper/css/effect-fade";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import useAxiosPublic from "@/Hooks/useAxiosPublic";
+import { useGetBusTicketsQuery } from "@/app/features/travel/travelApi";
 
 const FlashDeals = () => {
-  const axiosPublic = useAxiosPublic()
-
-    const { data: flashDeals = []} = useQuery({
-        queryKey: ["flashDeals"],
-        queryFn: async () => {
-            const res = await axiosPublic.get("/travel/tickets");
-            return res.data.data;
-        }
-    })
+    const { data: busTicketResponse } = useGetBusTicketsQuery(undefined);
+    const flashDeals = busTicketResponse?.data || [];
 
 
   return (

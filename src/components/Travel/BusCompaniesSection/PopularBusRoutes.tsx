@@ -5,13 +5,13 @@ import useTravelContext from "@/Hooks/TrevalHook/useTravelContext";
 import useAuth from "@/Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2"
-import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import { useLazyGetBusTicketsQuery } from "@/app/features/travel/travelApi";
 
 const PopularBusRoutes = () => {
   const { allBusData, setSearchData, setFilterBus } = useTravelContext() as any
   const { darkMode } = useAuth() as any
   const navigate = useNavigate()
-  const axiosSecure = useAxiosSecure()
+  const [trigger] = useLazyGetBusTicketsQuery()
 
 
   const cardVariants = {
@@ -43,17 +43,17 @@ const PopularBusRoutes = () => {
 
 
       try {
-        axiosSecure.get("/travel/tickets", {
-            params: placeTimeData,
-        })
-            .then(data => {
+        trigger(placeTimeData).unwrap()
+            .then((response:any) => {
+              const data = response.data;
               setSearchData(placeTimeData)
-                setFilterBus(data.data)
+                setFilterBus(data)
                 if (location.pathname === "/travel") {
                     navigate("/travel/bus-ticket-book")
                 }
             })
-            .catch(err => {console.log(err)
+            .catch((err:any) => {
+              console.log(err)
               setFilterBus([])
             })
     } catch (err) {

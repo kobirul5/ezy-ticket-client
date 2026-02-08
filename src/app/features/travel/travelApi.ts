@@ -14,6 +14,14 @@ export const travelApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Bus"],
     }),
+    getBusStands: builder.query({
+      query: () => "/travel/stand",
+      providesTags: ["Bus"],
+    }),
+    getTravelLocations: builder.query({
+      query: () => "/travel",
+      providesTags: ["Bus"],
+    }),
     getBusTickets: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
@@ -45,5 +53,8 @@ export const {
   useGetBusServicesQuery,
   useCreateBusServiceMutation,
   useGetBusTicketsQuery,
+  useLazyGetBusTicketsQuery,
   useCreateBusTicketMutation,
+  useGetBusStandsQuery,
+  useGetTravelLocationsQuery
 } = travelApi;

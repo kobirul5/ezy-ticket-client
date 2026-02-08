@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import travelBannerImage from "@/assets/Travel_image/travel-service/bg-bus.jpg"
-import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import useCurrentUser from "@/Hooks/useCurrentUser";
 import useAuth from "@/Hooks/useAuth";
 import useTravelContext from "@/Hooks/TrevalHook/useTravelContext";
+import { useCreateOrderMutation } from "@/app/features/order/orderApi";
+import Swal from "sweetalert2";
 
 const TravelSelectSet = () => {
-    const axiosSecure = useAxiosSecure()
+    // const axiosSecure = useAxiosSecure()
     const { user } = useAuth() as any
     const [currentUser] = useCurrentUser() as any
     const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
@@ -16,7 +17,8 @@ const TravelSelectSet = () => {
     const seatPrice = location?.state?.ticketPrice;
     const { darkMode } = useAuth() as any
     const [bookedSeat] = useState<string[]>(location?.state?.bookedSeats || [])
-    console.log(location.state)
+    
+    const [createOrder] = useCreateOrderMutation();
 
     const handleSeatSelect = (seat: string) => {
         setSelectedSeats((prevSeats) => {
@@ -26,7 +28,6 @@ const TravelSelectSet = () => {
             return [...prevSeats, seat];
         });
     };
-
 
     const handleTravelInfo = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -41,19 +42,38 @@ const TravelSelectSet = () => {
         const routeAndDateAndTime = { from: location?.state?.from, to: location?.state?.to, date: location?.state?.date, time: location?.state?.busTimes }
         const buyDate = new Date()
 
-        const passengerData = { verifyData, busPostId, name, email, number, selectedSeats, address, totalPrices, seatPrice, routeAndDateAndTime, buyDate, }
-        
-        console.log(passengerData)
-        setBusPassengerData(passengerData)
-        console.log("hello", passengerData)
+        const passengerData = {
+            verifyData,
+            busPostId,
+            name,
+            email,
+            number,
+            selectedSeats,
+            address,
+            totalPrices,
+            seatPrice,
+            routeAndDateAndTime,
+            buyDate,
+            // Fields for backend order creation
+            total_amount: totalPrices,
+            cus_name: name,
+            cus_email: email,
+            cus_phone: number,
+            cus_add1: address,
+            productName: `Bus Ticket: ${location?.state?.busName}`
+        }
 
-        const res = await axiosSecure.post("/order/bus", passengerData);
-        if (res.data) {
-            window.location.replace(res.data.url);
+        try {
+            setBusPassengerData(passengerData)
+            const res = await createOrder(passengerData).unwrap();
+            if (res.data?.url) {
+                window.location.replace(res.data.url);
+            }
+        } catch (err) {
+            console.error("Order error:", err);
+            Swal.fire("Error", "Failed to process order", "error");
         }
     }
-
-    console.log("----------------------", currentUser)
 
     return (
         <>

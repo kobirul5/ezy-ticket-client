@@ -5,33 +5,18 @@ import { TbListDetails } from "react-icons/tb";
 import Swal from "sweetalert2";
 import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import useAuth from "@/Hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
 import { IoBus, IoLocationSharp, IoTime } from "react-icons/io5";
 import { MdOutlineTour, MdDirectionsBusFilled } from "react-icons/md";
 import { FaBus, FaMoneyBillWave, FaRegMoneyBillAlt, FaUserCircle, FaCalendarAlt } from "react-icons/fa";
-
+import { useGetBusServicesQuery } from "@/app/features/travel/travelApi";
 
 const MyBusServices = () => {
   const [selectedBus, setSelectedBus] = useState<any>(null);
-  // const { user } = useAuth()! as any; // This line was commented out as per instruction.
-  // const email = user?.email; // This line was commented out as per instruction.
-  const { user } = useAuth()! as any; // Keeping this line as "user" is used later and commenting it out would break the code.
+  const { user } = useAuth()! as any;
   const axiosSecure = useAxiosSecure();
 
-  const fetchUserBuses = async () => {
-    const res = await axiosSecure.get(`/api/buses`);
-    return res.data;
-  };
-
-  const useUserBuses = (email: string) => {
-    return useQuery<any[]>({
-      queryKey: ["user-buses", email],
-      queryFn: () => fetchUserBuses(),
-      enabled: !!email,
-    });
-  };
-
-  const { data: buses = [], isLoading } = useUserBuses(user?.email);
+  const { data: busServicesRes, isLoading, refetch } = useGetBusServicesQuery(undefined);
+  const buses = busServicesRes?.data || [];
 
   const handleDelete = async () => {
     Swal.fire({
@@ -50,9 +35,6 @@ const MyBusServices = () => {
     });
   };
 
-  // const handleViewDetails = (id: string) => { // This function was not present in the original code, skipping.
-  //     console.log("View details for bus:", id);
-  // };
   const handleUpdate = () => {
     Swal.fire({
       title: "Coming Soon...!",
@@ -101,7 +83,7 @@ const MyBusServices = () => {
             </thead>
             <tbody>
               {buses.map((bus: any) => (
-                <tr key={bus._id} className="hover:bg-green-100 transition">
+                <tr key={bus.id || bus._id} className="hover:bg-green-100 transition">
                   <td>{bus.busName}</td>
                   <td>{bus.busTimes}</td>
                   <td>{bus.date}</td>
@@ -140,99 +122,99 @@ const MyBusServices = () => {
 
       {/* Modal */}
       <dialog id="busDetailsModal" className="modal">
-  {selectedBus && (
-    <div className="modal-box max-w-5xl w-full bg-white rounded-2xl p-0 overflow-hidden shadow-2xl border border-green-200 animate__animated animate__zoomIn">
+        {selectedBus && (
+          <div className="modal-box max-w-5xl w-full bg-white rounded-2xl p-0 overflow-hidden shadow-2xl border border-green-200 animate__animated animate__zoomIn">
 
-      {/* Header */}
-      <div className="relative bg-gradient-to-r from-green-100 to-green-200 px-8 py-6 flex justify-between items-center">
-        <h3 className="text-green-700 text-2xl font-bold flex items-center gap-2">
-          <IoBus className="text-3xl" /> Bus Service Details
-        </h3>
-        <form method="dialog">
-          <button className="text-green-600 hover:text-green-800 text-2xl font-bold absolute top-4 right-6">✖</button>
-        </form>
-      </div>
+            {/* Header */}
+            <div className="relative bg-gradient-to-r from-green-100 to-green-200 px-8 py-6 flex justify-between items-center">
+              <h3 className="text-green-700 text-2xl font-bold flex items-center gap-2">
+                <IoBus className="text-3xl" /> Bus Service Details
+              </h3>
+              <form method="dialog">
+                <button className="text-green-600 hover:text-green-800 text-2xl font-bold absolute top-4 right-6">✖</button>
+              </form>
+            </div>
 
-      {/* Bus Image */}
-      <div className="w-full h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
-        <img 
-          src={selectedBus?.image || "https://via.placeholder.com/500x200?text=Bus+Image"} 
-          alt="Bus" 
-          className="object-cover w-full h-full"
-        />
-      </div>
+            {/* Bus Image */}
+            <div className="w-full h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
+              <img
+                src={selectedBus?.image || "https://via.placeholder.com/500x200?text=Bus+Image"}
+                alt="Bus"
+                className="object-cover w-full h-full"
+              />
+            </div>
 
-      {/* Content */}
-      <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-8 bg-white text-gray-700 text-[15px]">
-        <div className="space-y-5">
-          <div className="flex items-center gap-3">
-            <FaBus className="text-green-500" />
-            <span className="font-semibold">Bus Name:</span>
-            <span>{selectedBus.busName}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <MdOutlineTour className="text-green-500" />
-            <span className="font-semibold">Trip Name:</span>
-            <span>{selectedBus.tripName}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <IoLocationSharp className="text-green-500" />
-            <span className="font-semibold">From:</span>
-            <span>{selectedBus.from}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <IoLocationSharp className="text-green-500 rotate-180" />
-            <span className="font-semibold">To:</span>
-            <span>{selectedBus.to}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <FaCalendarAlt className="text-green-500" />
-            <span className="font-semibold">Date:</span>
-            <span>{selectedBus.date}</span>
-          </div>
-        </div>
+            {/* Content */}
+            <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-8 bg-white text-gray-700 text-[15px]">
+              <div className="space-y-5">
+                <div className="flex items-center gap-3">
+                  <FaBus className="text-green-500" />
+                  <span className="font-semibold">Bus Name:</span>
+                  <span>{selectedBus.busName}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <MdOutlineTour className="text-green-500" />
+                  <span className="font-semibold">Trip Name:</span>
+                  <span>{selectedBus.tripName}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <IoLocationSharp className="text-green-500" />
+                  <span className="font-semibold">From:</span>
+                  <span>{selectedBus.from}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <IoLocationSharp className="text-green-500 rotate-180" />
+                  <span className="font-semibold">To:</span>
+                  <span>{selectedBus.to}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <FaCalendarAlt className="text-green-500" />
+                  <span className="font-semibold">Date:</span>
+                  <span>{selectedBus.date}</span>
+                </div>
+              </div>
 
-        <div className="space-y-5">
-          <div className="flex items-center gap-3">
-            <IoTime className="text-green-500" />
-            <span className="font-semibold">Time:</span>
-            <span>{selectedBus.busTimes}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <FaMoneyBillWave className="text-green-500" />
-            <span className="font-semibold">Price:</span>
-            <span>{selectedBus.ticketPrice}৳</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <MdDirectionsBusFilled className="text-green-500" />
-            <span className="font-semibold">Type:</span>
-            <span>{selectedBus.type}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <FaRegMoneyBillAlt className="text-green-500" />
-            <span className="font-semibold">Refundable:</span>
-            <span>{selectedBus.refund ? "Yes ✅" : "No ❌"}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <FaUserCircle className="text-green-500" />
-            <span className="font-semibold">Added By:</span>
-            <span>{user?.displayName} ({user?.email})</span>
-          </div>
-        </div>
-      </div>
+              <div className="space-y-5">
+                <div className="flex items-center gap-3">
+                  <IoTime className="text-green-500" />
+                  <span className="font-semibold">Time:</span>
+                  <span>{selectedBus.busTimes}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <FaMoneyBillWave className="text-green-500" />
+                  <span className="font-semibold">Price:</span>
+                  <span>{selectedBus.ticketPrice}৳</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <MdDirectionsBusFilled className="text-green-500" />
+                  <span className="font-semibold">Type:</span>
+                  <span>{selectedBus.type}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <FaRegMoneyBillAlt className="text-green-500" />
+                  <span className="font-semibold">Refundable:</span>
+                  <span>{selectedBus.refund ? "Yes ✅" : "No ❌"}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <FaUserCircle className="text-green-500" />
+                  <span className="font-semibold">Added By:</span>
+                  <span>{user?.displayName} ({user?.email})</span>
+                </div>
+              </div>
+            </div>
 
-      {/* Footer */}
-      <div className="px-8 py-5 bg-green-50 flex justify-end">
-        <form method="dialog">
-          <button className="btn btn-sm bg-green-500 hover:bg-green-600 text-white font-semibold px-8 rounded-full shadow-md transition">
-            Close
-          </button>
-        </form>
-      </div>
+            {/* Footer */}
+            <div className="px-8 py-5 bg-green-50 flex justify-end">
+              <form method="dialog">
+                <button className="btn btn-sm bg-green-500 hover:bg-green-600 text-white font-semibold px-8 rounded-full shadow-md transition">
+                  Close
+                </button>
+              </form>
+            </div>
 
-    </div>
-  )}
-</dialog>
+          </div>
+        )}
+      </dialog>
 
 
     </div>
