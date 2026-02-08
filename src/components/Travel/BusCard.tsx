@@ -32,7 +32,7 @@ const BusCard = ({ bus }: { bus: any; time?: any }) => {
                     </h1>
                     <p 
                     className="text-sm text-emerald-200"
-                    >Express Service • {bus?.type || "Non-AC Bus"}
+                    >Express Service • {bus?.busType || "Non-AC Bus"}
                     </p>
                 </div>
                 <div className="text-right"
@@ -43,7 +43,7 @@ const BusCard = ({ bus }: { bus: any; time?: any }) => {
                     <p className="font-mono text-emerald-100">
                         <span className="uppercase">
                             {bus?.busName?.slice(0,3)}</span>
-                            -{bus?._id}
+                            -{bus?.id}
                     </p>
                 </div>
             </div>
@@ -100,7 +100,7 @@ const BusCard = ({ bus }: { bus: any; time?: any }) => {
                                     Departure Time
                                     </p>
                                 <p className="font-bold text-2xl ">
-                                    {bus?.busTimes || "N/A"}
+                                    {bus?.departure || "N/A"}
                                     </p>
                             </div>
                             <div className={` 
@@ -112,7 +112,7 @@ const BusCard = ({ bus }: { bus: any; time?: any }) => {
                                     Date
                                     </p>
                                 <p className="font-bold ">
-                                    {searchData?.date || currentDate}
+                                    {bus?.date || searchData?.date || currentDate}
                                     </p>
                             </div>
                         </div>
@@ -128,7 +128,7 @@ const BusCard = ({ bus }: { bus: any; time?: any }) => {
                             <p 
                             className="font-bold text-3xl text-emerald-700 flex items-center gap-1"
                             >
-                                {bus?.ticketPrice || 0} 
+                                {bus?.price || 0} 
                                 <FaBangladeshiTakaSign className="text-base" />
                             </p>
                         </div>
@@ -145,7 +145,7 @@ const BusCard = ({ bus }: { bus: any; time?: any }) => {
                         <FaChair className="text-emerald-600 text-xl" />
                         <div>
                             <p className="font-semibold text-emerald-700">
-                                {52 - (bus?.bookedSeats?.length || 0)} Seats Available
+                                {(bus?.totalSeats || 52) - (bus?.bookedSeats?.length || 0)} Seats Available
                             </p>
                             <p className="text-sm text-emerald-600">Economy Class</p>
                         </div>

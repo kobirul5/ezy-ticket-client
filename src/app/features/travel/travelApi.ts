@@ -2,13 +2,37 @@ import { baseApi } from "../../baseApi";
 
 export const travelApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getBuses: builder.query({
-      query: () => "/bus",
+    getBusServices: builder.query({
+      query: () => "/travel/services",
       providesTags: ["Bus"],
     }),
-    postBusPayment: builder.mutation({
+    createBusService: builder.mutation({
       query: (data) => ({
-        url: "/payment-bus-ticket",
+        url: "/travel/services",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Bus"],
+    }),
+    getBusTickets: builder.query({
+      query: (args) => {
+        const params = new URLSearchParams();
+        if (args) {
+          Object.entries(args).forEach(([key, value]) => {
+            if (value) params.append(key, value as string);
+          });
+        }
+        return {
+          url: "/travel/tickets",
+          method: "GET",
+          params: params,
+        };
+      },
+      providesTags: ["Bus"],
+    }),
+    createBusTicket: builder.mutation({
+      query: (data) => ({
+        url: "/travel/tickets",
         method: "POST",
         body: data,
       }),
@@ -17,4 +41,9 @@ export const travelApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetBusesQuery, usePostBusPaymentMutation } = travelApi;
+export const {
+  useGetBusServicesQuery,
+  useCreateBusServiceMutation,
+  useGetBusTicketsQuery,
+  useCreateBusTicketMutation,
+} = travelApi;

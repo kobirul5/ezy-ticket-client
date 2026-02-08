@@ -1,6 +1,6 @@
 
 import travelBannerImage from "@/assets/Travel_image/travel-service/bg-bus.jpg"
-import { useGetBusesQuery } from "@/app/features/travel/travelApi";
+import { useGetBusTicketsQuery } from "@/app/features/travel/travelApi";
 import BusCard from "@/components/Travel/BusCard";
 import BusFilter from "@/components/Travel/TravelTicekBook/BusFilter";
 import BusUnavailable from "@/components/Travel/TravelTicekBook/BusUnavailable";
@@ -9,7 +9,7 @@ import useTravelContext from "@/Hooks/TrevalHook/useTravelContext";
 
 
 const TravelBusTicketPage = () => {
-  const { data: allBus, isLoading } = useGetBusesQuery(undefined);
+  const { data: allBus, isLoading } = useGetBusTicketsQuery(undefined);
 
   if (isLoading) {
     return (
