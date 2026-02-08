@@ -125,9 +125,9 @@ const Route = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      // <PrivateRoute>
+      <PrivateRoute>
         <Dashboard></Dashboard>
-      // </PrivateRoute>
+       </PrivateRoute>
     ),
     errorElement: <Error></Error>,
     children: [
