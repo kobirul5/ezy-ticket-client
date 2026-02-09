@@ -10,7 +10,7 @@ const useCurrentUser = () => {
         queryKey: [user?.email, "user"],
         enabled: !!user?.email,
         queryFn: async () => {
-            const res = await axiosPublic.get(`/users/${user?.email}`);
+            const res = await axiosPublic.get(`/user/${user?.email}`);
             return res.data[0];
         }
     });

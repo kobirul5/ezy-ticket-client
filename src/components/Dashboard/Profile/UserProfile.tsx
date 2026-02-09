@@ -2,12 +2,8 @@ import { MdOutlineEmail, MdEdit } from "react-icons/md";
 import noImage from "@/assets/Common_image/noImage.png";
 import { FaHome, FaPhoneAlt, FaTicketAlt, FaUserCircle } from "react-icons/fa";
 import { FaFolderOpen } from "react-icons/fa";
-import { Link } from "react-router-dom";
-
 import useAuth from "@/Hooks/useAuth";
-import { useEffect } from "react";
 import { useGetMyProfileQuery } from "@/app/features/user/userApi";
-import Swal from "sweetalert2";
 import EditButton from "./EditButton";
 
 const UserProfile = () => {
