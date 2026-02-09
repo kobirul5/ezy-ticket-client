@@ -91,7 +91,7 @@ const TravelSelectSet = () => {
             verifyData,
             busPostId,
             name,
-            email,
+            email, // Use form email (which is now read-only/registered user email)
             number,
             selectedSeats,
             address,
@@ -102,13 +102,13 @@ const TravelSelectSet = () => {
             // Fields for backend order creation
             total_amount: totalPrices,
             cus_name: name,
-            cus_email: email,
+            cus_email: email, // This satisfies the Order -> User FK constraint
             cus_phone: number,
             cus_add1: address,
             productName: `Bus Ticket: ${busData?.busName || "Trip"}`
         }
 
-        console.log("Submitting passenger data:", passengerData);
+        console.log("Submitting passenger data to SSLCommerz flow:", passengerData);
 
         try {
             setBusPassengerData(passengerData)
@@ -275,15 +275,17 @@ const TravelSelectSet = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label className="block text-sm font-medium">Email ID</label>
+                                <label className="block text-sm font-medium underline decoration-main">Registered Email (Read Only)</label>
                                 <input
                                     type="email"
                                     name="email"
-                                    defaultValue={user?.email}
-                                    className={`w-full border input border-gray-300 rounded-lg px-4 py-2 mt-1 ${darkMode && ` bg-dark-surface border-main text-white`}`}
+                                    value={user?.email || ""}
+                                    readOnly
+                                    className={`w-full border input border-gray-300 rounded-lg px-4 py-2 mt-1 bg-gray-100 cursor-not-allowed ${darkMode && ` bg-dark-surface border-main text-white`}`}
                                     placeholder="Enter your email"
                                     required
                                 />
+                                <p className="text-xs text-supporting mt-1">Orders must be placed using your registered account email.</p>
                             </div>
                             <div className="mb-4">
                                 <label className="block text-sm font-medium">Address</label>
