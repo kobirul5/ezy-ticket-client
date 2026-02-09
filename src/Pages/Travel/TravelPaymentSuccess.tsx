@@ -16,7 +16,7 @@ const TravelPaymentSuccess = () => {
 
     const { data: orderRes, isLoading, isError } = useGetOrderByTranIdQuery(tran_id);
     const order = orderRes?.data;
-    const payment = order?.orderData; 
+    const payment = order?.orderData as any;
     
     // const { data: payment, isLoading, isError } = useQuery({
     //     queryKey: ["payment", tran_id],
@@ -83,7 +83,7 @@ const TravelPaymentSuccess = () => {
                                             Order ID:
                                             </p>
                                         <p className="text-lg font-semibold ">
-                                            {payment._id}
+                                            {order?.id}
                                             </p>
                                     </div>
                                     <div className="flex items-center gap-2">
@@ -91,7 +91,7 @@ const TravelPaymentSuccess = () => {
                                             Transaction ID:
                                             </p>
                                         <p className="text-lg font-semibold payment">
-                                            {payment.transactionId}
+                                            {order?.tranId}
                                             </p>
                                     </div>
                                 </div>
@@ -100,8 +100,8 @@ const TravelPaymentSuccess = () => {
                                         Purchase Date
                                         </p>
                                     <p className="text-sm md:text-lg">
-                                        {new Date(payment.buyDate).toLocaleDateString("en-GB")} at{" "}
-                                        {new Date(payment.buyDate).toLocaleTimeString("en-GB")}
+                                        {payment?.buyDate ? new Date(payment.buyDate).toLocaleDateString("en-GB") : ""} at{" "}
+                                        {payment?.buyDate ? new Date(payment.buyDate).toLocaleTimeString("en-GB") : ""}
                                     </p>
                                 </div>
                             </div>
@@ -159,18 +159,18 @@ const TravelPaymentSuccess = () => {
                                     {/* Purchase Time */}
                                     <div className="flex justify-between py-2">
                                         <p className="payment">Purchase Time</p>
-                                        <p className="font-medium">
-                                            {new Date(payment.buyDate).toLocaleString("en-US", {
-                                                hour: "numeric",
-                                                minute: "2-digit",
-                                                hour12: true,
-                                            })}
-                                        </p>
+                                    <p className="font-medium">
+                                        {payment?.buyDate ? new Date(payment.buyDate).toLocaleString("en-US", {
+                                            hour: "numeric",
+                                            minute: "2-digit",
+                                            hour12: true,
+                                        }) : ""}
+                                    </p>
                                     </div>
                                     {/* Seat(s) */}
                                     <div className="flex justify-between py-2">
                                         <p className="payment">Seat(s)</p>
-                                        <p className="font-medium">{payment.selectedSeats.join(", ")}</p>
+                                        <p className="font-medium">{payment?.selectedSeats?.join(", ")}</p>
                                     </div>
                                     {/* Seat Price */}
                                     <div className="flex justify-between py-2">
@@ -180,13 +180,13 @@ const TravelPaymentSuccess = () => {
                                     {/* Total */}
                                     <div className="flex justify-between py-2">
                                         <p className="payment font-semibold">Total</p>
-                                        <p className="font-bold">Tk {payment.seatPrice * payment.selectedSeats.length}</p>
+                                        <p className="font-bold">Tk {payment?.seatPrice * (payment?.selectedSeats?.length || 0)}</p>
                                     </div>
                                     {/* Charge (5% */}
                                     <div className="flex justify-between py-2">
 
                                         <p className="payment font-semibold">Charge (5%)</p>
-                                        <p className="font-medium">Tk {(payment.totalPrices - (payment.seatPrice * payment.selectedSeats.length)).toFixed(2)}</p>
+                                        <p className="font-medium">Tk {(payment?.totalPrices - (payment?.seatPrice * (payment?.selectedSeats?.length || 0))).toFixed(2)}</p>
                                     </div>
                                     {/* Total Amount */}
                                     <div className="border-t border-gray-200 my-2"></div>

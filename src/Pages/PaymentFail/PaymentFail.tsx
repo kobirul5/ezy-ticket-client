@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { FiAlertTriangle } from "react-icons/fi";
 import { MdOutlineContactSupport } from "react-icons/md";
 import useAuth from "@/Hooks/useAuth";
+import { useParams } from "react-router-dom";
 
 const PaymentFail = () => {
-    const {darkMode} = useAuth()! as any;
+    const { darkMode } = useAuth()! as any;
+    const { tran_id } = useParams();
 
     return (
         <div className={`min-h-screen ${darkMode ? "bg-dark-background text-dark-primary" : "bg-background"} pt-24 pb-12 px-4 sm:px-6 lg:px-8`}>
@@ -30,6 +32,12 @@ const PaymentFail = () => {
                     <div className={`px-6 py-5   flex items-center ${darkMode ? "bg-red-900 text-dark-primary": "bg-red-500 text-white"}`}>
                         <FiAlertTriangle className="h-6 w-6 mr-2" />
                         <h2 className="text-xl font-semibold">Transaction Details</h2>
+                    </div>
+
+                    <div className="px-6 py-5 text-center">
+                        <p className={`text-lg font-semibold ${darkMode ? "text-gray-300" : "text-gray-700"}`}>
+                            Transaction ID: <span className="text-red-500">{tran_id}</span>
+                        </p>
                     </div>
 
                     <div className="px-6 py-5">

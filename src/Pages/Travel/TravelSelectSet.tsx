@@ -68,11 +68,24 @@ const TravelSelectSet = () => {
         const email = form.email.value;
         const number = form.number.value;
         const address = form.address.value;
-        const totalPrices = selectedSeats.length * seatPrice * 0.05 + selectedSeats.length * seatPrice;
+
+        // Defensive checks for price
+        const currentSeatPrice = seatPrice || 0;
+        const totalPrices = selectedSeats.length * currentSeatPrice * 1.05; // 5% charge
         const busPostId = busData?.id
         const verifyData = "bus"
         const routeAndDateAndTime = { from: busData?.from, to: busData?.to, date: busData?.date, time: busData?.departure }
         const buyDate = new Date()
+
+        if (!name || !email || !number || !address) {
+            Swal.fire("Warning", "Please fill in all passenger details", "warning");
+            return;
+        }
+
+        if (selectedSeats.length < 1) {
+            Swal.fire("Warning", "Please select at least one seat", "warning");
+            return;
+        }
 
         const passengerData = {
             verifyData,
@@ -83,7 +96,7 @@ const TravelSelectSet = () => {
             selectedSeats,
             address,
             totalPrices,
-            seatPrice,
+            seatPrice: currentSeatPrice,
             routeAndDateAndTime,
             buyDate,
             // Fields for backend order creation
@@ -92,18 +105,29 @@ const TravelSelectSet = () => {
             cus_email: email,
             cus_phone: number,
             cus_add1: address,
-            productName: `Bus Ticket: ${busData?.busName}`
+            productName: `Bus Ticket: ${busData?.busName || "Trip"}`
         }
+
+        console.log("Submitting passenger data:", passengerData);
 
         try {
             setBusPassengerData(passengerData)
             const res = await createOrder(passengerData).unwrap();
-            if (res.data?.url) {
-                window.location.replace(res.data.url);
+            console.log("Order creation response:", res);
+
+            // Accessing URL based on backend response shape { success: true, data: { url: ... } }
+            const paymentUrl = res?.data?.url || (res as any)?.url;
+            
+            if (paymentUrl) {
+                window.location.replace(paymentUrl);
+            } else {
+                console.error("No payment URL in response:", res);
+                Swal.fire("Error", "Payment link could not be generated", "error");
             }
-        } catch (err) {
+        } catch (err: any) {
             console.error("Order error:", err);
-            Swal.fire("Error", "Failed to process order", "error");
+            const errorMessage = err?.data?.message || err?.message || "Failed to process order";
+            Swal.fire("Error", errorMessage, "error");
         }
     }
 
