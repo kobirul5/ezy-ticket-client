@@ -109,6 +109,7 @@ const TravelSelectSet = () => {
         const passengerData = {
             verifyData: "bus",
             busPostId: busData?.id,
+            userId: currentUser?.id,
             name,
             email,
             number,

@@ -15,6 +15,8 @@ const BusCard = ({ bus }: { bus: any; time?: any }) => {
         year: "numeric",
       })
 
+      console.log(bus);
+
     return (
         <div 
         className={`w-full mx-auto 
@@ -27,7 +29,8 @@ const BusCard = ({ bus }: { bus: any; time?: any }) => {
                 <div>
                     <h1 
                     className="text-2xl font-bold flex items-center gap-2">
-                        <PiBusBold className="text-supporting" />
+                        {/* <PiBusBold className="text-supporting" /> */}
+                        <img src={bus?.image} alt=""  className=" w-12 h-12 rounded-full"/>
                         {bus?.busName || "Unknown Bus"}
                     </h1>
                     <p 
@@ -173,17 +176,17 @@ const BusCard = ({ bus }: { bus: any; time?: any }) => {
                 </div>
 
                 {/* Footer */}
-                {/* <div 
+                <div 
                 className="border-t border-emerald-100 pt-4">
                     <div 
                     className="font-mono text-center text-2xl tracking-widest text-gray-800">
-                        ▰▰▰▰▰ 1234 5678 9012 ▰▰▰▰▰
+                        ▰▰▰▰▰ {bus?.contact} ▰▰▰▰▰
                     </div>
                     <p 
                     className="text-center text-xs text-gray-500 mt-2">
                         Show this barcode at boarding time
                     </p>
-                </div> */}
+                </div>
             </div>
         </div>
     )
