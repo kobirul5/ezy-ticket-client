@@ -68,6 +68,19 @@ const Sidebar = ({ isMobileMenuOpen, closeMenu }: SidebarProps) => {
                 
                 <div className="divider"></div>
                 
+                {/* Quick Action Button for privileged roles */}
+                {(isAdmin || isTravelManager) && (
+                    <div className="px-4 mb-4">
+                        <Link 
+                            to="/dashboard/add-bus-service" 
+                            onClick={closeMenu}
+                            className="flex items-center justify-center gap-2 bg-main hover:bg-green-600 text-white w-full py-3 rounded-xl font-bold transition-all shadow-md active:scale-95"
+                        >
+                            <TbHomePlus className="text-xl" /> Add New Bus
+                        </Link>
+                    </div>
+                )}
+                
                 {/* Navigation Menu */}
                 <ul className="menu space-y-2 w-full">
                     {isAdmin ? (
@@ -76,7 +89,9 @@ const Sidebar = ({ isMobileMenuOpen, closeMenu }: SidebarProps) => {
 
                             <li onClick={closeMenu}><NavLink to="/dashboard/manageEvents" className={getNavLinkClass}><MdEmojiEvents /> Manage Events</NavLink></li>
 
-                            <li onClick={closeMenu}><NavLink to="/dashboard/manageTravel" className={getNavLinkClass}><FaBus /> Manage Travel</NavLink></li>
+                            <li onClick={closeMenu}><NavLink to="/dashboard/MyBusServices" className={getNavLinkClass}><FaBus /> Manage Travel</NavLink></li>
+
+                            <li onClick={closeMenu}><NavLink to="/dashboard/add-bus-service" className={getNavLinkClass}><TbHomePlus /> Add New Bus</NavLink></li>
 
                             <li onClick={closeMenu}><NavLink to="/dashboard/manageUsers" className={getNavLinkClass}><FaUsers /> Manage Users</NavLink></li>
                         </>

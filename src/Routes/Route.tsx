@@ -36,6 +36,8 @@ import TravelPaymentSuccess from "../Pages/Travel/TravelPaymentSuccess";
 import Page404 from "../Pages/Page404/Page404";
 import TicketSold from "../components/Dashboard/TicketSold";
 import TicketBought from "../Pages/Dashboard/User/TicketBought";
+import DashboardRoute from "./DashboardRoute";
+import DashboardHome from "../Pages/Dashboard/DashboardHome";
 
 
 const Route = createBrowserRouter([
@@ -131,12 +133,16 @@ const Route = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <PrivateRoute>
+      <DashboardRoute>
         <Dashboard></Dashboard>
-       </PrivateRoute>
+      </DashboardRoute>
     ),
     errorElement: <Error></Error>,
     children: [
+      {
+        index: true,
+        element: <DashboardHome />,
+      },
       // ---------Users and Common route start ------------
       {
         path: "profile",

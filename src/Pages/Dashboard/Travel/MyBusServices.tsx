@@ -65,16 +65,21 @@ const MyBusServices = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-6 bg-slate-50 min-h-screen">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 bg-white p-8 rounded-3xl border border-slate-100 shadow-sm">
           <div>
-              <h2 className="text-3xl font-bold text-slate-800">My Bus Services</h2>
-              <p className="text-slate-500">Manage and monitor your active bus routes</p>
+              <h2 className="text-3xl font-bold text-slate-800 flex items-center gap-3">
+                <div className="p-2 bg-emerald-100 text-emerald-600 rounded-xl">
+                  <IoBus />
+                </div>
+                My Bus Services
+              </h2>
+              <p className="text-slate-500 mt-1">Manage and monitor your active bus routes, prices, and schedules</p>
           </div>
           <Link 
             to="/dashboard/add-bus-service"
-            className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-emerald-100 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="flex items-center gap-2 bg-main hover:bg-green-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-green-100 transition-all hover:scale-[1.02] active:scale-[0.98]"
           >
-              <FaPlus /> Add New Bus
+              <FaPlus /> Add New Bus Service
           </Link>
       </div>
 
