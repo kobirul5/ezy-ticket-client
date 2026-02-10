@@ -98,7 +98,7 @@ const Sidebar = ({ isMobileMenuOpen, closeMenu }: SidebarProps) => {
 
                             <li onClick={closeMenu}><NavLink to="/dashboard/add-bus-service" className={getNavLinkClass}><TbHomePlus /> Add New Bus</NavLink></li>
 
-                            <li onClick={closeMenu}><NavLink to="/dashboard/create-travel-location" className={getNavLinkClass}><FaMapMarkerAlt /> Create Location</NavLink></li>
+                            <li onClick={closeMenu}><NavLink to="/dashboard/create-travel-location" className={getNavLinkClass}><FaMapMarkerAlt /> Location</NavLink></li>
 
                             <li onClick={closeMenu}><NavLink to="/dashboard/soldTickets" className={getNavLinkClass}><HiCurrencyDollar /> Ticket Sold</NavLink></li>
                         </>

@@ -18,7 +18,11 @@ export const orderApi = baseApi.injectEndpoints({
       query: (tranId) => `/orders/${tranId}`,
       providesTags: ["Order"],
     }),
+    getMyBusOrders: builder.query({
+      query: () => "/orders/my-orders",
+      providesTags: ["Order"],
+    }),
   }),
 });
 
-export const { useCreateOrderMutation, useGetAllOrdersQuery, useGetOrderByTranIdQuery } = orderApi;
+export const { useCreateOrderMutation, useGetAllOrdersQuery, useGetOrderByTranIdQuery, useGetMyBusOrdersQuery } = orderApi;
