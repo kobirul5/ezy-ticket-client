@@ -7,8 +7,10 @@ import { FaFacebookF, FaLinkedinIn, FaRegHandshake } from "react-icons/fa";
 import { TbColorFilter, TbPhoneCall } from "react-icons/tb";
 import { IoCallOutline, IoColorFilterOutline } from "react-icons/io5";
 import { PiHandshakeLight } from "react-icons/pi";
-import { BsTwitterX } from "react-icons/bs";
+import { BsGithub, BsTwitterX } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import noImage from "@/assets/Common_image/noImage.png";
+import kobirulImage from "../../assets/Common_image/kobirul.jpg";
 
 const About = () => {
   const { darkMode } = useAuth()! as any;
@@ -47,13 +49,49 @@ const About = () => {
   ]
 
   
-  const leaders =[
-    { name: "Mazharul Islam  Sourav", role: "Team Lead",description:"Mazharul is a seasoned manager with over 10 years of experience in the transportation industry. He is known for his strategic thinking and leadership skills.",social:"https://www.linkedin.com/in/rohim-khan" },
-    { name: "Apu Roy", image:"/apuroy.jpg", role: "Team Member",description:"Apu is the visionary director behind our platform, with a passion for innovation and a commitment to excellence in customer service.",social:"https://www.linkedin.com/in/md-abdullah" },
-    { name: "Mahdi Asif",image:"/asif.jpg", role: "Team Member",description:"Mahdi  is a dedicated employee who ensures smooth operations and exceptional customer experiences. His attention to detail and problem-solving skills are invaluable.",social:"https://www.linkedin.com/in/mehedi-hossain" },
-    { name: "Kobirul islam",image:"", role: "Team Member",description:"Mahdi  is a dedicated employee who ensures smooth operations and exceptional customer experiences. His attention to detail and problem-solving skills are invaluable.",social:"https://www.linkedin.com/in/mehedi-hossain" },
-    { name: "Tanmoy",image:"", role: "Team Member",description:"Mahdi  is a dedicated employee who ensures smooth operations and exceptional customer experiences. His attention to detail and problem-solving skills are invaluable.",social:"https://www.linkedin.com/in/mehedi-hossain" },
-    { name: "Susanto",image:"", role: "Team Member",description:"Mahdi  is a dedicated employee who ensures smooth operations and exceptional customer experiences. His attention to detail and problem-solving skills are invaluable.",social:"https://www.linkedin.com/in/mehedi-hossain" },
+  const leaders = [
+    {
+      name: "Mazharul Islam Sourav",
+      role: "Team Lead",
+      description: "Visionary leader with 8+ years of experience in product management and growth strategy.",
+      image: "",
+      socials: { linkedin: "https://www.linkedin.com/", github: "#", facebook: "#" }
+    },
+    {
+      name: "Kobirul Islam",
+      role: "Lead Developer",
+      description: "Architect of our technical framework, specializing in high-performance web systems and scalable solutions.",
+      image: kobirulImage,
+      socials: { linkedin: "https://www.linkedin.com/in/kobirul-islam/", github: "https://github.com/kobirul5", facebook: "https://www.facebook.com/kobirul0k" }
+    },
+    {
+      name: "Apu Roy",
+      role: "Full Stack Developer",
+      description: "Dedicated to crafting intuitive interfaces that blend aesthetics with functionality for a seamless experience.",
+      image: "/apuroy.jpg",
+      socials: { linkedin: "https://www.linkedin.com/", github: "#", facebook: "#" }
+    },
+    {
+      name: "Mahdi Asif",
+      role: "Full Stack Developer",
+      description: "Passionate developer focusing on creating robust back-ends and elegant frontend integrations.",
+      image: "/asif.jpg",
+      socials: { linkedin: "https://www.linkedin.com/", github: "#", facebook: "#" }
+    },
+    {
+      name: "Tanmoy",
+      role: "Full Stack Developer",
+      description: "Specialist in building highly responsive and dynamic user interfaces with clean, modern code.",
+      image: "",
+      socials: { linkedin: "https://www.linkedin.com/", github: "#", facebook: "#" }
+    },
+    {
+      name: "Susanto",
+      role: "Full Stack Developer",
+      description: "Expert in database optimization and building secure, efficient server-side architectures.",
+      image: "",
+      socials: { linkedin: "https://www.linkedin.com/", github: "#", facebook: "#" }
+    },
   ]
 
   return (
@@ -163,45 +201,75 @@ const About = () => {
       </div>
 
       {/* Team Section */}
-      <div className="my-24 w-11/12 mx-auto text-center ">
-        <h2 className="text-3xl font-semibold  mb-10">
-          {" "}
-          Meet Our Team
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 ">
+      <div className="my-32 w-11/12 max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <p className="text-main font-bold tracking-widest uppercase text-sm mb-3">Our Visionaries</p>
+          <h2 className="text-4xl md:text-5xl font-black text-slate-800">
+            Meet Our Exceptional Team
+          </h2>
+          <div className="w-24 h-1.5 bg-main mx-auto mt-6 rounded-full"></div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {leaders.map((member, idx) => (
             <div
               key={idx}
-              className={` rounded-lg p-6 border ${darkMode ? "" : "bg-white"}`}
+              className="group relative bg-white rounded-[2rem] p-8 border border-slate-100 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-main/10 transition-all duration-500 hover:-translate-y-2 overflow-hidden"
             >
-              <div
-                className={`w-36 h-36 mx-auto mb-4 rounded-full bg-green-200 `}
-              >
-                <img src={member.image} alt="" className="w-36 h-36 mx-auto mb-4 rounded-full object-cover" />
+              {/* Decorative background element */}
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-main/5 rounded-full group-hover:scale-150 transition-transform duration-700"></div>
+              
+              <div className="relative z-10 flex flex-col items-center">
+                <div className="relative mb-6">
+                  <div className="w-40 h-40 rounded-[2.5rem] bg-emerald-50 overflow-hidden border-4 border-white shadow-inner group-hover:rotate-3 transition-transform duration-500">
+                    <img 
+                      src={member.image || noImage} 
+                      alt={member.name} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                    />
+                  </div>
+                  {/* Status dot or badge can go here */}
+                  <div className="absolute -bottom-2 -right-2 bg-main text-white p-2 rounded-xl shadow-lg transform group-hover:scale-110 transition-transform">
+                    <TbColorFilter className="text-xl" />
+                  </div>
                 </div>
-              <div className="mb-5">
-              <h3 className="text-lg text-main font-bold ">
-                {member.name}
-              </h3>
-              <p className="text-sm text-gray-600">{member.role}</p>
-              </div>
-            
 
-              <p className="px-2 text-center">{member.description}</p>
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold text-slate-800 group-hover:text-main transition-colors">
+                    {member.name}
+                  </h3>
+                  <div className="inline-block px-4 py-1.5 bg-emerald-50 text-main rounded-full text-xs font-bold uppercase tracking-wider mt-2">
+                    {member.role}
+                  </div>
+                </div>
 
-              <div className="flex gap-5 justify-center items-center mt-7">
+                <p className="text-slate-500 text-sm leading-relaxed text-center mb-8 px-4 h-20 line-clamp-3">
+                  {member.description}
+                </p>
 
-                <Link to="https://www.linkedin.com/in/apu-r0y/">
-                <FaLinkedinIn />
-                </Link>
-                <Link to="https://www.linkedin.com/in/apu-r0y/">
-                <BsTwitterX />
-                </Link>
-
-                <Link to="https://www.linkedin.com/in/apu-r0y/">
-                <FaFacebookF />
-                </Link>
-             
+                <div className="flex gap-4 justify-center items-center pt-6 border-t border-slate-50 w-full group-hover:border-emerald-100 transition-colors">
+                  <Link 
+                    to={member.socials.linkedin} 
+                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400 hover:bg-main hover:text-white transition-all transform hover:scale-110"
+                    target="_blank"
+                  >
+                    <FaLinkedinIn />
+                  </Link>
+                  <Link 
+                    to={member.socials.github} 
+                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400 hover:bg-main hover:text-white transition-all transform hover:scale-110"
+                    target="_blank"
+                  >
+                    <BsGithub />
+                  </Link>
+                  <Link 
+                    to={member.socials.facebook} 
+                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-400 hover:bg-main hover:text-white transition-all transform hover:scale-110"
+                    target="_blank"
+                  >
+                    <FaFacebookF />
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
