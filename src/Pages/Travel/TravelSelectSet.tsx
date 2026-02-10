@@ -29,16 +29,19 @@ const TravelSelectSet = () => {
     const { tran_id } = useParams();
     const isVirtual = tran_id?.startsWith("virtual-");
     
-    const { data: scheduleRes, isLoading: isScheduleLoading } = useGetScheduleByIdQuery(tran_id, {
-        skip: !tran_id || isVirtual
-    });
+    const location = useLocation();
+    const queryDate = location?.state?.date;
+    
+    const { data: scheduleRes, isLoading: isScheduleLoading } = useGetScheduleByIdQuery(
+        { id: tran_id!, date: queryDate },
+        { skip: !tran_id || isVirtual }
+    );
     console.log(scheduleRes, "--------------------------------");
 
     const { user, darkMode } = useAuth() as any;
     const [currentUser] = useCurrentUser() as any;
     const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
     const { setBusPassengerData } = useTravelContext() as any;
-    const location = useLocation();
 
     const scheduleData = scheduleRes?.data;
 

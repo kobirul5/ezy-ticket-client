@@ -11,7 +11,8 @@ const useCurrentUser = () => {
         enabled: !!user?.email,
         queryFn: async () => {
             const res = await axiosPublic.get(`/user/${user?.email}`);
-            return res.data[0];
+            // res.data is the body { success, data: userObj }
+            return res.data?.data || null;
         }
     });
     
