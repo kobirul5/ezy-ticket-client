@@ -16,7 +16,7 @@ import useAuth from "@/Hooks/useAuth";
 import { useRegisterUserMutation } from "@/app/features/auth/authApi";
 
 function RegisterPage() {
-  const { createUser, signInWithGoogle, darkMode, setLoading } = useAuth()! as any;
+  const { darkMode, setLoading } = useAuth()! as any;
   const [registerUser] = useRegisterUserMutation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -33,92 +33,69 @@ function RegisterPage() {
   const confirmPassword = watch("confirmPassword");
 
   const onSubmit = async (data: any) => {
-    const { email, password } = data;
     try {
-    
+      setLoading(true);
       await registerUser({
         name: data.name,
         email: data.email,
         password: data.password,
       }).unwrap();
-        const result =  createUser(email, password);
+
       Swal.fire({
         icon: "success",
         title: "Registration Successful",
-        showConfirmButton: false,
-        timer: 1500,
+        text: "Please login with your new account.",
+        showConfirmButton: true,
       });
-      navigate("/");
-    } catch (error) {
-      toast.error("Registration failed");
+      navigate("/login");
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Registration failed");
       setLoading(false);
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleGoogleSignUp = async () => {
-    try {
-      const result = await signInWithGoogle();
-      const user = result?.user;
-      await registerUser({
-        name: user?.displayName,
-        email: user?.email,
-        displayName: user?.displayName,
-        status: "",
-        phone: "",
-        address: "",
-        role: "user",
-      }).unwrap();
-      Swal.fire({
-        icon: "success",
-        title: "Signed in with Google!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      navigate("/");
-    } catch (err) {
-      toast.error("Google Sign-In failed");
-      setLoading(false);
-      console.log(err);
-    }
+  const handleGoogleSignUp = () => {
+    Swal.fire({
+      icon: "info",
+      title: "Google Sign-Up",
+      text: "Google Sign-Up is currently disabled. Please use the registration form.",
+    });
   };
 
   return (
     <div
-      className={`min-h-screen grid md:grid-cols-2 px-6 ${
-        darkMode
+      className={`min-h-screen grid md:grid-cols-2 px-6 ${darkMode
           ? "bg-gradient-to-r from-purple-900 via-blue-900 to-black"
           : "bg-white"
-      }`}
+        }`}
     >
       {/* Left Panel */}
       <div
-        className={`hidden md:flex items-center justify-center p-10 ${
-          darkMode
+        className={`hidden md:flex items-center justify-center p-10 ${darkMode
             ? "bg-gradient-to-r from-purple-900 via-blue-900 to-black"
             : "bg-white"
-        }`}
+          }`}
       >
         <div className="text-center space-y-6">
           <h1
-            className={`text-5xl font-extrabold drop-shadow ${
-              darkMode ? "text-white" : "text-green-700"
-            }`}
+            className={`text-5xl font-extrabold drop-shadow ${darkMode ? "text-white" : "text-green-700"
+              }`}
           >
             Join the Journey!
           </h1>
           <p
-            className={`text-lg ${
-              darkMode ? "text-gray-300" : "text-gray-700"
-            } max-w-md mx-auto`}
+            className={`text-lg ${darkMode ? "text-gray-300" : "text-gray-700"
+              } max-w-md mx-auto`}
           >
             Create your account and step into a world of streamlined
             productivity.
           </p>
           <p
-            className={`text-md italic ${
-              darkMode ? "text-amber-300" : "text-green-500"
-            }`}
+            className={`text-md italic ${darkMode ? "text-amber-300" : "text-green-500"
+              }`}
           >
             "Every great story starts with a single signup."
           </p>
@@ -127,18 +104,16 @@ function RegisterPage() {
 
       {/* Right Form Panel */}
       <div
-        className={`flex items-center justify-center py-20 ${
-          darkMode
+        className={`flex items-center justify-center py-20 ${darkMode
             ? "bg-gradient-to-r from-black via-blue-900 to-purple-900 text-white"
             : "bg-white text-black"
-        }`}
+          }`}
       >
         <div
-          className={`${
-            darkMode
+          className={`${darkMode
               ? "bg-white/10 backdrop-blur-md border border-white/20 text-white"
               : "bg-white text-black"
-          } p-10 rounded-2xl shadow-2xl w-full max-w-md`}
+            } p-10 rounded-2xl shadow-2xl w-full max-w-md`}
         >
           <h2 className="text-3xl font-bold text-center mb-6">
             Create an Account
@@ -154,11 +129,10 @@ function RegisterPage() {
                   type="text"
                   placeholder="Enter your name"
                   {...register("name", { required: true })}
-                  className={`w-full outline-none ${
-                    darkMode
+                  className={`w-full outline-none ${darkMode
                       ? "bg-transparent text-white placeholder-gray-300"
                       : "bg-white text-gray-800 placeholder-gray-500"
-                  }`}
+                    }`}
                 />
               </div>
               {errors.name && (
@@ -175,11 +149,10 @@ function RegisterPage() {
                   type="email"
                   placeholder="Enter email"
                   {...register("email", { required: true })}
-                  className={`w-full outline-none ${
-                    darkMode
+                  className={`w-full outline-none ${darkMode
                       ? "bg-transparent text-white placeholder-gray-300"
                       : "bg-white text-gray-800 placeholder-gray-500"
-                  }`}
+                    }`}
                 />
               </div>
               {errors.email && (
@@ -208,11 +181,10 @@ function RegisterPage() {
                         /[a-z]/.test(val) || "Must include a lowercase letter",
                     },
                   })}
-                  className={`w-full outline-none pr-10 ${
-                    darkMode
+                  className={`w-full outline-none pr-10 ${darkMode
                       ? "bg-transparent text-white placeholder-gray-300"
                       : "bg-white text-gray-800 placeholder-gray-500"
-                  }`}
+                    }`}
                 />
                 <button
                   type="button"
@@ -242,11 +214,10 @@ function RegisterPage() {
                     validate: (value) =>
                       value === password || "Passwords do not match",
                   })}
-                  className={`w-full outline-none pr-10 ${
-                    darkMode
+                  className={`w-full outline-none pr-10 ${darkMode
                       ? "bg-transparent text-white placeholder-gray-300"
                       : "bg-white text-gray-800 placeholder-gray-500"
-                  }`}
+                    }`}
                 />
                 <button
                   type="button"
@@ -267,11 +238,10 @@ function RegisterPage() {
             <button
               type="submit"
               disabled={password !== confirmPassword}
-              className={`w-full py-3 rounded-lg shadow-md text-white font-semibold bg-supporting hover:scale-95 transition-transform ${
-                password !== confirmPassword
+              className={`w-full py-3 rounded-lg shadow-md text-white font-semibold bg-supporting hover:scale-95 transition-transform ${password !== confirmPassword
                   ? "opacity-50 cursor-not-allowed"
                   : ""
-              }`}
+                }`}
             >
               Register
             </button>
@@ -288,7 +258,7 @@ function RegisterPage() {
                 <FcGoogle />
               </button>
               <button
-                onClick={() => {}}
+                onClick={() => { }}
                 className="p-2 border border-gray-300 text-3xl text-blue-500 rounded-full hover:scale-95 transition-transform shadow-md"
               >
                 <FaFacebookF />
