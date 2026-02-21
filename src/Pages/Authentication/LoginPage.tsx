@@ -22,6 +22,7 @@ function LoginPage() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -54,6 +55,14 @@ function LoginPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleQuickLogin = async (email: string) => {
+    const password = "Password12345@"; // Standardized test password
+    setValue("email", email);
+    setValue("password", password);
+    setResetEmail(email);
+    // await handleSubmit(onSubmit)();
   };
 
   const handleGoogleSignIn = () => {
@@ -93,15 +102,15 @@ function LoginPage() {
   return (
     <div
       className={`min-h-screen grid md:grid-cols-2 px-6 ${darkMode
-          ? "bg-gradient-to-r from-purple-900  via-blue-900 to-black "
-          : "bg-white"
+        ? "bg-gradient-to-r from-purple-900  via-blue-900 to-black "
+        : "bg-white"
         }`}
     >
       {/* Left Panel */}
       <div
         className={`hidden md:flex items-center justify-center p-10 ${darkMode
-            ? "bg-gradient-to-r from-purple-900  via-blue-900 to-black "
-            : "bg-white"
+          ? "bg-gradient-to-r from-purple-900  via-blue-900 to-black "
+          : "bg-white"
           }`}
       >
         <div className="text-center space-y-6">
@@ -130,17 +139,45 @@ function LoginPage() {
       {/* Right Form Panel */}
       <div
         className={`flex items-center justify-center py-20 ${darkMode
-            ? "bg-gradient-to-r from-black via-blue-900 to-purple-900 text-white"
-            : "bg-white text-black"
+          ? "bg-gradient-to-r from-black via-blue-900 to-purple-900 text-white"
+          : "bg-white text-black"
           }`}
       >
         <div
           className={`${darkMode
-              ? "bg-white/10 backdrop-blur-md border border-white/20 text-white"
-              : "bg-white text-black"
+            ? "bg-white/10 backdrop-blur-md border border-white/20 text-white"
+            : "bg-white text-black"
             } p-10 rounded-2xl shadow-2xl w-full max-w-md`}
         >
           <h2 className="text-3xl font-bold text-center mb-6">Sign In</h2>
+
+          {/* Quick Login Buttons */}
+          <div className="grid grid-cols-2 gap-3 mb-6">
+            <button
+              onClick={() => handleQuickLogin("admin@gmail.com")}
+              className="py-2 px-4 bg-main hover:bg-green-700 text-white text-xs font-bold rounded-lg transition-all shadow-lg hover:scale-105"
+            >
+              ADMIN LOGIN
+            </button>
+            <button
+              onClick={() => handleQuickLogin("travel@gmail.com")}
+              className="py-2 px-4 bg-main hover:bg-green-700 text-white text-xs font-bold rounded-lg transition-all shadow-lg hover:scale-105"
+            >
+              TRAVEL LOGIN
+            </button>
+            <button
+              onClick={() => handleQuickLogin("event@gmail.com")}
+              className="py-2 px-4 bg-main hover:bg-green-700 text-white text-xs font-bold rounded-lg transition-all shadow-lg hover:scale-105"
+            >
+              EVENT LOGIN
+            </button>
+            <button
+              onClick={() => handleQuickLogin("user@gmail.com")}
+              className="py-2 px-4 bg-main hover:bg-green-700 text-white text-xs font-bold rounded-lg transition-all shadow-lg hover:scale-105"
+            >
+              USER LOGIN
+            </button>
+          </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* Email Field */}
