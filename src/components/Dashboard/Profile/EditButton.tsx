@@ -15,7 +15,6 @@ const EditButton = ({ user, refetch }: { user: any, refetch: any }) => {
     formState: { errors },
     reset,
     watch,
-    setValue
   } = useForm();
 
   // Watch for image file changes to update preview

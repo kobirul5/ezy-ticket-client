@@ -1,20 +1,38 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "@/Hooks/useAuth";
-import { FaTicketAlt } from "react-icons/fa";
-import { IoInformationCircle } from "react-icons/io5";
+import { FaTicketAlt, FaImage, FaCalendarAlt, FaClock, FaMapMarkerAlt, FaInfoCircle, FaLink } from "react-icons/fa";
+import { HiOutlineSparkles } from "react-icons/hi";
 import Swal from "sweetalert2";
 import { useCreateEventMutation } from "@/app/features/event/eventApi";
-
+import noImage from "@/assets/Common_image/noImage.png";
 
 const AddEvents = () => {
     const { user, userInfo } = useAuth()! as any;
-    const { register, handleSubmit, getValues, reset, formState: { errors } } = useForm();
+    const { register, handleSubmit, getValues, reset, watch, formState: { errors } } = useForm();
     const [createEvent, { isLoading }] = useCreateEventMutation();
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+    // Watch image field for preview
+    const imageFile = watch("image");
+
+    // Update image preview when file changes
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            setImagePreview(null);
+        }
+    };
 
     const onSubmit = async (data: any) => {
         const formData = new FormData();
 
-        // Prepare the event data object
         const eventData = {
             title: data.title,
             eventType: data.eventType,
@@ -26,6 +44,7 @@ const AddEvents = () => {
             details: data.details,
             totalTickets: parseInt(data.totalTickets),
             price: parseFloat(data.price),
+            maxTickets: parseInt(data.maxTickets),
             managerName: userInfo?.name,
             managerEmail: user?.email,
             managerImage: userInfo?.photoURL,
@@ -33,7 +52,6 @@ const AddEvents = () => {
             status: "pending"
         };
 
-        // Append the file and the stringified data
         if (data.image && data.image[0]) {
             formData.append("image", data.image[0]);
         }
@@ -43,329 +61,272 @@ const AddEvents = () => {
             const res = await createEvent(formData).unwrap();
             if (res.success) {
                 reset();
+                setImagePreview(null);
                 Swal.fire({
-                    position: "top-end",
                     icon: "success",
-                    title: "Your Event has been added",
-                    showConfirmButton: false,
-                    timer: 1500
+                    title: "Event Created!",
+                    text: "Your event has been submitted for review.",
+                    confirmButtonColor: "#53b17a"
                 });
             }
         } catch (error: any) {
             Swal.fire({
                 icon: "error",
-                title: "Oops...",
+                title: "Creation Failed",
                 text: error?.data?.message || "Something went wrong!",
             });
         }
     }
 
+    const inputClass = "w-full p-3 rounded-xl border border-gray-200 focus:border-main focus:ring-2 focus:ring-main/20 outline-none transition-all bg-white/50 backdrop-blur-sm shadow-sm hover:shadow-md";
+    const labelClass = "text-sm font-bold text-gray-700 mb-1 flex items-center gap-2";
+    const sectionTitleClass = "text-xl font-bold text-gray-800 mb-6 flex items-center gap-2 border-b-2 border-main/10 pb-2";
+
     return (
-        <div>
-            <h2 className="text-5xl font-semibold text-center my-8">Create Event</h2>
-            <div className="md:w-10/12 mx-auto bg-background p-8 rounded-lg border border-gray-200">
-                <div className="flex items-center gap-2 text-2xl">
-                    <IoInformationCircle />
-                    <p className=" font-semibold text-gray-800">Details</p>
+        <div className="min-h-screen bg-gray-50/50 py-10 px-4 md:px-8">
+            <div className="max-w-6xl mx-auto">
+                {/* Header Section */}
+                <div className="mb-10 text-center">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-main/10 text-main font-medium text-sm mb-4">
+                        <HiOutlineSparkles className="animate-pulse" />
+                        <span>Create Something Amazing</span>
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-3">Host a New Event</h2>
+                    <p className="text-gray-500 max-w-xl mx-auto">Fill in the details below to publish your event. Make it descriptive and eye-catching!</p>
                 </div>
-                <div className="divider"></div>
 
-                {/* Form Start */}
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    {/* Event Title */}
-                    <div className="form-control w-full mb-4">
-                        <div className="label">
-                            <span className="label-text text-lg">Event Title*</span>
-                        </div>
-                        <input
-                            type="text"
-                            placeholder="Enter event name here"
-                            {...register("title", { required: true })}
-                            className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow" />
-                    </div>
+                <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    {/* Left Column - Main Details */}
+                    <div className="lg:col-span-8 space-y-8">
+                        {/* Section 1: Basic Information */}
+                        <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl shadow-gray-200/50 border border-gray-100">
+                            <h3 className={sectionTitleClass}>
+                                <FaInfoCircle className="text-main" /> Basic Information
+                            </h3>
 
-                    {/* Event Type */}
-                    <div className="form-control w-full mb-4">
-                        <div className="label">
-                            <span className="label-text text-lg">Chose Event Type</span>
-                        </div>
-                        <select defaultValue="default" {...register("eventType", { required: true })}
-                            className="select select-bordered w-full focus:outline-none focus:border-supporting focus:shadow">
-                            <option disabled value="default">Select Event Type</option>
-                            <option value="online">Online</option>
-                            <option value="venue">Venue</option>
-                        </select>
-                    </div>
+                            <div className="space-y-6">
+                                <div className="form-control">
+                                    <label className={labelClass}>
+                                        Event Title <span className="text-red-500">*</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        placeholder="Give your event a catchy title"
+                                        {...register("title", { required: "Title is required" })}
+                                        className={`${inputClass} ${errors.title ? "border-red-500 ring-red-500/10" : ""}`}
+                                    />
+                                    {errors.title && <span className="text-xs text-red-500 mt-1">{(errors.title as any).message}</span>}
+                                </div>
 
-                    {/* Event Category */}
-                    <div className="form-control w-full mb-4">
-                        <div className="label">
-                            <span className="label-text text-lg">Chose Event Category</span>
-                        </div>
-                        <select defaultValue="default" {...register("eventCategory", { required: true })}
-                            className="select select-bordered w-full focus:outline-none focus:border-supporting focus:shadow">
-                            <option disabled value="default">Select Event Category</option>
-                            <option value="adventureTour">Adventure Tour</option>
-                            <option value="concert">Concert</option>
-                            <option value="theater">Theater</option>
-                            <option value="festivals">Festivals</option>
-                            <option value="party">Party</option>
-                            <option value="sports">Sports</option>
-                            <option value="park">Park</option>
-                            <option value="workshop">Workshop</option>
-                            <option value="class">Class</option>
-                        </select>
-                    </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="form-control">
+                                        <label className={labelClass}>Event Type</label>
+                                        <select
+                                            defaultValue="venue"
+                                            {...register("eventType", { required: true })}
+                                            className={inputClass}
+                                        >
+                                            <option value="online">🌐 Online Event</option>
+                                            <option value="venue">📍 Physical Venue</option>
+                                        </select>
+                                    </div>
 
-                    {/* Date and Time */}
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-                        {/* Event Date */}
-                        <div className="col-span-2 form-control">
-                            <div className="label">
-                                <span className="label-text">Event Date*</span>
+                                    <div className="form-control">
+                                        <label className={labelClass}>Category</label>
+                                        <select
+                                            defaultValue="concert"
+                                            {...register("eventCategory", { required: true })}
+                                            className={inputClass}
+                                        >
+                                            <option value="adventureTour">🏔️ Adventure Tour</option>
+                                            <option value="concert">🎸 Concert</option>
+                                            <option value="theater">🎭 Theater</option>
+                                            <option value="festivals">🎪 Festivals</option>
+                                            <option value="party">🎉 Party</option>
+                                            <option value="sports">⚽ Sports</option>
+                                            <option value="park">🌳 Park</option>
+                                            <option value="workshop">🛠️ Workshop</option>
+                                            <option value="class">🎓 Class</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="form-control">
+                                    <label className={labelClass}>Event Details</label>
+                                    <textarea
+                                        rows={6}
+                                        placeholder="Describe what makes your event special..."
+                                        {...register("details")}
+                                        className={`${inputClass} resize-none`}
+                                    />
+                                </div>
                             </div>
-                            <input
-                                type="date"
-                                {...register("eventDate", { required: true })}
-                                className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow"
-                                placeholder="MM/DD/YYYY"
-                            />
                         </div>
 
-                        {/* Event Time */}
-                        <div className="col-span-1 form-control">
-                            <div className="label">
-                                <span className="label-text">Time*</span>
+                        {/* Section 2: Schedule & Location */}
+                        <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl shadow-gray-200/50 border border-gray-100">
+                            <h3 className={sectionTitleClass}>
+                                <FaCalendarAlt className="text-main" /> Schedule & Location
+                            </h3>
+
+                            <div className="space-y-6">
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div className="form-control">
+                                        <label className={labelClass}>Date</label>
+                                        <div className="relative">
+                                            <input
+                                                type="date"
+                                                {...register("eventDate", { required: true })}
+                                                className={inputClass}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="form-control">
+                                        <label className={labelClass}>Start Time</label>
+                                        <select {...register("eventTime", { required: true })} className={inputClass}>
+                                            <option value="09:00">09:00 AM</option>
+                                            <option value="10:00">10:00 AM</option>
+                                            <option value="11:00">11:00 AM</option>
+                                            <option value="12:00">12:00 PM</option>
+                                            <option value="13:00">01:00 PM</option>
+                                            <option value="14:00">02:00 PM</option>
+                                            <option value="15:00">03:00 PM</option>
+                                            <option value="16:00">04:00 PM</option>
+                                            <option value="17:00">05:00 PM</option>
+                                            <option value="18:00">06:00 PM</option>
+                                            <option value="19:00">07:00 PM</option>
+                                            <option value="20:00">08:00 PM</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-control">
+                                        <label className={labelClass}>Duration</label>
+                                        <select {...register("duration", { required: true })} className={inputClass}>
+                                            <option value="1h">1 Hour</option>
+                                            <option value="2h">2 Hours</option>
+                                            <option value="3h">3 Hours</option>
+                                            <option value="4h">4 Hours</option>
+                                            <option value="5h">5+ Hours</option>
+                                            <option value="fullDay">Full Day</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="form-control">
+                                    <label className={labelClass}>Location / Meeting Link</label>
+                                    <div className="relative group">
+                                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <FaMapMarkerAlt className="text-gray-400 group-focus-within:text-main transition-colors" />
+                                        </div>
+                                        <input
+                                            type="text"
+                                            placeholder="Enter address or online link"
+                                            {...register("location", { required: true })}
+                                            className={`${inputClass} pl-11`}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-control">
+                                    <label className={labelClass}>Organizer Name</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Who is organizing this?"
+                                        {...register("organizer", { required: true })}
+                                        className={inputClass}
+                                    />
+                                </div>
                             </div>
-                            <select
-                                {...register("eventTime", { required: true })}
-                                className="select select-bordered w-full focus:outline-none focus:border-supporting focus:shadow"
+                        </div>
+                    </div>
+
+                    {/* Right Column - Media & Tickets */}
+                    <div className="lg:col-span-4 space-y-8">
+                        {/* Section 3: Event Media */}
+                        <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl shadow-gray-200/50 border border-gray-100">
+                            <h3 className={sectionTitleClass}>
+                                <FaImage className="text-main" /> Event Media
+                            </h3>
+                            <div className="space-y-4">
+                                <div className="relative aspect-video rounded-2xl overflow-hidden bg-gray-100 border-2 border-dashed border-gray-300 flex items-center justify-center group cursor-pointer hover:border-main transition-all">
+                                    {imagePreview ? (
+                                        <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
+                                    ) : (
+                                        <div className="text-center p-6">
+                                            <FaImage className="text-4xl text-gray-300 mx-auto mb-2" />
+                                            <p className="text-sm text-gray-500 font-medium font-roboto">Click to upload cover image</p>
+                                        </div>
+                                    )}
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        className="absolute inset-0 opacity-0 cursor-pointer"
+                                        {...register("image", { required: "Cover image is required" })}
+                                        onChange={handleImageChange}
+                                    />
+                                </div>
+                                {errors.image && <span className="text-xs text-red-500 mt-1">{(errors.image as any).message}</span>}
+                                <p className="text-xs text-gray-400 italic font-roboto">Recommend size: 1200x675px (16:9)</p>
+                            </div>
+                        </div>
+
+                        {/* Section 4: Ticket Settings */}
+                        <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xl shadow-gray-200/50 border border-gray-100">
+                            <h3 className={sectionTitleClass}>
+                                <FaTicketAlt className="text-main" /> Ticket Pricing
+                            </h3>
+
+                            <div className="space-y-5">
+                                <div className="form-control">
+                                    <label className={labelClass}>Total Capacity</label>
+                                    <input
+                                        type="number"
+                                        placeholder="0"
+                                        {...register("totalTickets", { required: true, min: 1 })}
+                                        className={inputClass}
+                                    />
+                                </div>
+
+                                <div className="form-control">
+                                    <label className={labelClass}>Per Customer Max</label>
+                                    <input
+                                        type="number"
+                                        placeholder="5"
+                                        {...register("maxTickets", { required: true, min: 1 })}
+                                        className={inputClass}
+                                    />
+                                </div>
+
+                                <div className="form-control">
+                                    <label className={labelClass}>Price (BDT)</label>
+                                    <div className="relative">
+                                        <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-gray-400">৳</span>
+                                        <input
+                                            type="number"
+                                            placeholder="0.00"
+                                            {...register("price", { required: true, min: 0 })}
+                                            className={`${inputClass} pl-10`}
+                                        />
+                                    </div>
+                                    <p className="text-[10px] text-gray-400 mt-2">Enter 0 for free events</p>
+                                </div>
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={isLoading}
+                                className="w-full mt-8 py-4 bg-main hover:bg-green-600 text-white rounded-2xl font-bold text-lg shadow-lg shadow-main/30 active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed group"
                             >
-                                {/* AM Times */}
-                                <option value="00:00">12:00 AM</option>
-                                <option value="00:30">12:30 AM</option>
-                                <option value="01:00">1:00 AM</option>
-                                <option value="01:30">1:30 AM</option>
-                                <option value="02:00">2:00 AM</option>
-                                <option value="02:30">2:30 AM</option>
-                                <option value="03:00">3:00 AM</option>
-                                <option value="03:30">3:30 AM</option>
-                                <option value="04:00">4:00 AM</option>
-                                <option value="04:30">4:30 AM</option>
-                                <option value="05:00">5:00 AM</option>
-                                <option value="05:30">5:30 AM</option>
-                                <option value="06:00">6:00 AM</option>
-                                <option value="06:30">6:30 AM</option>
-                                <option value="07:00">7:00 AM</option>
-                                <option value="07:30">7:30 AM</option>
-                                <option value="08:00">8:00 AM</option>
-                                <option value="08:30">8:30 AM</option>
-                                <option value="09:00">9:00 AM</option>
-                                <option value="09:30">9:30 AM</option>
-                                <option value="10:00">10:00 AM</option>
-                                <option value="10:30">10:30 AM</option>
-                                <option value="11:00">11:00 AM</option>
-                                <option value="11:30">11:30 AM</option>
-
-                                {/* PM Times */}
-                                <option value="12:00">12:00 PM</option>
-                                <option value="12:30">12:30 PM</option>
-                                <option value="13:00">1:00 PM</option>
-                                <option value="13:30">1:30 PM</option>
-                                <option value="14:00">2:00 PM</option>
-                                <option value="14:30">2:30 PM</option>
-                                <option value="15:00">3:00 PM</option>
-                                <option value="15:30">3:30 PM</option>
-                                <option value="16:00">4:00 PM</option>
-                                <option value="16:30">4:30 PM</option>
-                                <option value="17:00">5:00 PM</option>
-                                <option value="17:30">5:30 PM</option>
-                                <option value="18:00">6:00 PM</option>
-                                <option value="18:30">6:30 PM</option>
-                                <option value="19:00">7:00 PM</option>
-                                <option value="19:30">7:30 PM</option>
-                                <option value="20:00">8:00 PM</option>
-                                <option value="20:30">8:30 PM</option>
-                                <option value="21:00">9:00 PM</option>
-                                <option value="21:30">9:30 PM</option>
-                                <option value="22:00">10:00 PM</option>
-                                <option value="22:30">10:30 PM</option>
-                                <option value="23:00">11:00 PM</option>
-                                <option value="23:30">11:30 PM</option>
-                            </select>
-                        </div>
-
-                        {/* Event Duration */}
-                        <div className="col-span-1 form-control">
-                            <div className="label">
-                                <span className="label-text">Duration*</span>
-                            </div>
-                            <select
-                                {...register("duration", { required: true })}
-                                className="select select-bordered w-full focus:outline-none focus:border-supporting focus:shadow"
-                            >
-                                {/* Minutes Only */}
-                                <option value="15mins">15 mins</option>
-                                <option value="30mins">30 mins</option>
-                                <option value="45mins">45 mins</option>
-
-                                {/* Hours */}
-                                <option value="1h">1 hour</option>
-                                <option value="1h 15mins">1h 15m</option>
-                                <option value="1h 30mins">1h 30m</option>
-                                <option value="1h 45mins">1h 45m</option>
-
-                                <option value="2h">2 hours</option>
-                                <option value="2h 15mins">2h 15m</option>
-                                <option value="2h 30mins">2h 30m</option>
-                                <option value="2h 45mins">2h 45m</option>
-
-                                <option value="3h">3 hours</option>
-                                <option value="3h 15mins">3h 15m</option>
-                                <option value="3h 30mins">3h 30m</option>
-                                <option value="3h 45mins">3h 45m</option>
-
-                                <option value="4h">4 hours</option>
-                                <option value="4h 15mins">4h 15m</option>
-                                <option value="4h 30mins">4h 30m</option>
-                                <option value="4h 45mins">4h 45m</option>
-
-                                <option value="5h">5 hours</option>
-                                <option value="custom">Custom</option>
-
-                            </select>
+                                {isLoading ? (
+                                    <span className="loading loading-spinner"></span>
+                                ) : (
+                                    <>
+                                        Publish Event
+                                        <HiOutlineSparkles className="text-xl group-hover:rotate-12 transition-transform" />
+                                    </>
+                                )}
+                            </button>
                         </div>
                     </div>
-
-                    {/* Event Location */}
-                    <div className="form-control w-full my-4">
-                        <div className="label">
-                            <span className="label-text">Event Location</span>
-                        </div>
-                        <input
-                            type="text"
-                            placeholder="Online / for venue Type Full Address"
-                            {...register("location", { required: true })}
-                            className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow" />
-                    </div>
-
-                    {/* Event Details */}
-                    <div className="form-control w-full my-4 flex flex-col">
-                        <div className="label">
-                            <span className="label-text">Event Details</span>
-                        </div>
-                        <textarea
-                            className="textarea textarea-bordered h-36 w-full focus:outline-none focus:border-supporting focus:shadow"
-                            placeholder="Details"
-                            {...register("details")}
-                        >
-                        </textarea>
-                    </div>
-
-                    {/* Event Location */}
-                    <div className="form-control w-full my-4">
-                        <div className="label">
-                            <span className="label-text">Organized By</span>
-                        </div>
-                        <input
-                            type="text"
-                            placeholder="Organizer Company"
-                            {...register("organizer", { required: true })}
-                            className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow" />
-                    </div>
-
-                    {/* Event Image */}
-                    <div className="my-4 ">
-                        <input
-                            type="file"
-                            className="file-input w-full"
-                            {...register("image", { required: true })}
-                        />
-                    </div>
-
-                    {/* --------------Create Ticket----------- */}
-
-                    <div className="flex items-center gap-2 text-2xl mt-16">
-                        <FaTicketAlt />
-                        <p className=" font-semibold text-gray-800">Create Ticket</p>
-                    </div>
-                    <div className="divider"></div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
-                        {/* Total Tickets Field */}
-                        <div className="form-control w-full">
-                            <div className="label">
-                                <span className="label-text">Total number of tickets*</span>
-                            </div>
-                            <input
-                                type="number"
-                                min="0"
-                                placeholder="Total available tickets"
-                                {...register("totalTickets", {
-                                    required: "Total tickets is required",
-                                    min: {
-                                        value: 0,
-                                        message: "Must be at least 0"
-                                    },
-                                    valueAsNumber: true
-                                })}
-                                className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow"
-                            />
-                            {errors.totalTickets && (
-                                <p className="text-red-600 mt-1">{errors.totalTickets.message as string}</p>
-                            )}
-                        </div>
-
-                        {/* Max Tickets Field */}
-                        <div className="form-control w-full">
-                            <div className="label">
-                                <span className="label-text">Max tickets per customer*</span>
-                            </div>
-                            <input
-                                type="number"
-                                min="0"
-                                placeholder="Max per customer"
-                                {...register("maxTickets", {
-                                    required: "Max tickets is required",
-                                    validate: (value) => {
-                                        const total = getValues("totalTickets");
-                                        if (value < 0) return "Must be at least 0";
-                                        if (total !== undefined && value > total) {
-                                            return `Cannot exceed total tickets(${total})`;
-                                        }
-                                        return true;
-                                    },
-                                    valueAsNumber: true
-                                })}
-                                className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow"
-                            />
-                            {errors.maxTickets && (
-                                <p className="text-red-600 mt-1">{errors.maxTickets.message as string}</p>
-                            )}
-                        </div>
-
-                        {/* Each Ticket Price */}
-                        <div className="form-control w-full col-span-1">
-                            <div className="label">
-                                <span className="label-text">Price in BDT (min 10 Taka)</span>
-                            </div>
-                            <input
-                                type="number"
-                                placeholder="Each ticket Price"
-                                {...register("price", {
-                                    required: "Price is required",
-                                    valueAsNumber: true,
-                                    validate: (value) => value >= 10 || "Minimum price should be at least 10",
-                                })}
-                                className={`input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow ${errors.price && "input-error"}`}
-                            />
-                            {errors?.price && <p className="text-red-600">{(errors.price as any).message}</p>}
-                        </div>
-                    </div>
-
-
-
-                    <button className="ezy-button-primary">Add Event</button>
                 </form>
             </div>
         </div>

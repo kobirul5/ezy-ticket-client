@@ -1,22 +1,27 @@
-import { MdOutlineEmail, MdEdit } from "react-icons/md";
+import { MdOutlineEmail } from "react-icons/md";
 import noImage from "@/assets/Common_image/noImage.png";
 import { FaHome, FaPhoneAlt, FaTicketAlt, FaUserCircle } from "react-icons/fa";
-import { FaFolderOpen } from "react-icons/fa";
+import { FaFolderOpen } from "react-icons/fa6";
 import useAuth from "@/Hooks/useAuth";
 import { useGetMyProfileQuery } from "@/app/features/user/userApi";
 import EditButton from "./EditButton";
+import Loading from "@/components/shared/Loading/Loading";
 
 const UserProfile = () => {
   const { user } = useAuth()! as any;
-  
   const { data: profileData, isLoading, refetch } = useGetMyProfileQuery(undefined);
   const userInfo = profileData?.data;
 
-  console.log("UserProfile - userInfo:", userInfo);
-
   if (isLoading) {
-      return <div className="min-h-screen flex justify-center items-center">Loading profile...</div>;
+    return <Loading />;
   }
+
+  // Role-based dynamic labels
+  const getRoleStatsLabel = (role: string) => {
+    if (role === "TRAVEL_MANAGER") return "Travel Places";
+    if (role === "EVENT_MANAGER") return "Events";
+    return "Bookings";
+  };
 
   return (
     <div className="min-h-screen mt-5 mb-10">
@@ -27,7 +32,7 @@ const UserProfile = () => {
           <div className="bg-gradient-to-r from-main to-green-500 h-46 relative">
             <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2">
               <img
-                src={userInfo?.picture || noImage}
+                src={userInfo?.picture || user?.photoURL || noImage}
                 alt="User"
                 className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
               />
@@ -39,6 +44,9 @@ const UserProfile = () => {
             <h1 className="text-3xl font-bold text-gray-800 mb-1">
               {userInfo?.name || user?.displayName || "Anonymous User"}
             </h1>
+            <p className="text-main font-medium capitalize">
+              {(userInfo?.role || user?.role || "User").replace("_", " ").toLowerCase()}
+            </p>
 
             <div className="flex justify-center gap-2  md:gap-4 lg:gap-8 mt-6 mb-8">
               <div className="bg-green-50 rounded-lg p-4 text-center w-32">
@@ -49,7 +57,7 @@ const UserProfile = () => {
               <div className="bg-blue-50 rounded-lg p-4 text-center w-32">
                 <FaFolderOpen className="text-blue-500 text-2xl mx-auto mb-2" />
                 <p className="font-semibold text-gray-700">5</p>
-                <p className="text-xs text-gray-500">Events</p>
+                <p className="text-xs text-gray-500">{getRoleStatsLabel(userInfo?.role)}</p>
               </div>
               <div className="bg-purple-50 rounded-lg p-4 text-center w-32">
                 <FaUserCircle className="text-purple-500 text-2xl mx-auto mb-2" />
@@ -107,9 +115,12 @@ const UserProfile = () => {
 
         {/* Recent Activity Section */}
         <div className="mt-8 bg-white rounded-xl shadow-lg overflow-hidden">
-        
-         
-       
+          <div className="px-6 py-4 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-gray-800">Recent Activity</h2>
+          </div>
+          <div className="px-6 py-4">
+            <p className="text-gray-500 text-center py-8">No recent activity</p>
+          </div>
         </div>
       </div>
     </div>
@@ -117,3 +128,4 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
