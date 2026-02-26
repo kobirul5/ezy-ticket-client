@@ -5,7 +5,7 @@ import { HiCurrencyDollar } from "react-icons/hi";
 import { Link, NavLink } from "react-router-dom";
 import { IoMdMail } from "react-icons/io";
 import useAuth from "../Hooks/useAuth";
-import useUserRole from "../Hooks/useUserRole";
+import { useGetMyProfileQuery } from "../app/features/user/userApi";
 import { MdEmojiEvents } from "react-icons/md";
 
 interface SidebarProps {
@@ -14,8 +14,12 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isMobileMenuOpen, closeMenu }: SidebarProps) => {
-    const { role } = useUserRole();
-    const { user, userInfo } = useAuth() as any;
+    const { logOut } = useAuth() as any;
+
+    // Get profile data directly from Redux
+    const { data: profileData, isLoading } = useGetMyProfileQuery(undefined);
+    const userInfo = profileData?.data;
+    const role = userInfo?.role;
 
     const isAdmin = role === "ADMIN";
     const isEventManager = role === "EVENT_MANAGER";
@@ -61,9 +65,18 @@ const Sidebar = ({ isMobileMenuOpen, closeMenu }: SidebarProps) => {
                 <div className="divider"></div>
 
                 {/* ----------------User Profile---------------- */}
-                <div className="flex flex-col items-center space-y-2 mb-4 text-center">
-                    <h3 className="text-2xl font-bold">{userInfo?.name}</h3>
-                    <p className="font-semibold text-gray-500">{user?.email}</p>
+                <div className="flex flex-col items-center space-y-2 mb-4 text-center min-h-[80px] justify-center">
+                    {isLoading ? (
+                        <div className="space-y-2 w-full px-4 animate-pulse">
+                            <div className="h-6 bg-gray-200 rounded w-3/4 mx-auto"></div>
+                            <div className="h-4 bg-gray-100 rounded w-1/2 mx-auto"></div>
+                        </div>
+                    ) : (
+                        <>
+                            <h3 className="text-2xl font-bold line-clamp-1">{userInfo?.name || "User"}</h3>
+                            <p className="font-semibold text-gray-500 text-sm line-clamp-1">{userInfo?.email}</p>
+                        </>
+                    )}
                 </div>
 
                 <div className="divider"></div>

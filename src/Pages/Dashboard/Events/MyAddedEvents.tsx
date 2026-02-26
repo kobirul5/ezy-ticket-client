@@ -4,16 +4,17 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { MdEventAvailable } from "react-icons/md";
-import useAuth from "@/Hooks/useAuth";
 import noImage from "@/assets/Common_image/noImage.png";
 import {
     useGetMyEventsQuery,
     useUpdateEventMutation,
     useDeleteEventMutation
 } from "@/app/features/event/eventApi";
+import { useGetMyProfileQuery } from "@/app/features/user/userApi";
 
 const MyAddedEvents = () => {
-    const { user } = useAuth()! as any;
+    const { data: profileData } = useGetMyProfileQuery(undefined);
+    const user = profileData?.data;
     const [selectedEvent, setSelectedEvent] = useState<any>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -26,9 +27,10 @@ const MyAddedEvents = () => {
     } = useForm();
 
     // Redux Hooks
-    const { data: myEvents = [], isLoading, isError, refetch } = useGetMyEventsQuery(user?.email, {
+    const { data: res, isLoading, isError, refetch } = useGetMyEventsQuery(user?.email, {
         skip: !user?.email
     });
+    const myEvents = res?.data || [];
     const [updateEvent, { isLoading: isUpdating }] = useUpdateEventMutation();
     const [deleteEvent] = useDeleteEventMutation();
 
