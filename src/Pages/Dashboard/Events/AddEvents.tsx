@@ -1,58 +1,48 @@
 import { useForm } from "react-hook-form";
 import useAuth from "@/Hooks/useAuth";
-import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import { FaTicketAlt } from "react-icons/fa";
 import { IoInformationCircle } from "react-icons/io5";
-import useAxiosPublic from "@/Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { useCreateEventMutation } from "@/app/features/event/eventApi";
 
-
-const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const AddEvents = () => {
-    const axiosSecure = useAxiosSecure();
-    const axiosPublic = useAxiosPublic();
     const { user, userInfo } = useAuth()! as any;
     const { register, handleSubmit, getValues, reset, formState: { errors } } = useForm();
+    const [createEvent, { isLoading }] = useCreateEventMutation();
 
     const onSubmit = async (data: any) => {
-        // console.log(data);
-        //image upload to imgbb
-        const imageFile = { image: data.image[0] }
-        const res = await axiosPublic.post(image_hosting_api, imageFile, {
-            headers: {
-                "content-type": "multipart/form-data"
-            },
-            withCredentials: false
-        })
-        if (res.data.success) {
-            //send the data to Backend
-            const eventInfo = {
-                title: data.title,
-                eventType: data.eventType,
-                eventCategory: data.eventCategory,
-                eventDate: data.eventDate,
-                eventTime: data.eventTime,
-                duration: data.duration,
-                location: data.location,
-                details: data.details,
-                organizer: data.organizer,
-                image: res.data.data.display_url,
-                totalTickets: parseInt(data.totalTickets),
-                soldTickets: 0,
-                maxTickets: parseInt(data.maxTickets),
-                price: parseFloat(data.price),
-                managerName: userInfo?.name,
-                managerEmail: user?.email,
-                managerImage: userInfo?.photoURL,
-                category: "event",
-                status: "pending"
-            }
-            const eventRes = await axiosSecure.post("/events", eventInfo);
-            if (eventRes.data.insertedId) {
+        const formData = new FormData();
+
+        // Prepare the event data object
+        const eventData = {
+            title: data.title,
+            eventType: data.eventType,
+            eventCategory: data.eventCategory,
+            eventDate: data.eventDate,
+            eventTime: data.eventTime,
+            duration: data.duration,
+            location: data.location,
+            details: data.details,
+            totalTickets: parseInt(data.totalTickets),
+            price: parseFloat(data.price),
+            managerName: userInfo?.name,
+            managerEmail: user?.email,
+            managerImage: userInfo?.photoURL,
+            organizer: data.organizer,
+            status: "pending"
+        };
+
+        // Append the file and the stringified data
+        if (data.image && data.image[0]) {
+            formData.append("image", data.image[0]);
+        }
+        formData.append("data", JSON.stringify(eventData));
+
+        try {
+            const res = await createEvent(formData).unwrap();
+            if (res.success) {
                 reset();
-                //show success popup
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
@@ -61,6 +51,12 @@ const AddEvents = () => {
                     timer: 1500
                 });
             }
+        } catch (error: any) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error?.data?.message || "Something went wrong!",
+            });
         }
     }
 
@@ -335,7 +331,7 @@ const AddEvents = () => {
                                         const total = getValues("totalTickets");
                                         if (value < 0) return "Must be at least 0";
                                         if (total !== undefined && value > total) {
-                                            return `Cannot exceed total tickets (${total})`;
+                                            return `Cannot exceed total tickets(${total})`;
                                         }
                                         return true;
                                     },

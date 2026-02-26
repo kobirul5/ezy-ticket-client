@@ -185,6 +185,10 @@ const Route = createBrowserRouter([
         element: <ManageEvents></ManageEvents>,
       },
       {
+        path: "my-added-events",
+        element: <MyAddedEvents></MyAddedEvents>,
+      },
+      {
         path: "myAddedEvents",
         element: <MyAddedEvents></MyAddedEvents>,
       },

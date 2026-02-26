@@ -1,16 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { FaEdit, FaTrash, FaTicketAlt } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { MdEventAvailable } from "react-icons/md";
-import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import useAuth from "@/Hooks/useAuth";
 import noImage from "@/assets/Common_image/noImage.png";
+import {
+    useGetMyEventsQuery,
+    useUpdateEventMutation,
+    useDeleteEventMutation
+} from "@/app/features/event/eventApi";
 
 const MyAddedEvents = () => {
-    const axiosSecure = useAxiosSecure();
     const { user } = useAuth()! as any;
     const [selectedEvent, setSelectedEvent] = useState<any>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,13 +25,12 @@ const MyAddedEvents = () => {
         formState: { errors },
     } = useForm();
 
-    const { data: myEvents = [], isLoading, isError, refetch } = useQuery({
-        queryKey: ["myEvents", user?.email],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/events/my-added-events/${user?.email}`);
-            return res.data.data;
-        }
+    // Redux Hooks
+    const { data: myEvents = [], isLoading, isError, refetch } = useGetMyEventsQuery(user?.email, {
+        skip: !user?.email
     });
+    const [updateEvent, { isLoading: isUpdating }] = useUpdateEventMutation();
+    const [deleteEvent] = useDeleteEventMutation();
 
 
     const handleEdit = (event: any) => {
@@ -55,16 +56,22 @@ const MyAddedEvents = () => {
     };
 
     const onSubmit = async (data: any) => {
-        console.log(data);
+        const formData = new FormData();
+
+        // Prepare data object for stringification
+        const updateData = { ...data };
+        delete updateData.image; // Image is handled separately if there's a file input
+
+        // Note: Currently the edit modal doesn't have a file input for image,
+        // but let's keep it consistent with createEvent structure.
+        formData.append("data", JSON.stringify(updateData));
+
         try {
-            const res = await axiosSecure.patch(`/events/${selectedEvent.id}`, data);
-            if (res.data.success || res.data.data) {
-                Swal.fire("Success", "Event updated successfully!", "success");
-                refetch();
-                handleCloseModal();
-            }
-        } catch (err) {
-            console.error(err);
+            await updateEvent({ id: selectedEvent.id, formData }).unwrap();
+            Swal.fire("Success", "Event updated successfully!", "success");
+            handleCloseModal();
+        } catch (err: any) {
+            Swal.fire("Error", err?.data?.message || "Failed to update event", "error");
         }
     };
 
@@ -77,19 +84,18 @@ const MyAddedEvents = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                axiosSecure.delete(`/events/${id}`)
-                    .then(res => {
-                        if (res.data.success) {
-                            refetch();
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Your event has been deleted.",
-                                icon: "success"
-                            });
-                        }
-                    })
+                try {
+                    await deleteEvent(id).unwrap();
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your event has been deleted.",
+                        icon: "success"
+                    });
+                } catch (err: any) {
+                    Swal.fire("Error", err?.data?.message || "Failed to delete event", "error");
+                }
             }
         });
     }
@@ -345,14 +351,16 @@ const MyAddedEvents = () => {
                                         },
                                         valueAsNumber: true,
                                         validate: value =>
-                                            value >= selectedEvent?.soldTickets || `Total tickets can"t be less than sold tickets (${selectedEvent?.soldTickets})`
+                                            value >= (selectedEvent?.soldTickets || 0) || `Total tickets cannot be less than sold tickets (${selectedEvent?.soldTickets || 0})`
                                     })}
                                     className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow"
                                 />
-                                {errors.totalTickets && (
-                                    <p className="text-red-600 mt-1">{errors.totalTickets.message as string}</p>
-                                )}
-                            </div>
+                                {
+                                    errors.totalTickets && (
+                                        <p className="text-red-600 mt-1">{errors.totalTickets.message as string}</p>
+                                    )
+                                }
+                            </div >
 
 
                             <div className="mb-4">
@@ -368,11 +376,11 @@ const MyAddedEvents = () => {
                             <div className="text-right">
                                 <button type="submit" className="btn btn-success">Update Event</button>
                             </div>
-                        </form>
-                    </div>
-                </div>
+                        </form >
+                    </div >
+                </div >
             )}
-        </div>
+        </div >
     );
 };
 

@@ -22,7 +22,7 @@ const Sidebar = ({ isMobileMenuOpen, closeMenu }: SidebarProps) => {
     const isTravelManager = role === "TRAVEL_MANAGER";
 
     // Active link style function
-    const getNavLinkClass = ({ isActive }: { isActive: boolean }) => 
+    const getNavLinkClass = ({ isActive }: { isActive: boolean }) =>
         isActive ? "bg-main text-white" : "hover:bg-main";
 
     return (
@@ -59,20 +59,20 @@ const Sidebar = ({ isMobileMenuOpen, closeMenu }: SidebarProps) => {
                 </div>
 
                 <div className="divider"></div>
-                
+
                 {/* ----------------User Profile---------------- */}
                 <div className="flex flex-col items-center space-y-2 mb-4 text-center">
                     <h3 className="text-2xl font-bold">{userInfo?.name}</h3>
                     <p className="font-semibold text-gray-500">{user?.email}</p>
                 </div>
-                
+
                 <div className="divider"></div>
-                
+
                 {/* Quick Action Button for privileged roles */}
                 {(isAdmin || isTravelManager) && (
                     <div className="px-4 mb-4">
-                        <Link 
-                            to="/dashboard/add-bus-service" 
+                        <Link
+                            to="/dashboard/add-bus-service"
                             onClick={closeMenu}
                             className="flex items-center justify-center gap-2 bg-main hover:bg-green-600 text-white w-full py-3 rounded-xl font-bold transition-all shadow-md active:scale-95"
                         >
@@ -80,7 +80,7 @@ const Sidebar = ({ isMobileMenuOpen, closeMenu }: SidebarProps) => {
                         </Link>
                     </div>
                 )}
-                
+
                 {/* Navigation Menu */}
                 <ul className="menu space-y-2 w-full">
                     {isAdmin ? (
@@ -101,7 +101,7 @@ const Sidebar = ({ isMobileMenuOpen, closeMenu }: SidebarProps) => {
 
                             <li onClick={closeMenu}><NavLink to="/dashboard/addEvent" className={getNavLinkClass}><TbHomePlus /> Add Post</NavLink></li>
 
-                            <li onClick={closeMenu}><NavLink to="/dashboard/myAddedEvents" className={getNavLinkClass}><FaList /> My added Post</NavLink></li>
+                            <li onClick={closeMenu}><NavLink to="/dashboard/my-added-events" className={getNavLinkClass}><FaList /> My added Post</NavLink></li>
 
                             <li onClick={closeMenu}><NavLink to="/dashboard/ticketSold" className={getNavLinkClass}><HiCurrencyDollar /> Ticket Sold</NavLink></li>
                         </>

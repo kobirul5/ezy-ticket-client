@@ -20,15 +20,15 @@ const EventManagerHome = () => {
     const pendingEvents = myEvents.filter((e: any) => e.status !== "verified").length;
 
     const stats = [
-        { label: "My Events", value: myEvents.length, icon: <FaCalendarPlus />, color: "bg-purple-500", link: "/dashboard/myAddedEvents" },
-        { label: "Tickets Sold", value: totalSold, icon: <FaTicketAlt />, color: "bg-orange-500", link: "/dashboard/myAddedEvents" },
-        { label: "Pending Approval", value: pendingEvents, icon: <FaChartLine />, color: "bg-blue-500", link: "/dashboard/myAddedEvents" },
+        { label: "My Events", value: myEvents.length, icon: <FaCalendarPlus />, color: "bg-purple-500", link: "/dashboard/my-added-events" },
+        { label: "Tickets Sold", value: totalSold, icon: <FaTicketAlt />, color: "bg-orange-500", link: "/dashboard/my-added-events" },
+        { label: "Pending Approval", value: pendingEvents, icon: <FaChartLine />, color: "bg-blue-500", link: "/dashboard/my-added-events" },
     ];
 
     return (
         <div className="p-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-8 font-outfit">Event Manager Dashboard</h1>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 {stats.map((stat, idx) => (
                     <div key={idx} className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-md transition-all">
