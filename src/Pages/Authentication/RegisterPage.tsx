@@ -16,7 +16,7 @@ import useAuth from "@/Hooks/useAuth";
 import { useRegisterUserMutation } from "@/app/features/auth/authApi";
 
 function RegisterPage() {
-  const { darkMode, setLoading } = useAuth()! as any;
+  const { darkMode, setLoading, setUser } = useAuth()! as any;
   const [registerUser] = useRegisterUserMutation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -35,19 +35,22 @@ function RegisterPage() {
   const onSubmit = async (data: any) => {
     try {
       setLoading(true);
-      await registerUser({
+      const result = await registerUser({
         name: data.name,
         email: data.email,
         password: data.password,
       }).unwrap();
 
-      Swal.fire({
-        icon: "success",
-        title: "Registration Successful",
-        text: "Please login with your new account.",
-        showConfirmButton: true,
-      });
-      navigate("/login");
+      if (result?.success) {
+        setUser(result.data);
+        Swal.fire({
+          icon: "success",
+          title: "Registration Successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      }
     } catch (error: any) {
       toast.error(error?.data?.message || "Registration failed");
       setLoading(false);
@@ -68,15 +71,15 @@ function RegisterPage() {
   return (
     <div
       className={`min-h-screen grid md:grid-cols-2 px-6 ${darkMode
-          ? "bg-gradient-to-r from-purple-900 via-blue-900 to-black"
-          : "bg-white"
+        ? "bg-gradient-to-r from-purple-900 via-blue-900 to-black"
+        : "bg-white"
         }`}
     >
       {/* Left Panel */}
       <div
         className={`hidden md:flex items-center justify-center p-10 ${darkMode
-            ? "bg-gradient-to-r from-purple-900 via-blue-900 to-black"
-            : "bg-white"
+          ? "bg-gradient-to-r from-purple-900 via-blue-900 to-black"
+          : "bg-white"
           }`}
       >
         <div className="text-center space-y-6">
@@ -105,14 +108,14 @@ function RegisterPage() {
       {/* Right Form Panel */}
       <div
         className={`flex items-center justify-center py-20 ${darkMode
-            ? "bg-gradient-to-r from-black via-blue-900 to-purple-900 text-white"
-            : "bg-white text-black"
+          ? "bg-gradient-to-r from-black via-blue-900 to-purple-900 text-white"
+          : "bg-white text-black"
           }`}
       >
         <div
           className={`${darkMode
-              ? "bg-white/10 backdrop-blur-md border border-white/20 text-white"
-              : "bg-white text-black"
+            ? "bg-white/10 backdrop-blur-md border border-white/20 text-white"
+            : "bg-white text-black"
             } p-10 rounded-2xl shadow-2xl w-full max-w-md`}
         >
           <h2 className="text-3xl font-bold text-center mb-6">
@@ -130,8 +133,8 @@ function RegisterPage() {
                   placeholder="Enter your name"
                   {...register("name", { required: true })}
                   className={`w-full outline-none ${darkMode
-                      ? "bg-transparent text-white placeholder-gray-300"
-                      : "bg-white text-gray-800 placeholder-gray-500"
+                    ? "bg-transparent text-white placeholder-gray-300"
+                    : "bg-white text-gray-800 placeholder-gray-500"
                     }`}
                 />
               </div>
@@ -150,8 +153,8 @@ function RegisterPage() {
                   placeholder="Enter email"
                   {...register("email", { required: true })}
                   className={`w-full outline-none ${darkMode
-                      ? "bg-transparent text-white placeholder-gray-300"
-                      : "bg-white text-gray-800 placeholder-gray-500"
+                    ? "bg-transparent text-white placeholder-gray-300"
+                    : "bg-white text-gray-800 placeholder-gray-500"
                     }`}
                 />
               </div>
@@ -182,8 +185,8 @@ function RegisterPage() {
                     },
                   })}
                   className={`w-full outline-none pr-10 ${darkMode
-                      ? "bg-transparent text-white placeholder-gray-300"
-                      : "bg-white text-gray-800 placeholder-gray-500"
+                    ? "bg-transparent text-white placeholder-gray-300"
+                    : "bg-white text-gray-800 placeholder-gray-500"
                     }`}
                 />
                 <button
@@ -215,8 +218,8 @@ function RegisterPage() {
                       value === password || "Passwords do not match",
                   })}
                   className={`w-full outline-none pr-10 ${darkMode
-                      ? "bg-transparent text-white placeholder-gray-300"
-                      : "bg-white text-gray-800 placeholder-gray-500"
+                    ? "bg-transparent text-white placeholder-gray-300"
+                    : "bg-white text-gray-800 placeholder-gray-500"
                     }`}
                 />
                 <button
@@ -239,8 +242,8 @@ function RegisterPage() {
               type="submit"
               disabled={password !== confirmPassword}
               className={`w-full py-3 rounded-lg shadow-md text-white font-semibold bg-supporting hover:scale-95 transition-transform ${password !== confirmPassword
-                  ? "opacity-50 cursor-not-allowed"
-                  : ""
+                ? "opacity-50 cursor-not-allowed"
+                : ""
                 }`}
             >
               Register
