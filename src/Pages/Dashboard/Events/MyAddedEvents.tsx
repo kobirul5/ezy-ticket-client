@@ -26,23 +26,23 @@ const MyAddedEvents = () => {
     const { data: myEvents = [], isLoading, isError, refetch } = useQuery({
         queryKey: ["myEvents", user?.email],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/events/${user?.email}`);
-            return res.data;
+            const res = await axiosSecure.get(`/events/my-added-events/${user?.email}`);
+            return res.data.data;
         }
     });
 
-  
-    const handleEdit = (event:any) => {
+
+    const handleEdit = (event: any) => {
         setSelectedEvent(event);
         setIsModalOpen(true);
 
-    const editableFields = [
-        "title", "eventType", "eventDate", "eventTime", "duration", "price", "totalTickets", "location", "details"
-    ]
+        const editableFields = [
+            "title", "eventType", "eventCategory", "eventDate", "eventTime", "duration", "price", "totalTickets", "location", "details"
+        ]
 
         // Set form values
-        editableFields.forEach((field)=> {
-            if (field in event){
+        editableFields.forEach((field) => {
+            if (field in event) {
                 setValue(field, event[field])
             }
         })
@@ -54,11 +54,11 @@ const MyAddedEvents = () => {
         reset();
     };
 
-    const onSubmit = async (data:any) => {
+    const onSubmit = async (data: any) => {
         console.log(data);
         try {
-            const res = await axiosSecure.patch(`/events/${selectedEvent._id}`, data);
-            if (res.data.modifiedCount > 0) {
+            const res = await axiosSecure.patch(`/events/${selectedEvent.id}`, data);
+            if (res.data.success || res.data.data) {
                 Swal.fire("Success", "Event updated successfully!", "success");
                 refetch();
                 handleCloseModal();
@@ -81,7 +81,7 @@ const MyAddedEvents = () => {
             if (result.isConfirmed) {
                 axiosSecure.delete(`/events/${id}`)
                     .then(res => {
-                        if (res.data.deletedCount > 0) {
+                        if (res.data.success) {
                             refetch();
                             Swal.fire({
                                 title: "Deleted!",
@@ -127,7 +127,7 @@ const MyAddedEvents = () => {
                         </thead>
                         <tbody>
                             {myEvents.map((event: any) => (
-                                <tr key={event._id} className="hover:bg-gray-50">
+                                <tr key={event.id} className="hover:bg-gray-50">
                                     <td><img src={event.image || noImage} className="w-20 h-16 rounded" alt="event" /></td>
                                     <td>{event.title}</td>
                                     <td>{event.eventType}</td>
@@ -149,7 +149,7 @@ const MyAddedEvents = () => {
                                             <button onClick={() => handleEdit(event)} className="btn btn-sm btn-outline btn-primary">
                                                 <FaEdit />
                                             </button>
-                                            <button onClick={() => handleDeleteEvent(event._id)} className="btn btn-sm btn-outline btn-error">
+                                            <button onClick={() => handleDeleteEvent(event.id)} className="btn btn-sm btn-outline btn-error">
                                                 <FaTrash />
                                             </button>
                                         </div>
@@ -172,6 +172,21 @@ const MyAddedEvents = () => {
                                 <label className="label">Title</label>
                                 <input {...register("title", { required: true })} className="input input-bordered w-full" />
                                 {errors.title && <p className="text-red-500 text-sm">Title is required</p>}
+                            </div>
+
+                            <div className="mb-4">
+                                <label className="label">Event Category</label>
+                                <select {...register("eventCategory", { required: true })} className="select select-bordered w-full">
+                                    <option value="adventureTour">Adventure Tour</option>
+                                    <option value="concert">Concert</option>
+                                    <option value="theater">Theater</option>
+                                    <option value="festivals">Festivals</option>
+                                    <option value="party">Party</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="park">Park</option>
+                                    <option value="workshop">Workshop</option>
+                                    <option value="class">Class</option>
+                                </select>
                             </div>
 
                             <div className="mb-4">
@@ -305,8 +320,8 @@ const MyAddedEvents = () => {
                                     className="input input-bordered w-full"
                                 />
                                 {errors.soldTickets && (
-                                        <p className="text-red-600 mt-1">{errors.soldTickets.message as string}</p>
-                                    )}
+                                    <p className="text-red-600 mt-1">{errors.soldTickets.message as string}</p>
+                                )}
                                 {errors.price && (
                                     <p className="text-red-600 mt-1">{errors?.price?.message as string}</p>
                                 )}

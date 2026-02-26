@@ -19,7 +19,6 @@ const DashboardRoute = ({ children }: DashboardRouteProps) => {
     }
 
     const authorizedRoles = ["ADMIN", "TRAVEL_MANAGER", "EVENT_MANAGER", "USER"];
-    console.log(role, "----------------------------------");
 
     if (role && authorizedRoles.includes(role)) {
         return <>{children}</>;
