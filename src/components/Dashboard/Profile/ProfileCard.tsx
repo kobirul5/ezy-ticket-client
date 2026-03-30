@@ -80,8 +80,8 @@ const ProfileCard = ({ userInfo, user, refetch, stats }: ProfileCardProps) => {
               </div>
 
               {/* Name + badge */}
-              <div className="text-center sm:text-left pb-1 flex-1">
-                <h1 className="text-3xl  font-extrabold text-gray-800 leading-tight">
+              <div className="text-center sm:text-left mt-6 sm:mt-5 pb-1 flex-1">
+                <h1 className="text-3xl  font-extrabold pt-14 text-gray-800 leading-tight">
                   {displayName}
                 </h1>
                 <div className="flex items-center gap-2 justify-center sm:justify-start mt-2">

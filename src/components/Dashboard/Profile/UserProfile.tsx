@@ -32,7 +32,7 @@ const UserProfile = () => {
           </div>
 
           {/* Profile Content */}
-          <div className="pt-20 pb-8 px-6 sm:px-8 text-center">
+          <div className="pt-28 pb-8 px-6 sm:px-8 text-center">
             <h1 className="text-3xl font-bold text-gray-800 mb-1">
               {userInfo?.name || user?.displayName || "Anonymous User"}
             </h1>

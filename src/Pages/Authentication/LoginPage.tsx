@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import useAuth from "@/Hooks/useAuth";
 import { saveUserInformation } from "../../API/Utils";
 import { useForgotPasswordMutation, useLoginUserMutation } from "@/app/features/auth/authApi";
+import QuickLoginButtons from "@/components/QuickLoginButtons";
 
 function LoginPage() {
   const { setLoading, darkMode, setUser } = useAuth()! as any;
@@ -60,10 +61,10 @@ function LoginPage() {
     }
   };
 
-  const handleQuickLogin = async (email: string) => {
-    const password = "Password12345@"; // Standardized test password
+  const handleQuickLogin = async (email: string, password?: string) => {
+    const finalPassword = password || "Password12345@"; // Use provided password or fallback
     setValue("email", email);
-    setValue("password", password);
+    setValue("password", finalPassword);
     setResetEmail(email);
     // await handleSubmit(onSubmit)();
   };
@@ -153,6 +154,9 @@ function LoginPage() {
             } p-10 rounded-2xl shadow-2xl w-full max-w-md`}
         >
           <h2 className="text-3xl font-bold text-center mb-6">Sign In</h2>
+
+          {/* Quick Login Buttons */}
+          <QuickLoginButtons darkMode={darkMode} onSelect={handleQuickLogin} />
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* Email Field */}
