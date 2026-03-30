@@ -11,7 +11,8 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "@/Hooks/useAuth";
-import { useLoginUserMutation, useForgotPasswordMutation } from "@/app/features/auth/authApi";
+import { saveUserInformation } from "../../API/Utils";
+import { useForgotPasswordMutation, useLoginUserMutation } from "@/app/features/auth/authApi";
 
 function LoginPage() {
   const { setLoading, darkMode, setUser } = useAuth()! as any;
@@ -28,6 +29,8 @@ function LoginPage() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [resetEmail, setResetEmail] = useState(""); //  State to hold email for password reset
+
+
 
   const onSubmit = async (data: any) => {
     const { email, password } = data;
@@ -150,34 +153,6 @@ function LoginPage() {
             } p-10 rounded-2xl shadow-2xl w-full max-w-md`}
         >
           <h2 className="text-3xl font-bold text-center mb-6">Sign In</h2>
-
-          {/* Quick Login Buttons */}
-          <div className="grid grid-cols-2 gap-3 mb-6">
-            <button
-              onClick={() => handleQuickLogin("admin@gmail.com")}
-              className="py-2 px-4 bg-main hover:bg-green-700 text-white text-xs font-bold rounded-lg transition-all shadow-lg hover:scale-105"
-            >
-              ADMIN LOGIN
-            </button>
-            <button
-              onClick={() => handleQuickLogin("travel@gmail.com")}
-              className="py-2 px-4 bg-main hover:bg-green-700 text-white text-xs font-bold rounded-lg transition-all shadow-lg hover:scale-105"
-            >
-              TRAVEL LOGIN
-            </button>
-            <button
-              onClick={() => handleQuickLogin("event@gmail.com")}
-              className="py-2 px-4 bg-main hover:bg-green-700 text-white text-xs font-bold rounded-lg transition-all shadow-lg hover:scale-105"
-            >
-              EVENT LOGIN
-            </button>
-            <button
-              onClick={() => handleQuickLogin("user@gmail.com")}
-              className="py-2 px-4 bg-main hover:bg-green-700 text-white text-xs font-bold rounded-lg transition-all shadow-lg hover:scale-105"
-            >
-              USER LOGIN
-            </button>
-          </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* Email Field */}

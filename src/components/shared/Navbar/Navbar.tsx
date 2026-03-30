@@ -129,7 +129,7 @@ const Navbar: React.FC = () => {
             onClick={() => setDropdownOpen((prev) => !prev)}
           >
             <img
-              src={userInfo?.photoURL || noImage}
+              src={userInfo?.picture || userInfo?.photoURL || user?.photoURL || noImage}
               alt="User"
               className="w-full h-full object-cover"
             />
@@ -145,7 +145,7 @@ const Navbar: React.FC = () => {
           >
             <div className="p-4 text-center">
               <img
-                src={userInfo?.photoURL ? userInfo.photoURL : noImage}
+                src={userInfo?.picture || userInfo?.photoURL || user?.photoURL || noImage}
                 alt="User Avatar"
                 className="w-16 h-16 mx-auto rounded-full border mb-2"
               />
