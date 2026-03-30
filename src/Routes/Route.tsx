@@ -40,6 +40,8 @@ import DashboardRoute from "./DashboardRoute";
 import DashboardHome from "../Pages/Dashboard/DashboardHome";
 
 
+import AuthRoute from "./AuthRoute";
+
 const Route = createBrowserRouter([
   {
     path: "/",
@@ -56,11 +58,19 @@ const Route = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <LoginPage></LoginPage>,
+        element: (
+          <AuthRoute>
+            <LoginPage></LoginPage>
+          </AuthRoute>
+        ),
       },
       {
         path: "/register",
-        element: <RegisterPage></RegisterPage>,
+        element: (
+          <AuthRoute>
+            <RegisterPage></RegisterPage>
+          </AuthRoute>
+        ),
       },
       {
         path: "/payment/success/:tran_id",
@@ -153,11 +163,11 @@ const Route = createBrowserRouter([
         element: <ManageUsers></ManageUsers>,
       },
       {
-        path:"ticket-bought",
-        element:<TicketBought></TicketBought>
+        path: "ticket-bought",
+        element: <TicketBought></TicketBought>
       },
       {
-        path:"ticketSold",
+        path: "ticketSold",
         element: <TicketSold></TicketSold>
       },
       // ------------Events route start----------
@@ -173,6 +183,10 @@ const Route = createBrowserRouter([
       {
         path: "manageEvents",
         element: <ManageEvents></ManageEvents>,
+      },
+      {
+        path: "my-added-events",
+        element: <MyAddedEvents></MyAddedEvents>,
       },
       {
         path: "myAddedEvents",

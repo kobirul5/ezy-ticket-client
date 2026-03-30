@@ -10,16 +10,15 @@ import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth"; // ✅ Import for reset
 import useAuth from "@/Hooks/useAuth";
 import { saveUserInformation } from "../../API/Utils";
-import { useLoginUserMutation } from "@/app/features/auth/authApi";
-import QuickLoginButtons from "@/components/QuickLoginButtons";
+import { useForgotPasswordMutation, useLoginUserMutation } from "@/app/features/auth/authApi";
 
 function LoginPage() {
-  const { signIn, signInWithGoogle, setLoading, darkMode } = useAuth()! as any;
+  const { setLoading, darkMode, setUser } = useAuth()! as any;
   const navigate = useNavigate();
   const [loginUser] = useLoginUserMutation();
+  const [forgotPassword] = useForgotPasswordMutation();
 
   const {
     register,
@@ -36,37 +35,45 @@ function LoginPage() {
   const onSubmit = async (data: any) => {
     const { email, password } = data;
     try {
-      await signIn(email, password);
-      await loginUser({ email, password }).unwrap();
-      Swal.fire({
-        icon: "success",
-        title: "Login Successful",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      navigate("/");
-    } catch (error) {
+      setLoading(true);
+      const result = await loginUser({ email, password }).unwrap();
+      if (result?.success) {
+        setUser(result.data?.user);
+        Swal.fire({
+          icon: "success",
+          title: "Login Successful",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      }
+    } catch (error: any) {
       setLoading(false);
       console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: error?.data?.message || "Invalid credentials",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      const result = await signInWithGoogle();
-      const user = result?.user;
-      await saveUserInformation(user);
-      Swal.fire({
-        icon: "success",
-        title: "Login Successful",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      navigate("/");
-    } catch (err) {
-      setLoading(false);
-      console.log(err);
-    }
+  const handleQuickLogin = async (email: string) => {
+    const password = "Password12345@"; // Standardized test password
+    setValue("email", email);
+    setValue("password", password);
+    setResetEmail(email);
+    // await handleSubmit(onSubmit)();
+  };
+
+  const handleGoogleSignIn = () => {
+    Swal.fire({
+      icon: "info",
+      title: "Google Sign-In",
+      text: "Google Sign-In is currently disabled. Please use your email and password.",
+    });
   };
 
   //  Handle Forgot Password
@@ -79,59 +86,53 @@ function LoginPage() {
       return;
     }
     try {
-      const auth = getAuth();
-      await sendPasswordResetEmail(auth, resetEmail);
+      await forgotPassword({ email: resetEmail }).unwrap();
       Swal.fire({
         icon: "success",
-        title: "Password reset email sent",
-        text: "Check your inbox to reset your password.",
+        title: "Password reset instructions sent",
+        text: "Check your inbox for further instructions.",
       });
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       Swal.fire({
         icon: "error",
-        title: "Failed to send reset email",
-        text: (error as Error).message,
+        title: "Failed to send reset request",
+        text: error?.data?.message || "An error occurred",
       });
     }
   };
 
   return (
     <div
-      className={`min-h-screen grid md:grid-cols-2 px-6 ${
-        darkMode
-          ? "bg-gradient-to-r from-purple-900  via-blue-900 to-black "
-          : "bg-white"
-      }`}
+      className={`min-h-screen grid md:grid-cols-2 px-6 ${darkMode
+        ? "bg-gradient-to-r from-purple-900  via-blue-900 to-black "
+        : "bg-white"
+        }`}
     >
       {/* Left Panel */}
       <div
-        className={`hidden md:flex items-center justify-center p-10 ${
-          darkMode
-            ? "bg-gradient-to-r from-purple-900  via-blue-900 to-black "
-            : "bg-white"
-        }`}
+        className={`hidden md:flex items-center justify-center p-10 ${darkMode
+          ? "bg-gradient-to-r from-purple-900  via-blue-900 to-black "
+          : "bg-white"
+          }`}
       >
         <div className="text-center space-y-6">
           <h1
-            className={`text-5xl font-extrabold ${
-              darkMode ? "text-white" : "text-green-700"
-            } drop-shadow`}
+            className={`text-5xl font-extrabold ${darkMode ? "text-white" : "text-green-700"
+              } drop-shadow`}
           >
             Welcome Back!
           </h1>
           <p
-            className={`text-lg ${
-              darkMode ? "text-gray-300" : "text-gray-700"
-            } max-w-md mx-auto`}
+            className={`text-lg ${darkMode ? "text-gray-300" : "text-gray-700"
+              } max-w-md mx-auto`}
           >
             Dive into your dashboard and manage everything in one place. Fast,
             secure, and stylish.
           </p>
           <p
-            className={`text-md italic ${
-              darkMode ? "text-amber-300" : "text-green-500"
-            }`}
+            className={`text-md italic ${darkMode ? "text-amber-300" : "text-green-500"
+              }`}
           >
             "The journey of a thousand miles begins with a single login."
           </p>
@@ -140,30 +141,18 @@ function LoginPage() {
 
       {/* Right Form Panel */}
       <div
-        className={`flex items-center justify-center py-20 ${
-          darkMode
-            ? "bg-gradient-to-r from-black via-blue-900 to-purple-900 text-white"
-            : "bg-white text-black"
-        }`}
+        className={`flex items-center justify-center py-20 ${darkMode
+          ? "bg-gradient-to-r from-black via-blue-900 to-purple-900 text-white"
+          : "bg-white text-black"
+          }`}
       >
         <div
-          className={`${
-            darkMode
-              ? "bg-white/10 backdrop-blur-md border border-white/20 text-white"
-              : "bg-white text-black"
-          } p-10 rounded-2xl shadow-2xl w-full max-w-md`}
+          className={`${darkMode
+            ? "bg-white/10 backdrop-blur-md border border-white/20 text-white"
+            : "bg-white text-black"
+            } p-10 rounded-2xl shadow-2xl w-full max-w-md`}
         >
           <h2 className="text-3xl font-bold text-center mb-6">Sign In</h2>
-
-          {/* Quick Login Buttons */}
-          <QuickLoginButtons
-            darkMode={darkMode}
-            onSelect={(email, password) => {
-              setValue("email", email);
-              setValue("password", password);
-              setResetEmail(email);
-            }}
-          />
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* Email Field */}
@@ -243,7 +232,7 @@ function LoginPage() {
                 <FcGoogle />
               </button>
               <button
-                onClick={() => {}}
+                onClick={() => { }}
                 className="p-2 border border-gray-300 text-3xl text-blue-500 rounded-full hover:scale-95 transition-transform shadow-md"
               >
                 <FaFacebookF />

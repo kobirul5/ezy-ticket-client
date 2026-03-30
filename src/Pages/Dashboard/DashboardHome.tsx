@@ -1,10 +1,11 @@
-import useUserRole from "@/Hooks/useUserRole";
+import { useGetMyProfileQuery } from "@/app/features/user/userApi";
 import AdminHome from "@/components/Dashboard/Home/AdminHome";
 import EventManagerHome from "@/components/Dashboard/Home/EventManagerHome";
 import TravelManagerHome from "@/components/Dashboard/Home/TravelManagerHome";
 
 const DashboardHome = () => {
-    const { role } = useUserRole();
+    const { data: profileData } = useGetMyProfileQuery(undefined);
+    const role = profileData?.data?.role;
 
     if (role === "ADMIN") {
         return <AdminHome />;

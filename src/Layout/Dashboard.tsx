@@ -1,20 +1,20 @@
 import { Link, Outlet } from "react-router-dom";
-import useUserRole from "../Hooks/useUserRole";
+import { useGetMyProfileQuery } from "../app/features/user/userApi";
 import { useState } from "react";
 import Sidebar from "./Sidebar";
 
 const Dashboard = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const { isLoading } = useUserRole();
+    const { isLoading } = useGetMyProfileQuery(undefined);
 
-    const closeMenu = ()=>{
+    const closeMenu = () => {
         setIsMobileMenuOpen(false)
     }
 
     if (isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
-                <span className="loading loading-spinner loading-lg"></span>
+                <span className="loading loading-spinner loading-lg text-main"></span>
             </div>
         );
     }
@@ -26,7 +26,7 @@ const Dashboard = () => {
                 <Link to={"/"}>
                     <p className="text-2xl text-main font-bold">Ezy Tickets</p>
                 </Link>
-                <button 
+                <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     className="text-gray-700 focus:outline-none"
                 >
@@ -47,7 +47,7 @@ const Dashboard = () => {
 
             {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
-                <div 
+                <div
                     className="fixed inset-0 bg-black/20 bg-opacity-50 z-30 md:hidden"
                     onClick={() => setIsMobileMenuOpen(false)}
                 />

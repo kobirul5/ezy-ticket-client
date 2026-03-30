@@ -1,13 +1,14 @@
 import { ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import useUserRole from "../Hooks/useUserRole";
+import { useGetMyProfileQuery } from "../app/features/user/userApi";
 
 interface DashboardRouteProps {
     children: ReactNode;
 }
 
 const DashboardRoute = ({ children }: DashboardRouteProps) => {
-    const { role, isLoading } = useUserRole();
+    const { data: profileData, isLoading } = useGetMyProfileQuery(undefined);
+    const role = profileData?.data?.role;
     const location = useLocation();
 
     if (isLoading) {

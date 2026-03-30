@@ -1,14 +1,13 @@
-import { ReactNode } from "react";
-import {
-  FaTicketAlt, FaUsers, FaChartBar, FaShieldAlt,
-  FaCalendarAlt, FaStar, FaBus, FaMapMarkerAlt,
-  FaUserCircle,
-} from "react-icons/fa";
-import { FaFolderOpen } from "react-icons/fa6";
+import AdminProfile from "@/components/Dashboard/Profile/AdminProfile";
+import EventManagerProfile from "@/components/Dashboard/Profile/EventManagerProfile";
+import TravelManagerProfile from "@/components/Dashboard/Profile/TravelManagerProfile";
+import UserProfile from "@/components/Dashboard/Profile/UserProfile";
 import Loading from "@/components/shared/Loading/Loading";
 import ProfileCard from "@/components/Dashboard/Profile/ProfileCard";
 import { useGetMyProfileQuery } from "@/app/features/user/userApi";
 import useAuth from "@/Hooks/useAuth";
+import { ReactNode } from "react";
+import { FaBus, FaCalendarAlt, FaChartBar, FaFolderOpen, FaMapMarkerAlt, FaShieldAlt, FaStar, FaTicketAlt, FaUserCircle, FaUsers } from "react-icons/fa";
 
 type Stat = { icon: ReactNode; label: string; value: string | number };
 
@@ -47,12 +46,25 @@ const Profile = () => {
   const { data: profileData, isLoading, refetch } = useGetMyProfileQuery(undefined);
   const userInfo = profileData?.data;
 
-  if (isLoading) return <Loading />;
+  // console.log("Profile Page - Role:", userInfo?.role);
 
-  const role = userInfo?.role ?? "USER";
-  const stats = statsByRole[role] ?? statsByRole["USER"];
+  if (isLoading) {
+    return <Loading />;
+  }
 
-  return <ProfileCard userInfo={userInfo} user={user} refetch={refetch} stats={stats} />;
+  return (
+    <div>
+      {userInfo?.role === "ADMIN" || userInfo?.role === "SUPER_ADMIN" ? (
+        <AdminProfile />
+      ) : userInfo?.role === "TRAVEL_MANAGER" ? (
+        <TravelManagerProfile />
+      ) : userInfo?.role === "EVENT_MANAGER" ? (
+        <EventManagerProfile />
+      ) : (
+        <UserProfile />
+      )}
+    </div>
+  );
 };
 
 export default Profile;

@@ -5,7 +5,7 @@ import { HiCurrencyDollar } from "react-icons/hi";
 import { Link, NavLink } from "react-router-dom";
 import { IoMdMail } from "react-icons/io";
 import useAuth from "../Hooks/useAuth";
-import useUserRole from "../Hooks/useUserRole";
+import { useGetMyProfileQuery } from "../app/features/user/userApi";
 import { MdEmojiEvents } from "react-icons/md";
 
 interface SidebarProps {
@@ -14,15 +14,19 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isMobileMenuOpen, closeMenu }: SidebarProps) => {
-    const { role } = useUserRole();
-    const { user, userInfo } = useAuth() as any;
+    const { logOut } = useAuth() as any;
+
+    // Get profile data directly from Redux
+    const { data: profileData, isLoading } = useGetMyProfileQuery(undefined);
+    const userInfo = profileData?.data;
+    const role = userInfo?.role;
 
     const isAdmin = role === "ADMIN";
     const isEventManager = role === "EVENT_MANAGER";
     const isTravelManager = role === "TRAVEL_MANAGER";
 
     // Active link style function
-    const getNavLinkClass = ({ isActive }: { isActive: boolean }) => 
+    const getNavLinkClass = ({ isActive }: { isActive: boolean }) =>
         isActive ? "bg-main text-white" : "hover:bg-main";
 
     return (
@@ -59,20 +63,29 @@ const Sidebar = ({ isMobileMenuOpen, closeMenu }: SidebarProps) => {
                 </div>
 
                 <div className="divider"></div>
-                
+
                 {/* ----------------User Profile---------------- */}
-                <div className="flex flex-col items-center space-y-2 mb-4 text-center">
-                    <h3 className="text-2xl font-bold">{userInfo?.name}</h3>
-                    <p className="font-semibold text-gray-500">{user?.email}</p>
+                <div className="flex flex-col items-center space-y-2 mb-4 text-center min-h-[80px] justify-center">
+                    {isLoading ? (
+                        <div className="space-y-2 w-full px-4 animate-pulse">
+                            <div className="h-6 bg-gray-200 rounded w-3/4 mx-auto"></div>
+                            <div className="h-4 bg-gray-100 rounded w-1/2 mx-auto"></div>
+                        </div>
+                    ) : (
+                        <>
+                            <h3 className="text-2xl font-bold line-clamp-1">{userInfo?.name || "User"}</h3>
+                            <p className="font-semibold text-gray-500 text-sm line-clamp-1">{userInfo?.email}</p>
+                        </>
+                    )}
                 </div>
-                
+
                 <div className="divider"></div>
-                
+
                 {/* Quick Action Button for privileged roles */}
                 {(isAdmin || isTravelManager) && (
                     <div className="px-4 mb-4">
-                        <Link 
-                            to="/dashboard/add-bus-service" 
+                        <Link
+                            to="/dashboard/add-bus-service"
                             onClick={closeMenu}
                             className="flex items-center justify-center gap-2 bg-main hover:bg-green-600 text-white w-full py-3 rounded-xl font-bold transition-all shadow-md active:scale-95"
                         >
@@ -80,7 +93,7 @@ const Sidebar = ({ isMobileMenuOpen, closeMenu }: SidebarProps) => {
                         </Link>
                     </div>
                 )}
-                
+
                 {/* Navigation Menu */}
                 <ul className="menu space-y-2 w-full">
                     {isAdmin ? (
@@ -101,7 +114,7 @@ const Sidebar = ({ isMobileMenuOpen, closeMenu }: SidebarProps) => {
 
                             <li onClick={closeMenu}><NavLink to="/dashboard/addEvent" className={getNavLinkClass}><TbHomePlus /> Add Post</NavLink></li>
 
-                            <li onClick={closeMenu}><NavLink to="/dashboard/myAddedEvents" className={getNavLinkClass}><FaList /> My added Post</NavLink></li>
+                            <li onClick={closeMenu}><NavLink to="/dashboard/my-added-events" className={getNavLinkClass}><FaList /> My added Post</NavLink></li>
 
                             <li onClick={closeMenu}><NavLink to="/dashboard/ticketSold" className={getNavLinkClass}><HiCurrencyDollar /> Ticket Sold</NavLink></li>
                         </>

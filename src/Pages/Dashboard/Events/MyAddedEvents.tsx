@@ -1,17 +1,20 @@
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { FaEdit, FaTrash, FaTicketAlt } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { MdEventAvailable } from "react-icons/md";
-import useAxiosSecure from "@/Hooks/useAxiosSecure";
-import useAuth from "@/Hooks/useAuth";
 import noImage from "@/assets/Common_image/noImage.png";
+import {
+    useGetMyEventsQuery,
+    useUpdateEventMutation,
+    useDeleteEventMutation
+} from "@/app/features/event/eventApi";
+import { useGetMyProfileQuery } from "@/app/features/user/userApi";
 
 const MyAddedEvents = () => {
-    const axiosSecure = useAxiosSecure();
-    const { user } = useAuth()! as any;
+    const { data: profileData } = useGetMyProfileQuery(undefined);
+    const user = profileData?.data;
     const [selectedEvent, setSelectedEvent] = useState<any>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -23,26 +26,26 @@ const MyAddedEvents = () => {
         formState: { errors },
     } = useForm();
 
-    const { data: myEvents = [], isLoading, isError, refetch } = useQuery({
-        queryKey: ["myEvents", user?.email],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/events/${user?.email}`);
-            return res.data;
-        }
+    // Redux Hooks
+    const { data: res, isLoading, isError, refetch } = useGetMyEventsQuery(user?.email, {
+        skip: !user?.email
     });
+    const myEvents = res?.data || [];
+    const [updateEvent, { isLoading: isUpdating }] = useUpdateEventMutation();
+    const [deleteEvent] = useDeleteEventMutation();
 
-  
-    const handleEdit = (event:any) => {
+
+    const handleEdit = (event: any) => {
         setSelectedEvent(event);
         setIsModalOpen(true);
 
-    const editableFields = [
-        "title", "eventType", "eventDate", "eventTime", "duration", "price", "totalTickets", "location", "details"
-    ]
+        const editableFields = [
+            "title", "eventType", "eventCategory", "eventDate", "eventTime", "duration", "price", "totalTickets", "location", "details"
+        ]
 
         // Set form values
-        editableFields.forEach((field)=> {
-            if (field in event){
+        editableFields.forEach((field) => {
+            if (field in event) {
                 setValue(field, event[field])
             }
         })
@@ -54,17 +57,23 @@ const MyAddedEvents = () => {
         reset();
     };
 
-    const onSubmit = async (data:any) => {
-        console.log(data);
+    const onSubmit = async (data: any) => {
+        const formData = new FormData();
+
+        // Prepare data object for stringification
+        const updateData = { ...data };
+        delete updateData.image; // Image is handled separately if there's a file input
+
+        // Note: Currently the edit modal doesn't have a file input for image,
+        // but let's keep it consistent with createEvent structure.
+        formData.append("data", JSON.stringify(updateData));
+
         try {
-            const res = await axiosSecure.patch(`/events/${selectedEvent._id}`, data);
-            if (res.data.modifiedCount > 0) {
-                Swal.fire("Success", "Event updated successfully!", "success");
-                refetch();
-                handleCloseModal();
-            }
-        } catch (err) {
-            console.error(err);
+            await updateEvent({ id: selectedEvent.id, formData }).unwrap();
+            Swal.fire("Success", "Event updated successfully!", "success");
+            handleCloseModal();
+        } catch (err: any) {
+            Swal.fire("Error", err?.data?.message || "Failed to update event", "error");
         }
     };
 
@@ -77,19 +86,18 @@ const MyAddedEvents = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                axiosSecure.delete(`/events/${id}`)
-                    .then(res => {
-                        if (res.data.deletedCount > 0) {
-                            refetch();
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Your event has been deleted.",
-                                icon: "success"
-                            });
-                        }
-                    })
+                try {
+                    await deleteEvent(id).unwrap();
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your event has been deleted.",
+                        icon: "success"
+                    });
+                } catch (err: any) {
+                    Swal.fire("Error", err?.data?.message || "Failed to delete event", "error");
+                }
             }
         });
     }
@@ -127,7 +135,7 @@ const MyAddedEvents = () => {
                         </thead>
                         <tbody>
                             {myEvents.map((event: any) => (
-                                <tr key={event._id} className="hover:bg-gray-50">
+                                <tr key={event.id} className="hover:bg-gray-50">
                                     <td><img src={event.image || noImage} className="w-20 h-16 rounded" alt="event" /></td>
                                     <td>{event.title}</td>
                                     <td>{event.eventType}</td>
@@ -149,7 +157,7 @@ const MyAddedEvents = () => {
                                             <button onClick={() => handleEdit(event)} className="btn btn-sm btn-outline btn-primary">
                                                 <FaEdit />
                                             </button>
-                                            <button onClick={() => handleDeleteEvent(event._id)} className="btn btn-sm btn-outline btn-error">
+                                            <button onClick={() => handleDeleteEvent(event.id)} className="btn btn-sm btn-outline btn-error">
                                                 <FaTrash />
                                             </button>
                                         </div>
@@ -172,6 +180,21 @@ const MyAddedEvents = () => {
                                 <label className="label">Title</label>
                                 <input {...register("title", { required: true })} className="input input-bordered w-full" />
                                 {errors.title && <p className="text-red-500 text-sm">Title is required</p>}
+                            </div>
+
+                            <div className="mb-4">
+                                <label className="label">Event Category</label>
+                                <select {...register("eventCategory", { required: true })} className="select select-bordered w-full">
+                                    <option value="adventureTour">Adventure Tour</option>
+                                    <option value="concert">Concert</option>
+                                    <option value="theater">Theater</option>
+                                    <option value="festivals">Festivals</option>
+                                    <option value="party">Party</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="park">Park</option>
+                                    <option value="workshop">Workshop</option>
+                                    <option value="class">Class</option>
+                                </select>
                             </div>
 
                             <div className="mb-4">
@@ -305,8 +328,8 @@ const MyAddedEvents = () => {
                                     className="input input-bordered w-full"
                                 />
                                 {errors.soldTickets && (
-                                        <p className="text-red-600 mt-1">{errors.soldTickets.message as string}</p>
-                                    )}
+                                    <p className="text-red-600 mt-1">{errors.soldTickets.message as string}</p>
+                                )}
                                 {errors.price && (
                                     <p className="text-red-600 mt-1">{errors?.price?.message as string}</p>
                                 )}
@@ -330,14 +353,16 @@ const MyAddedEvents = () => {
                                         },
                                         valueAsNumber: true,
                                         validate: value =>
-                                            value >= selectedEvent?.soldTickets || `Total tickets can"t be less than sold tickets (${selectedEvent?.soldTickets})`
+                                            value >= (selectedEvent?.soldTickets || 0) || `Total tickets cannot be less than sold tickets (${selectedEvent?.soldTickets || 0})`
                                     })}
                                     className="input input-bordered w-full focus:outline-none focus:border-supporting focus:shadow"
                                 />
-                                {errors.totalTickets && (
-                                    <p className="text-red-600 mt-1">{errors.totalTickets.message as string}</p>
-                                )}
-                            </div>
+                                {
+                                    errors.totalTickets && (
+                                        <p className="text-red-600 mt-1">{errors.totalTickets.message as string}</p>
+                                    )
+                                }
+                            </div >
 
 
                             <div className="mb-4">
@@ -353,11 +378,11 @@ const MyAddedEvents = () => {
                             <div className="text-right">
                                 <button type="submit" className="btn btn-success">Update Event</button>
                             </div>
-                        </form>
-                    </div>
-                </div>
+                        </form >
+                    </div >
+                </div >
             )}
-        </div>
+        </div >
     );
 };
 
