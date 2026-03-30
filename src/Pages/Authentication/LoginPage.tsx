@@ -14,6 +14,7 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth"; // ✅ Import f
 import useAuth from "@/Hooks/useAuth";
 import { saveUserInformation } from "../../API/Utils";
 import { useLoginUserMutation } from "@/app/features/auth/authApi";
+import QuickLoginButtons from "@/components/QuickLoginButtons";
 
 function LoginPage() {
   const { signIn, signInWithGoogle, setLoading, darkMode } = useAuth()! as any;
@@ -23,11 +24,14 @@ function LoginPage() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
   const [resetEmail, setResetEmail] = useState(""); //  State to hold email for password reset
+
+
 
   const onSubmit = async (data: any) => {
     const { email, password } = data;
@@ -150,6 +154,16 @@ function LoginPage() {
           } p-10 rounded-2xl shadow-2xl w-full max-w-md`}
         >
           <h2 className="text-3xl font-bold text-center mb-6">Sign In</h2>
+
+          {/* Quick Login Buttons */}
+          <QuickLoginButtons
+            darkMode={darkMode}
+            onSelect={(email, password) => {
+              setValue("email", email);
+              setValue("password", password);
+              setResetEmail(email);
+            }}
+          />
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* Email Field */}
