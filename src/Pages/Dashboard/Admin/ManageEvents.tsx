@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useGetAllEventsQuery } from "@/app/features/event/eventApi";
 import noImage from "@/assets/Common_image/noImage.png"
 import Swal from "sweetalert2";
 import useAxiosSecure from "@/Hooks/useAxiosSecure";
@@ -9,13 +9,9 @@ const ManageEvents = () => {
     const [selectedEvent, setSelectedEvent] = useState<any>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const { data: allEvents = [], isLoading, isError, refetch } = useQuery({
-        queryKey: ["allEvents"],
-        queryFn: async () => {
-            const res = await axiosSecure.get("/events");
-            return res.data;
-        }
-    });
+    const { data: res, isLoading, isError, refetch } = useGetAllEventsQuery({});
+    const allEventsArray = Array.isArray(res?.data) ? res.data : (res?.data?.data || []);
+    const allEvents = Array.isArray(allEventsArray) ? allEventsArray : [];
 
     const handleVerifyClick = (event: any) => {
         setSelectedEvent(event);

@@ -1,28 +1,19 @@
 import Loading from "../shared/Loading/Loading";
 import useAuth from "@/Hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "@/Hooks/useAxiosPublic";
+import { useGetAllEventsQuery } from "@/app/features/event/eventApi";
 import Heading from "../shared/Heading";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 const TopEvents = () => {
     const { darkMode } = useAuth() as any;
-    const axiosPublic = useAxiosPublic();
-
-    const {
-        data: events = [],
-        isLoading,
-        error,
-    } = useQuery({
-        queryKey: ["topEvents"],
-        queryFn: async () => {
-            const res = await axiosPublic.get("/events");
-            return (res.data.data as any[]).sort(
-                (a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()
-            );
-        },
-    });
+    const { data: responseData, isLoading, error } = useGetAllEventsQuery({});
+    
+    // Fallback safely and grab the actual events array
+    const eventsArray = Array.isArray(responseData?.data) ? responseData.data : (responseData?.data?.data || []);
+    const events = [...eventsArray].sort(
+        (a: any, b: any) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()
+    );
 
     if (isLoading)
         return (

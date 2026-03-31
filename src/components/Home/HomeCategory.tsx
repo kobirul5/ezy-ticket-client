@@ -5,6 +5,7 @@ import Heading from "../shared/Heading";
 import useAuth from "@/Hooks/useAuth";
 import bus from "@/assets/Home_image/bus.webp";
 import dance from "@/assets/Home_image/dance.webp";
+import concert from "@/assets/Home_image/concert.webp";
 
 const HomeCategory: React.FC = () => {
   const { darkMode } = useAuth()! as any;
@@ -50,6 +51,15 @@ const HomeCategory: React.FC = () => {
       lightBg: "bg-[#D2B483]",
       darkBg: "bg-[#817351]",
       imageClass: "rounded-tl-[120px] lg:rounded-tl-[150px] rounded-br-[120px] lg:rounded-br-[150px]"
+    },
+    {
+      title: "Live Concerts",
+      description: "Enjoy incredible live music performances.",
+      image: concert,
+      path: "/events",
+      lightBg: "bg-[#386b72]",
+      darkBg: "bg-[#18393d]",
+      imageClass: "rounded-t-[150px]"
     }
   ];
 
