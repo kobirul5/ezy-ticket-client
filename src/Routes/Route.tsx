@@ -75,7 +75,7 @@ const Route = createBrowserRouter([
       },
       {
         path: "/payment/success/:tran_id",
-        element: <TravelPaymentSuccess />,
+        element: <PaymentSuccess />,
       },
       {
         path: "/payment/fail/:tran_id",

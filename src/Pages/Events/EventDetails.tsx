@@ -170,21 +170,23 @@ const EventDetails = () => {
       name: userInfo?.name,
       email: userInfo?.email,
       phone: userInfo?.phone,
-      address: userInfo?.address,
+      userId: userInfo?.id,
       price: parseFloat((eventData?.price * ticketQuantity * 1.05).toFixed(2)),
       product: eventData?.title,
       unitPrice: eventData?.price,
       charge: parseFloat((eventData?.price * ticketQuantity * 0.05).toFixed(2)),
       productCategory: eventData?.category,
-      eventId: eventData?._id,
+      eventId: eventData?.id,
       quantity: ticketQuantity,
       organizerPayment: "pending",
       organizer: eventData?.organizer,
       date: new Date().toISOString(),
     };
 
-    const res = await axiosSecure.post("/order", checkoutData);
-    if (res.data) {
+    const res = await axiosSecure.post("/orders/event-payment", checkoutData);
+    if (res.data?.success && res.data?.data?.url) {
+      window.location.replace(res.data.data.url);
+    } else if (res.data?.url) {
       window.location.replace(res.data.url);
     }
   };
