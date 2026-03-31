@@ -1,5 +1,5 @@
 import useAuth from "@/Hooks/useAuth";
-import { useGetAllUsersQuery, useRemoveUserByAdminMutation, useChangeUserRoleMutation } from "@/app/features/user/userApi";
+import { useGetAllUsersQuery, useRemoveUserByAdminMutation, useAdminChangeUserRoleMutation } from "@/app/features/user/userApi";
 import Swal from "sweetalert2";
 import { FaTrashAlt, FaUserEdit } from "react-icons/fa";
 import noImage from "@/assets/Common_image/noImage.png";
@@ -9,7 +9,7 @@ const ManageUsers = () => {
     const { data: usersResponse, isLoading: usersLoading } = useGetAllUsersQuery({});
     const savedUsers = usersResponse?.data || [];
     const [removeUser] = useRemoveUserByAdminMutation();
-    const [changeRole] = useChangeUserRoleMutation();
+    const [changeRole] = useAdminChangeUserRoleMutation();
 
     // Handle user deletion
     const handleDeleteUser = (user: any) => {
@@ -56,7 +56,7 @@ const ManageUsers = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res = await changeRole({ role: newRole }).unwrap();
+                    const res = await changeRole({ id: user.id, role: newRole }).unwrap();
                     if (res.success) {
                         Swal.fire({
                             title: "Updated!",

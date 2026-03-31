@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { useGetAllEventsQuery } from "@/app/features/event/eventApi";
+import { useGetAllEventsQuery, useVerifyEventMutation } from "@/app/features/event/eventApi";
 import noImage from "@/assets/Common_image/noImage.png"
 import Swal from "sweetalert2";
-import useAxiosSecure from "@/Hooks/useAxiosSecure";
 
 const ManageEvents = () => {
-    const axiosSecure = useAxiosSecure();
     const [selectedEvent, setSelectedEvent] = useState<any>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { data: res, isLoading, isError, refetch } = useGetAllEventsQuery({});
+    const [verifyEvent] = useVerifyEventMutation();
+
     const allEventsArray = Array.isArray(res?.data) ? res.data : (res?.data?.data || []);
     const allEvents = Array.isArray(allEventsArray) ? allEventsArray : [];
 
@@ -23,41 +23,47 @@ const ManageEvents = () => {
         setSelectedEvent(null);
     };
 
-    const handleApprove = (id: string) => {
-        axiosSecure.patch(`/verifyEvent/${id}`, { status: "verified" })
-            .then(res => {
-                const data = res.data;
-                refetch();
-                if (data.success) {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Congratulation! The Event has been verified",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            })
-
+    const handleApprove = async (id: string) => {
+        try {
+            const res = await verifyEvent({ id, status: "verified" }).unwrap();
+            if (res.success) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Congratulation! The Event has been verified",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Failed to verify event"
+            });
+        }
         handleCloseModal();
     };
 
-    const handleReject = (id: string) => {
-        axiosSecure.patch(`/verifyEvent/${id}`, { status: "rejected" })
-            .then(res => {
-                const data = res.data;
-                refetch();
-                if (data.success) {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Sorry! The Event has been rejected",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            })
-
+    const handleReject = async (id: string) => {
+        try {
+            const res = await verifyEvent({ id, status: "rejected" }).unwrap();
+            if (res.success) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Sorry! The Event has been rejected",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Failed to reject event"
+            });
+        }
         handleCloseModal();
     };
 

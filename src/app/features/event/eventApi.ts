@@ -64,6 +64,16 @@ export const eventApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["Event"],
         }),
+
+        // Verify/Reject an event (admin only)
+        verifyEvent: builder.mutation({
+            query: ({ id, status }) => ({
+                url: `/verifyEvent/${id}`,
+                method: "PATCH",
+                body: { status },
+            }),
+            invalidatesTags: ["Event"],
+        }),
     }),
 });
 
@@ -74,4 +84,5 @@ export const {
     useGetSingleEventQuery,
     useUpdateEventMutation,
     useDeleteEventMutation,
+    useVerifyEventMutation,
 } = eventApi;

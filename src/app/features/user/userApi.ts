@@ -66,6 +66,16 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+
+    // Admin change user role (admin only)
+    adminChangeUserRole: builder.mutation({
+      query: ({ id, role }) => ({
+        url: `/user/admin/change-role/${id}`,
+        method: "PATCH",
+        body: { role },
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
@@ -77,4 +87,5 @@ export const {
   useGetSingleUserQuery,
   useSuspendUserMutation,
   useRemoveUserByAdminMutation,
+  useAdminChangeUserRoleMutation,
 } = userApi;
