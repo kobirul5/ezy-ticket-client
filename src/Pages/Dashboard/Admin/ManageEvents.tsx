@@ -28,7 +28,7 @@ const ManageEvents = () => {
             .then(res => {
                 const data = res.data;
                 refetch();
-                if (data.modifiedCount > 0) {
+                if (data.success) {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
@@ -47,7 +47,7 @@ const ManageEvents = () => {
             .then(res => {
                 const data = res.data;
                 refetch();
-                if (data.modifiedCount > 0) {
+                if (data.success) {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
@@ -90,7 +90,7 @@ const ManageEvents = () => {
                                 </tr>
                             ) : (
                                 allEvents.map((event: any) => (
-                                    <tr key={event._id} className="hover:bg-gray-50">
+                                    <tr key={event.id} className="hover:bg-gray-50">
                                         <td className="p-2">
                                             <img src={event?.image ? event.image : noImage} alt={event.title} className="w-20 h-16 rounded" />
                                         </td>
@@ -152,10 +152,10 @@ const ManageEvents = () => {
                         <p><strong>Price:</strong> ${selectedEvent.price}</p>
 
                         <div className="flex justify-end gap-2 md:gap-4 mt-4">
-                            <button className="ezy-button-primary-sm" onClick={() => handleApprove(selectedEvent._id)}>
+                            <button className="ezy-button-primary-sm" onClick={() => handleApprove(selectedEvent.id)}>
                                 Approve
                             </button>
-                            <button className="ezy-button-secondary-sm" onClick={()=>handleReject(selectedEvent._id)}>
+                            <button className="ezy-button-secondary-sm" onClick={()=>handleReject(selectedEvent.id)}>
                                 Reject
                             </button>
                             <button className="btn btn-outline btn-sm" onClick={handleCloseModal}>

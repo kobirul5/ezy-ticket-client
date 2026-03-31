@@ -17,9 +17,9 @@ const TravelBanner = () => {
 
     return (
         <>
-            <div className="relative mb-40 h-[720px] md:h-[450px] xl:h-[470px]">
+            <div className="relative mb-64 md:mb-40 h-[300px] md:h-[500px]">
                 <div
-                    className="hero md:min-h-[500px] min-h-screen bg-cover"
+                    className="hero h-full bg-cover"
                     style={{
                         backgroundImage: `url(${travelBannerImage})`,
                     }}>
@@ -43,7 +43,7 @@ const TravelBanner = () => {
                 {/* cards */}
 
                 <div className="flex justify-center items-center">
-                    <div className=" absolute z-20 top-[380px] md:top-[400px]  ">
+                    <div className=" absolute z-20 top-[220px] md:top-[420px]  ">
                         <div className="text-black md:px-5">
                             <SelectPlaceTime />
                         </div>
