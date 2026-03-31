@@ -2,28 +2,19 @@ import { MdDateRange } from "react-icons/md";
 import Loading from "../shared/Loading/Loading";
 import useAuth from "@/Hooks/useAuth";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "@/Hooks/useAxiosPublic";
+import { useGetAllEventsQuery } from "@/app/features/event/eventApi";
 import { FaBangladeshiTakaSign, FaRegClock } from "react-icons/fa6";
 import { GiTicket } from "react-icons/gi";
 
 const EventCards = () => {
   const { darkMode } = useAuth() as any;
-  const axiosPublic = useAxiosPublic();
-
-  const {
-    data: events = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["topEvents"],
-    queryFn: async () => {
-      const res = await axiosPublic.get("/topEvents");
-      return (res.data as any[]).sort(
-        (a, b) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime()
-      ); // Sorting after fetching
-    },
-  });
+  const { data: responseData, isLoading, error } = useGetAllEventsQuery({});
+  
+  // Fallback safely and grab the actual events array
+  const eventsArray = Array.isArray(responseData?.data) ? responseData.data : (responseData?.data?.data || []);
+  const events = [...eventsArray].sort(
+      (a: any, b: any) => new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime()
+  );
 
   if (isLoading)
     return (

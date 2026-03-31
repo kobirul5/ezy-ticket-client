@@ -1,20 +1,15 @@
 import { FaCalendarPlus, FaTicketAlt, FaChartLine, FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import useAuth from "@/Hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import { useGetMyEventsQuery } from "@/app/features/event/eventApi";
 
 const EventManagerHome = () => {
     const { user } = useAuth()! as any;
-    const axiosSecure = useAxiosSecure();
-
-    const { data: myEvents = [] } = useQuery({
-        queryKey: ["myEvents", user?.email],
-        queryFn: async () => {
-            const res = await axiosSecure.get(`/events/${user?.email}`);
-            return res.data;
-        }
+    const { data: res } = useGetMyEventsQuery(user?.email, {
+        skip: !user?.email
     });
+    const myEventsWrapper = Array.isArray(res?.data) ? res.data : (res?.data?.data || []);
+    const myEvents = Array.isArray(myEventsWrapper) ? myEventsWrapper : [];
 
     const totalSold = myEvents.reduce((acc: number, event: any) => acc + (event.soldTickets || 0), 0);
     const pendingEvents = myEvents.filter((e: any) => e.status !== "verified").length;

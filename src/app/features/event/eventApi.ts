@@ -37,6 +37,15 @@ export const eventApi = baseApi.injectEndpoints({
             providesTags: ["Event"],
         }),
 
+        // Get single event
+        getSingleEvent: builder.query({
+            query: (id) => ({
+                url: `/events/${id}`,
+                method: "GET",
+            }),
+            providesTags: ["Event"],
+        }),
+
         // Update an event (FormData supported)
         updateEvent: builder.mutation({
             query: ({ id, formData }) => ({
@@ -62,6 +71,7 @@ export const {
     useCreateEventMutation,
     useGetAllEventsQuery,
     useGetMyEventsQuery,
+    useGetSingleEventQuery,
     useUpdateEventMutation,
     useDeleteEventMutation,
 } = eventApi;

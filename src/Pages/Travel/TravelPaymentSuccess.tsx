@@ -48,7 +48,7 @@ const TravelPaymentSuccess = () => {
         <>
             <div className="min-h-screen  pt-24 pb-12 px-4 sm:px-6 lg:px-8">
                 <div ref={contentRef} className="max-w-3xl mx-auto">
-                    <div className="text-center mb-8">
+                    <div className="text-center mb-8 no-print">
                         <div className="flex items-center gap-3 mx-auto w-fit">
                             <div className="p-2 rounded-full bg-green-100">
                                 <FaCircleCheck className="text-4xl text-green-600" />
@@ -64,8 +64,9 @@ const TravelPaymentSuccess = () => {
                     </div>
 
                     <div
+                        ref={contentRef}
                         className={`
-                        ${darkMode ? "bg-[#1d1d1d] text-white" :
+                        ${darkMode ? "bg-[#1d1d1d] text-white no-print-bg" :
                                 "bg-white"}  
                     shadow-lg rounded-lg overflow-hidden`}>
                         <div className="px-6 py-5 bg-main text-white flex items-center">
@@ -184,7 +185,6 @@ const TravelPaymentSuccess = () => {
                                     </div>
                                     {/* Charge (5% */}
                                     <div className="flex justify-between py-2">
-
                                         <p className="payment font-semibold">Charge (5%)</p>
                                         <p className="font-medium">Tk {(payment?.totalPrices - (payment?.seatPrice * (payment?.selectedSeats?.length || 0))).toFixed(2)}</p>
                                     </div>
@@ -197,7 +197,7 @@ const TravelPaymentSuccess = () => {
                                 </div>
                             </div>
 
-                            <div className="mt-4">
+                            <div className="mt-4 no-print">
                                 <h3 className="text-lg font-medium  mb-4 flex items-center">
                                     <FiHash className="mr-2" /> 
                                     Next Steps
@@ -216,9 +216,9 @@ const TravelPaymentSuccess = () => {
                     </div>
 
                 </div>
-                <div className="px-6 py-8  text-center">
+                <div className="px-6 py-8  text-center no-print">
                     <button
-                        // onClick={handlePrint}
+                        onClick={() => handlePrint()}
                         className="ezy-button-primary"
                     >
                         Print Receipt

@@ -3,8 +3,7 @@ import Loading from "../../shared/Loading/Loading";
 import useAxiosSecure from "@/Hooks/useAxiosSecure";
 import useAuth from "@/Hooks/useAuth";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "@/Hooks/useAxiosPublic";
+import { useGetAllEventsQuery } from "@/app/features/event/eventApi";
 import { useState } from "react";
 import { FaBangladeshiTakaSign, FaRegClock } from "react-icons/fa6";
 import { GiTicket } from "react-icons/gi";
@@ -12,7 +11,6 @@ import EventOffer from "../EventOffer";
 
 const AllEvents = () => {
   const { darkMode } = useAuth() as any;
-  const axiosPublic = useAxiosPublic();
   const [currentPage, setCurrentPage] = useState(1);
   const eventsPerPage = 13; // 3 rows × 4 cols = 12 cards
 
@@ -24,19 +22,12 @@ const AllEvents = () => {
   };
 
 
-  const {
-    data: events = [],
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["events"],
-    queryFn: async () => {
-      const res = await axiosPublic.get("/events");
-      return (res.data as any[]).sort(
-        (a, b) => new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime()
-      );
-    },
-  });
+  const { data: responseData, isLoading, error } = useGetAllEventsQuery({});
+
+  const eventsArray = Array.isArray(responseData?.data) ? responseData.data : (responseData?.data?.data || []);
+  const events = [...eventsArray].sort(
+      (a: any, b: any) => new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime()
+  );
 
   if (error)
     return <p className="text-center text-red-500">Error: {(error as Error).message}</p>;

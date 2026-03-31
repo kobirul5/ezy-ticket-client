@@ -17,6 +17,7 @@ import Contact from "../Pages/Contact/Contact";
 import Dashboard from "../Layout/Dashboard";
 import TravelSelectSet from "../Pages/Travel/TravelSelectSet";
 import AddEvents from "../Pages/Dashboard/Events/AddEvents";
+import UpdateEvent from "../Pages/Dashboard/Events/UpdateEvent";
 import PrivateRoute from "./PrivateRoute";
 import ManageEvents from "../Pages/Dashboard/Admin/ManageEvents";
 import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
@@ -74,7 +75,7 @@ const Route = createBrowserRouter([
       },
       {
         path: "/payment/success/:tran_id",
-        element: <TravelPaymentSuccess />,
+        element: <PaymentSuccess />,
       },
       {
         path: "/payment/fail/:tran_id",
@@ -175,6 +176,10 @@ const Route = createBrowserRouter([
       {
         path: "addEvent",
         element: <AddEvents></AddEvents>,
+      },
+      {
+        path: "updateEvent/:id",
+        element: <UpdateEvent />,
       },
       {
         path: "manageEventReview",

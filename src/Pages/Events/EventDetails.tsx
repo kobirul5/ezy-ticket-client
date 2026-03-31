@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { motion } from "framer-motion";
@@ -27,6 +27,7 @@ import {
 import { GiTicket } from "react-icons/gi";
 import { FaMapMarkerAlt, FaMoneyCheckAlt } from "react-icons/fa";
 import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import { useGetSingleEventQuery, useGetAllEventsQuery } from "@/app/features/event/eventApi";
 
 const EventDetails = () => {
   // Hooks and state
@@ -59,29 +60,15 @@ const EventDetails = () => {
   }, []);
 
   // Data fetching
-  const {
-    data: eventData,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["event", eventId],
-    queryFn: async () => {
-      const res = await axiosPublic.get(`/events/${eventId}`);
-      console.log(res.data);
-      return res.data;
-    },
-  });
+  const { data: eventDataRes, isLoading, error } = useGetSingleEventQuery(eventId, { skip: !eventId });
+  const eventData = eventDataRes?.data || eventDataRes;
 
-  const { data: suggestionsData, isLoading: isSuggestionsLoading } = useQuery({
-    queryKey: ["suggestions", eventData?.location],
-    queryFn: async () => {
-      const res = await axiosPublic.get(
-        `/events?location=${eventData?.location}`
-      );
-      return res.data;
-    },
-    enabled: !!eventData?.location,
-  });
+  const { data: suggestionsRes, isLoading: isSuggestionsLoading } = useGetAllEventsQuery(
+    { location: eventData?.location },
+    { skip: !eventData?.location }
+  );
+  const suggestionsDataArray = Array.isArray(suggestionsRes?.data) ? suggestionsRes.data : (suggestionsRes?.data?.data || []);
+  const suggestionsData = Array.isArray(suggestionsDataArray) ? suggestionsDataArray : [];
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -183,21 +170,23 @@ const EventDetails = () => {
       name: userInfo?.name,
       email: userInfo?.email,
       phone: userInfo?.phone,
-      address: userInfo?.address,
+      userId: userInfo?.id,
       price: parseFloat((eventData?.price * ticketQuantity * 1.05).toFixed(2)),
       product: eventData?.title,
       unitPrice: eventData?.price,
       charge: parseFloat((eventData?.price * ticketQuantity * 0.05).toFixed(2)),
       productCategory: eventData?.category,
-      eventId: eventData?._id,
+      eventId: eventData?.id,
       quantity: ticketQuantity,
       organizerPayment: "pending",
       organizer: eventData?.organizer,
       date: new Date().toISOString(),
     };
 
-    const res = await axiosSecure.post("/order", checkoutData);
-    if (res.data) {
+    const res = await axiosSecure.post("/orders/event-payment", checkoutData);
+    if (res.data?.success && res.data?.data?.url) {
+      window.location.replace(res.data.data.url);
+    } else if (res.data?.url) {
       window.location.replace(res.data.url);
     }
   };
