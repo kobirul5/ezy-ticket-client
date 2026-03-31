@@ -3,8 +3,8 @@ import useAuth from "@/Hooks/useAuth";
 import AboutCounter from "@/components/About/AboutCounter";
 import { MdMoreTime } from "react-icons/md";
 import { CiCreditCard1, CiMedicalClipboard } from "react-icons/ci";
-import { FaFacebookF, FaLinkedinIn, FaRegHandshake } from "react-icons/fa";
-import { TbColorFilter, TbPhoneCall } from "react-icons/tb";
+import { FaBus, FaFacebookF, FaLinkedinIn, FaRegHandshake, FaTicketAlt } from "react-icons/fa";
+import { TbColorFilter, TbPhoneCall, TbTicket } from "react-icons/tb";
 import { IoCallOutline, IoColorFilterOutline } from "react-icons/io5";
 import { PiHandshakeLight } from "react-icons/pi";
 import { BsGithub, BsTwitterX } from "react-icons/bs";
@@ -96,51 +96,64 @@ const About = () => {
 
   return (
     <div className={` text-black   ${darkMode ? "text-white" : ""}`}>
-      <div
-        className={` relative text-center ${darkMode ? "text-gray-600" : ""}`}
-      >
-        <div className="relative ">
+      <div className="relative w-full h-[300px] md:h-[500px] overflow-hidden">
+        {/* Background Layer */}
+        <div className="absolute inset-0">
           <img
             src="/contact2.jpg"
-            alt=""
-            className=" w-full object-cover h-[200px] md:h-[400px]"
+            alt="About Banner"
+            className="w-full h-full object-cover scale-105"
           />
-          <div className="bg-gradient-to-l from-black/50 to-gray-700/90 inset-0 absolute"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/10 dark:to-black/10"></div>
         </div>
 
-        <div className=" absolute top-20 md:top-45 ml-7 md:ml-20 text-white text-md md:text-xl mb-16">
-          <h1 className="text-2xl md:text-5xl font-bold mb-1 md:mb-4">About Us</h1>
-          <p className="flex text-gray-200">
-            Home <IoIosArrowForward className="my-auto" /> About
-          </p>
-          {/* <p className="text-lg max-w-2xl mx-auto">
-                  We"d love to hear from you! Whether you have a question, feedback, or just want to say hello — we’re here to help.
-                </p> */}
-        </div>
-
-
-
-        {/* Header Section */}
-        {/* <div className="relative flex h-[500px] overflow-hidden mt-32">
+        {/* Decorative Floating Elements */}
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-main/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/4 right-1/3 w-48 h-48 bg-supporting/10 rounded-full blur-3xl animate-float-delayed"></div>
         
-          <div className="w-full">
-            <img
-              src="/about1.jpg"
-              alt="Side"
-              className="h-full w-full object-cover"
-            />
-          </div>
+        <div className="absolute top-20 right-20 text-white/20 text-6xl rotate-12 animate-float hidden md:block">
+          <FaTicketAlt />
+        </div>
+        <div className="absolute bottom-40 right-10 text-main/30 text-5xl -rotate-12 animate-float-delayed hidden md:block">
+          <FaBus />
+        </div>
+        <div className="absolute top-40 left-10 text-supporting/20 text-4xl rotate-45 animate-float hidden md:block">
+          <TbTicket />
+        </div>
+        
+        {/* Main Content Container */}
+        <div className="relative h-full container mx-auto px-4 md:px-12 flex flex-col justify-center">
+          <div className="max-w-2xl">
+            {/* Breadcrumb Glass Card */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 glass-morphism rounded-full text-white/90 text-sm mb-6 animate-fade-in">
+              <Link to="/" className="hover:text-main transition-colors">Home</Link>
+              <IoIosArrowForward className="text-xs" />
+              <span className="font-medium">About Us</span>
+            </div>
 
-       
-          <div className="absolute top-0 right-0 h-full w-1/2 bg-white z-10 clip-diagonal-reverse pl-44 shadow-lg overflow-y-auto">
-            <h2 className="text-3xl font-bold mb-4">What We Are</h2>
-            <p className="text-gray-700">
-            We aim to simplify transportation and event experiences across the nation. Our platform empowers users to find, book, and manage travel and event plans with ease and efficiency — ensuring comfort, transparency, and trust at every step.
-            </p>
-            
-          </div>
-        </div> */}
+            {/* Title with Gradient Text */}
+            <h1 className="text-4xl md:text-7xl font-black text-white mb-6 leading-tight">
+              Crafting <span className="text-transparent bg-clip-text bg-gradient-to-r from-main to-emerald-300">Seamless</span> <br />
+              Journeys for You
+            </h1>
 
+            {/* Description Glass Card */}
+            <div className="glass-morphism p-6 rounded-2xl border-white/10 max-w-xl group hover:border-main/30 transition-all duration-500 mb-10">
+              <p className="text-white/80 text-sm md:text-lg leading-relaxed ">
+                We're redefining ticket booking with cutting-edge technology and human-centric design. Discover our mission to simplify your travel and event experiences.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Wave/Shape Divider (Optional but adds flair) */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+          <svg className="relative block w-full h-[40px] md:h-[60px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C58.47,103.1,118.9,101.46,174,84.51c51.15-15.74,103.11-47.53,147.39-28.07Z" 
+                  fill={darkMode ? "#121212" : "#F9FAFB"}></path>
+          </svg>
+        </div>
       </div>
 
 
@@ -149,7 +162,7 @@ const About = () => {
 
 
       {/* Our Mission Section */}
-      <div className="mt-20 w-10/12 md:w-full md:max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <div className="mt-20 container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
    
         <img
           src="/about2.jpg"
@@ -177,7 +190,7 @@ const About = () => {
          </div>
 
       {/* Features Section */}
-      <div className="mt-20 w-10/12 max-w-6xl mx-auto">
+      <div className="mt-20 container mx-auto px-4">
         <h2 className="text-xl md:text-3xl font-semibold text-center  mb-12">
           {" "}
           Why Choose Us
@@ -201,7 +214,7 @@ const About = () => {
       </div>
 
       {/* Team Section */}
-      <div className="my-32 w-11/12 max-w-7xl mx-auto">
+      <div className="my-32 container mx-auto px-4">
         <div className="text-center mb-16">
           <p className="text-main font-bold tracking-widest uppercase text-sm mb-3">Our Visionaries</p>
           <h2 className="text-4xl md:text-5xl font-black text-slate-800">

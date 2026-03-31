@@ -12,7 +12,7 @@ const EventBanner: React.FC<EventBannerProps> = ({scrollToSection}) => {
     return (
         <>
             <div
-                className="relative bg-cover bg-center h-[60vh] md:h-[70vh] lg:h-[80vh] flex text-white mb-8 md:mb-16 lg:mb-20"
+                className="relative bg-cover bg-center h-[300px] md:h-[500px] flex text-white mb-8 md:mb-16 lg:mb-20"
                 style={{
                     backgroundImage: `url(${eventBanner})`
                 }}
