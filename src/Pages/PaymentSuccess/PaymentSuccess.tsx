@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { FiPackage, FiHash } from "react-icons/fi";
 import { useGetOrderByTranIdQuery } from "@/app/features/order/orderApi";
 import useAuth from "@/Hooks/useAuth";
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 
 const PaymentSuccess = () => {
     const { tran_id } = useParams();
@@ -10,6 +12,9 @@ const PaymentSuccess = () => {
     const { data: orderRes, isLoading, isError } = useGetOrderByTranIdQuery(tran_id);
     const order = orderRes?.data;
     const orderDetails = order?.orderData as any;
+
+    const contentRef = useRef<HTMLDivElement>(null);
+    const handlePrint = useReactToPrint({ contentRef } as any);
 
     if (isLoading) return (
         <div className="min-h-screen pt-24 flex items-center justify-center">
@@ -28,7 +33,7 @@ const PaymentSuccess = () => {
     return (
         <div className={`min-h-screen pt-24 pb-12 px-4 sm:px-6 lg:px-8 ${darkMode ? "bg-dark-background" : "bg-gray-50"}`}>
             <div className="max-w-3xl mx-auto">
-                <div className="text-center mb-8">
+                <div className="text-center mb-8 no-print">
                     <div className="flex items-center gap-3 mx-auto w-fit">
                         <div className="p-2 rounded-full bg-green-100">
                             <FaCircleCheck className="text-4xl text-green-600" />
@@ -42,7 +47,7 @@ const PaymentSuccess = () => {
                     </p>
                 </div>
 
-                <div className={`${darkMode ? "bg-dark-surface" : "bg-white"} shadow-lg rounded-lg overflow-hidden`}>
+                <div ref={contentRef} className={`${darkMode ? "bg-dark-surface no-print-bg" : "bg-white"} shadow-lg rounded-lg overflow-hidden`}>
                     <div className="px-6 py-5 bg-main text-white flex items-center">
                         <FaReceipt className="h-6 w-6 mr-2" />
                         <h2 className="text-xl font-semibold">Order Receipt</h2>
@@ -98,7 +103,7 @@ const PaymentSuccess = () => {
                             </div>
                         </div>
 
-                        <div className="mt-8">
+                        <div className="mt-8 no-print">
                             <h3 className={`text-lg font-medium mb-4 flex items-center ${darkMode ? "text-white" : "text-gray-900"}`}>
                                 <FiHash className="mr-2" /> Next Steps
                             </h3>
@@ -110,18 +115,18 @@ const PaymentSuccess = () => {
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className={`px-6 py-4 flex flex-col md:flex-row gap-4 items-center justify-center border-t ${darkMode ? "bg-[#2d2d2d] border-gray-700" : "bg-gray-50 border-gray-200"}`}>
-                        <button
-                            onClick={() => window.print()}
-                            className="ezy-button-primary"
-                        >
-                            Print Receipt
-                        </button>
-                        <a href="/" className={`font-medium hover:underline ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
-                            Back to Home
-                        </a>
-                    </div>
+                <div className={`mt-8 px-6 py-4 flex flex-col md:flex-row gap-4 items-center justify-center no-print`}>
+                    <button
+                        onClick={() => handlePrint()}
+                        className="ezy-button-primary"
+                    >
+                        Print Receipt
+                    </button>
+                    <a href="/" className={`font-medium hover:underline ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
+                        Back to Home
+                    </a>
                 </div>
             </div>
         </div>
