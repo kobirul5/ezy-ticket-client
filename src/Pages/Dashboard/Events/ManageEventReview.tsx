@@ -4,7 +4,8 @@ import useEventReview from "@/Hooks/useEventReview";
 import useAxiosSecure from "@/Hooks/useAxiosSecure";
 
 const ManageEventReview = () => {
-  const [eventReviews, setEventReviews, isLoading, refetch] = useEventReview() as any;
+  const [eventReviews, setEventReviews, isLoading, refetch] =
+    useEventReview() as any;
   const axiosSecure = useAxiosSecure();
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
@@ -37,7 +38,7 @@ const ManageEventReview = () => {
           Swal.fire(
             "Success!",
             "Review verified successfully!",
-            "success"
+            "success",
           ).then(() => {
             const updatedReviews = eventReviews.map((review: any) => {
               if (review._id === selectedEvent._id) {
@@ -47,7 +48,9 @@ const ManageEventReview = () => {
             });
             setEventReviews(updatedReviews);
             setSelectedEvent(null);
-            (document.getElementById("verify_modal") as HTMLDialogElement).close();
+            (
+              document.getElementById("verify_modal") as HTMLDialogElement
+            ).close();
           });
         } else {
           // Handle cases when modifiedCount is 0 and provide better feedback
@@ -55,7 +58,7 @@ const ManageEventReview = () => {
             "Error",
             res.data.message ||
               "Failed to verify the review. It may already be verified or does not exist.",
-            "error"
+            "error",
           );
         }
       })

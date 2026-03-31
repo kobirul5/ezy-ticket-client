@@ -1,182 +1,225 @@
 import useAuth from "@/Hooks/useAuth";
-import { useGetAllUsersQuery, useRemoveUserByAdminMutation, useAdminChangeUserRoleMutation } from "@/app/features/user/userApi";
+import {
+  useGetAllUsersQuery,
+  useRemoveUserByAdminMutation,
+  useAdminChangeUserRoleMutation,
+} from "@/app/features/user/userApi";
 import Swal from "sweetalert2";
 import { FaTrashAlt, FaUserEdit } from "react-icons/fa";
 import noImage from "@/assets/Common_image/noImage.png";
 
 const ManageUsers = () => {
-    const { user } = useAuth()! as any;
-    const { data: usersResponse, isLoading: usersLoading } = useGetAllUsersQuery({});
-    const savedUsers = usersResponse?.data || [];
-    const [removeUser] = useRemoveUserByAdminMutation();
-    const [changeRole] = useAdminChangeUserRoleMutation();
+  const { user } = useAuth()! as any;
+  const { data: usersResponse, isLoading: usersLoading } = useGetAllUsersQuery(
+    {},
+  );
+  const savedUsers = usersResponse?.data || [];
+  const [removeUser] = useRemoveUserByAdminMutation();
+  const [changeRole] = useAdminChangeUserRoleMutation();
 
-    // Handle user deletion
-    const handleDeleteUser = (user: any) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: `You want to delete ${user.name}?`,
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete!"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    const res = await removeUser(user.id).unwrap();
-                    if (res.success) {
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: `${user.name} has been deleted.`,
-                            icon: "success"
-                        });
-                    }
-                } catch (error) {
-                    Swal.fire({
-                        title: "Error!",
-                        text: "Failed to delete user.",
-                        icon: "error"
-                    });
-                }
-            }
-        });
-    };
+  // Handle user deletion
+  const handleDeleteUser = (user: any) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: `You want to delete ${user.name}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await removeUser(user.id).unwrap();
+          if (res.success) {
+            Swal.fire({
+              title: "Deleted!",
+              text: `${user.name} has been deleted.`,
+              icon: "success",
+            });
+          }
+        } catch (error) {
+          Swal.fire({
+            title: "Error!",
+            text: "Failed to delete user.",
+            icon: "error",
+          });
+        }
+      }
+    });
+  };
 
-    // Handle role change
-    const handleChangeRole = (user: any, newRole: string) => {
-        Swal.fire({
-            title: "Change Role",
-            text: `Change ${user.name}"s role to ${newRole}?`,
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, update!"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    const res = await changeRole({ id: user.id, role: newRole }).unwrap();
-                    if (res.success) {
-                        Swal.fire({
-                            title: "Updated!",
-                            text: `${user.name}"s role has been updated to ${newRole}.`,
-                            icon: "success"
-                        });
-                    }
-                } catch (error) {
-                    Swal.fire({
-                        title: "Error!",
-                        text: "Failed to update role.",
-                        icon: "error"
-                    });
-                }
-            }
-        });
-    };
+  // Handle role change
+  const handleChangeRole = (user: any, newRole: string) => {
+    Swal.fire({
+      title: "Change Role",
+      text: `Change ${user.name}"s role to ${newRole}?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, update!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await changeRole({ id: user.id, role: newRole }).unwrap();
+          if (res.success) {
+            Swal.fire({
+              title: "Updated!",
+              text: `${user.name}"s role has been updated to ${newRole}.`,
+              icon: "success",
+            });
+          }
+        } catch (error) {
+          Swal.fire({
+            title: "Error!",
+            text: "Failed to update role.",
+            icon: "error",
+          });
+        }
+      }
+    });
+  };
 
-    if (usersLoading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <span className="loading loading-spinner loading-lg"></span>
-            </div>
-        );
-    }
-
+  if (usersLoading) {
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h2 className="text-3xl md:text-5xl font-semibold text-center mb-8">Manage Users</h2>
-
-            <div className="bg-white rounded-lg shadow-md overflow-x-auto">
-                <table className="table w-full">
-                    {/* Table Header */}
-                    <thead className="bg-gray-100">
-                        <tr>
-                            <th>Photo</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-
-                    {/* Table Body */}
-                    <tbody>
-                        {savedUsers.map((savedUser: any) => {
-                            const isCurrentUser = savedUser.email === user?.email;
-                            return (
-                                <tr key={savedUser.id} className="hover:bg-gray-50">
-                                    <td>
-                                        <div className="avatar">
-                                            <div className="w-16 h-16 rounded-full">
-                                                <img
-                                                    src={savedUser?.picture || noImage}
-                                                    alt={savedUser.name}
-                                                    className="object-cover"
-                                                />
-                                                {isCurrentUser && (
-                                                    <div className="absolute -bottom-1 -right-1 text-xs px-1 py-0.5 bg-main rounded text-white font-medium">
-                                                        You
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <div className="font-bold">{savedUser.name}</div>
-                                        </div>
-                                    </td>
-                                    <td>{savedUser.email}</td>
-                                    <td className="capitalize">{savedUser.role || "user"}</td>
-                                    <td>
-                                        <div className="flex gap-2">
-                                            {/* Change Role Dropdown - Disabled for current user */}
-                                            <div className="dropdown dropdown-bottom">
-                                                <div
-                                                    tabIndex={0}
-                                                    role="button"
-                                                    className={`btn btn-sm btn-outline btn-primary ${isCurrentUser ? "btn-disabled opacity-90" : ""}`}
-                                                    aria-disabled={isCurrentUser}
-                                                >
-                                                    <FaUserEdit /> Role
-                                                </div>
-                                                {!isCurrentUser && (
-                                                    <ul tabIndex={0} className={`dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 ${savedUser?.role === "ADMIN" && "tooltip"}`}
-                                                        data-tip="Cannot modify your own account"
-                                                    >
-                                                        {
-                                                            savedUser?.role !== "ADMIN" &&
-                                                            <li><button onClick={() => handleChangeRole(savedUser, "ADMIN")}>Make Admin</button></li>
-                                                        }
-
-                                                        <li><button onClick={() => handleChangeRole(savedUser, "TRAVEL_MANAGER")}>Travel Manager</button></li>
-
-                                                        <li><button onClick={() => handleChangeRole(savedUser, "EVENT_MANAGER")}>Event Manager</button></li>
-
-                                                        <li><button onClick={() => handleChangeRole(savedUser, "USER")}>Make Regular User</button></li>
-                                                    </ul>
-                                                )}
-                                            </div>
-
-                                            {/* Delete Button - Disabled for current user */}
-                                            <button
-                                                onClick={() => !isCurrentUser && handleDeleteUser(savedUser)}
-                                                className={`btn btn-sm btn-outline btn-error ${isCurrentUser ? "btn-disabled opacity-80" : ""}`}
-                                                disabled={isCurrentUser}
-                                            >
-                                                <FaTrashAlt /> Remove
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+      <div className="min-h-screen flex items-center justify-center">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
     );
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h2 className="text-3xl md:text-5xl font-semibold text-center mb-8">
+        Manage Users
+      </h2>
+
+      <div className="bg-white rounded-lg shadow-md overflow-x-auto">
+        <table className="table w-full">
+          {/* Table Header */}
+          <thead className="bg-gray-100">
+            <tr>
+              <th>Photo</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          {/* Table Body */}
+          <tbody>
+            {savedUsers.map((savedUser: any) => {
+              const isCurrentUser = savedUser.email === user?.email;
+              return (
+                <tr key={savedUser.id} className="hover:bg-gray-50">
+                  <td>
+                    <div className="avatar">
+                      <div className="w-16 h-16 rounded-full">
+                        <img
+                          src={savedUser?.picture || noImage}
+                          alt={savedUser.name}
+                          className="object-cover"
+                        />
+                        {isCurrentUser && (
+                          <div className="absolute -bottom-1 -right-1 text-xs px-1 py-0.5 bg-main rounded text-white font-medium">
+                            You
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <div className="font-bold">{savedUser.name}</div>
+                    </div>
+                  </td>
+                  <td>{savedUser.email}</td>
+                  <td className="capitalize">{savedUser.role || "user"}</td>
+                  <td>
+                    <div className="flex gap-2">
+                      {/* Change Role Dropdown - Disabled for current user */}
+                      <div className="dropdown dropdown-bottom">
+                        <div
+                          tabIndex={0}
+                          role="button"
+                          className={`btn btn-sm btn-outline btn-primary ${isCurrentUser ? "btn-disabled opacity-90" : ""}`}
+                          aria-disabled={isCurrentUser}
+                        >
+                          <FaUserEdit /> Role
+                        </div>
+                        {!isCurrentUser && (
+                          <ul
+                            tabIndex={0}
+                            className={`dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52 ${savedUser?.role === "ADMIN" && "tooltip"}`}
+                            data-tip="Cannot modify your own account"
+                          >
+                            {savedUser?.role !== "ADMIN" && (
+                              <li>
+                                <button
+                                  onClick={() =>
+                                    handleChangeRole(savedUser, "ADMIN")
+                                  }
+                                >
+                                  Make Admin
+                                </button>
+                              </li>
+                            )}
+
+                            <li>
+                              <button
+                                onClick={() =>
+                                  handleChangeRole(savedUser, "TRAVEL_MANAGER")
+                                }
+                              >
+                                Travel Manager
+                              </button>
+                            </li>
+
+                            <li>
+                              <button
+                                onClick={() =>
+                                  handleChangeRole(savedUser, "EVENT_MANAGER")
+                                }
+                              >
+                                Event Manager
+                              </button>
+                            </li>
+
+                            <li>
+                              <button
+                                onClick={() =>
+                                  handleChangeRole(savedUser, "USER")
+                                }
+                              >
+                                Make Regular User
+                              </button>
+                            </li>
+                          </ul>
+                        )}
+                      </div>
+
+                      {/* Delete Button - Disabled for current user */}
+                      <button
+                        onClick={() =>
+                          !isCurrentUser && handleDeleteUser(savedUser)
+                        }
+                        className={`btn btn-sm btn-outline btn-error ${isCurrentUser ? "btn-disabled opacity-80" : ""}`}
+                        disabled={isCurrentUser}
+                      >
+                        <FaTrashAlt /> Remove
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
 
 export default ManageUsers;
