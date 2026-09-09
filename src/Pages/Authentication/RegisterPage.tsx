@@ -16,8 +16,8 @@ import useAuth from "@/Hooks/useAuth";
 import { useRegisterUserMutation } from "@/app/features/auth/authApi";
 
 function RegisterPage() {
-  const { darkMode, setLoading, setUser } = useAuth()! as any;
-  const [registerUser] = useRegisterUserMutation();
+  const { darkMode, setUser, refetchUserInfo } = useAuth()! as any;
+  const [registerUser, { isLoading: isRegistering }] = useRegisterUserMutation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -34,7 +34,6 @@ function RegisterPage() {
 
   const onSubmit = async (data: any) => {
     try {
-      setLoading(true);
       const result = await registerUser({
         name: data.name,
         email: data.email,
@@ -43,6 +42,9 @@ function RegisterPage() {
 
       if (result?.success) {
         setUser(result.data);
+        if (refetchUserInfo) {
+          refetchUserInfo();
+        }
         Swal.fire({
           icon: "success",
           title: "Registration Successful",
@@ -53,10 +55,7 @@ function RegisterPage() {
       }
     } catch (error: any) {
       toast.error(error?.data?.message || "Registration failed");
-      setLoading(false);
       console.log(error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -240,13 +239,21 @@ function RegisterPage() {
             {/* Submit */}
             <button
               type="submit"
-              disabled={password !== confirmPassword}
-              className={`w-full py-3 rounded-lg shadow-md text-white font-semibold bg-supporting hover:scale-95 transition-transform ${password !== confirmPassword
-                ? "opacity-50 cursor-not-allowed"
-                : ""
-                }`}
+              disabled={password !== confirmPassword || isRegistering}
+              className={`w-full py-3 rounded-lg shadow-md text-white font-semibold bg-supporting hover:scale-95 transition-transform flex items-center justify-center gap-2 ${
+                password !== confirmPassword || isRegistering
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
             >
-              Register
+              {isRegistering ? (
+                <>
+                  <span className="loading loading-spinner loading-sm"></span>
+                  <span>Registering...</span>
+                </>
+              ) : (
+                "Register"
+              )}
             </button>
           </form>
 

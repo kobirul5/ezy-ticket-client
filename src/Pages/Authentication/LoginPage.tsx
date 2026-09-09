@@ -16,9 +16,9 @@ import { useForgotPasswordMutation, useLoginUserMutation } from "@/app/features/
 import QuickLoginButtons from "@/components/QuickLoginButtons";
 
 function LoginPage() {
-  const { setLoading, darkMode, setUser } = useAuth()! as any;
+  const { darkMode, setUser, refetchUserInfo } = useAuth()! as any;
   const navigate = useNavigate();
-  const [loginUser] = useLoginUserMutation();
+  const [loginUser, { isLoading: isLoggingIn }] = useLoginUserMutation();
   const [forgotPassword] = useForgotPasswordMutation();
 
   const {
@@ -36,10 +36,12 @@ function LoginPage() {
   const onSubmit = async (data: any) => {
     const { email, password } = data;
     try {
-      setLoading(true);
       const result = await loginUser({ email, password }).unwrap();
       if (result?.success) {
         setUser(result.data?.user);
+        if (refetchUserInfo) {
+          refetchUserInfo();
+        }
         Swal.fire({
           icon: "success",
           title: "Login Successful",
@@ -49,15 +51,12 @@ function LoginPage() {
         navigate("/");
       }
     } catch (error: any) {
-      setLoading(false);
       console.log(error);
       Swal.fire({
         icon: "error",
         title: "Login Failed",
         text: error?.data?.message || "Invalid credentials",
       });
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -219,9 +218,17 @@ function LoginPage() {
             {/* Login Button */}
             <button
               type="submit"
-              className="w-full text-center py-3 bg-supporting rounded-lg shadow-md transition-transform hover:scale-95 text-white font-semibold"
+              disabled={isLoggingIn}
+              className="w-full text-center py-3 bg-supporting rounded-lg shadow-md transition-transform hover:scale-95 text-white font-semibold flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              Login
+              {isLoggingIn ? (
+                <>
+                  <span className="loading loading-spinner loading-sm"></span>
+                  <span>Logging in...</span>
+                </>
+              ) : (
+                "Login"
+              )}
             </button>
           </form>
 
