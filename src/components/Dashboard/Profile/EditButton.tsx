@@ -77,18 +77,19 @@ const EditButton = ({ user, refetch }: { user: any, refetch: any }) => {
       const res = await updateProfile(formData).unwrap();
 
       if (res.success) {
+        closeModal();
         refetch(); // Refetch profile data
-        await Swal.fire({
+        Swal.fire({
           title: "Updated!",
           text: "Profile updated successfully.",
           icon: "success",
           timer: 1500,
           showConfirmButton: false
         });
-        closeModal();
       }
     } catch (error: any) {
       console.error(error);
+      closeModal();
       Swal.fire({
         title: "Error!",
         text: error?.data?.message || "Failed to update profile.",
