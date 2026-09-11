@@ -176,7 +176,7 @@ const EventDetails = () => {
       unitPrice: eventData?.price,
       charge: parseFloat((eventData?.price * ticketQuantity * 0.05).toFixed(2)),
       productCategory: eventData?.category,
-      eventId: eventData?.id,
+      eventId: eventData?._id || eventData?.id,
       quantity: ticketQuantity,
       organizerPayment: "pending",
       organizer: eventData?.organizer,
