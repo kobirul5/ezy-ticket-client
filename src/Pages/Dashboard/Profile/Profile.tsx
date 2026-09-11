@@ -23,32 +23,48 @@ import useAuth from "@/Hooks/useAuth";
 
 const roleBadgeMap: Record<
   string,
-  { label: string; color: string; banner: string }
+  {
+    label: string;
+    color: string;
+    bannerGradient: string;
+    coverPhoto: string;
+    tagline: string;
+  }
 > = {
   ADMIN: {
     label: "Admin",
     color: "bg-rose-100 text-rose-700 border border-rose-200",
-    banner: "from-rose-500 via-pink-600 to-purple-700",
+    bannerGradient: "from-gray-950/90 via-rose-950/70 to-purple-950/90",
+    coverPhoto: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1600&auto=format&fit=crop",
+    tagline: "System Administration & Platform Governance",
   },
   SUPER_ADMIN: {
     label: "Super Admin",
     color: "bg-red-100 text-red-800 border border-red-200",
-    banner: "from-red-600 via-rose-600 to-indigo-800",
+    bannerGradient: "from-slate-950/95 via-red-950/70 to-indigo-950/90",
+    coverPhoto: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop",
+    tagline: "Master System Control & Security Operations",
   },
   EVENT_MANAGER: {
     label: "Event Manager",
     color: "bg-violet-100 text-violet-700 border border-violet-200",
-    banner: "from-violet-600 via-purple-600 to-indigo-700",
+    bannerGradient: "from-slate-950/90 via-purple-950/75 to-indigo-950/90",
+    coverPhoto: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1600&auto=format&fit=crop",
+    tagline: "Live Concerts, Shows & Event Operations",
   },
   TRAVEL_MANAGER: {
     label: "Travel Manager",
     color: "bg-cyan-100 text-cyan-700 border border-cyan-200",
-    banner: "from-cyan-600 via-teal-600 to-emerald-700",
+    bannerGradient: "from-slate-950/90 via-teal-950/75 to-blue-950/90",
+    coverPhoto: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1600&auto=format&fit=crop",
+    tagline: "Express Bus Services & Route Operations",
   },
   USER: {
     label: "User",
     color: "bg-emerald-100 text-emerald-700 border border-emerald-200",
-    banner: "from-emerald-500 via-teal-600 to-cyan-600",
+    bannerGradient: "from-slate-950/90 via-emerald-950/75 to-teal-950/90",
+    coverPhoto: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1600&auto=format&fit=crop",
+    tagline: "Passionate Explorer & Ticket Booking Member",
   },
 };
 
@@ -175,6 +191,7 @@ const Profile = () => {
   const stats = getRoleStats(roleKey);
   const avatar = userInfo?.picture || userInfo?.photoURL || user?.photoURL || noImage;
   const displayName = userInfo?.name || user?.displayName || "Anonymous User";
+  const coverPhotoUrl = userInfo?.coverPhoto || userInfo?.coverImage || badge.coverPhoto;
 
   const infoItems = [
     {
@@ -208,10 +225,24 @@ const Profile = () => {
       <div className="max-w-5xl mx-auto space-y-6">
         {/* Hero Banner Card */}
         <div className="rounded-3xl overflow-hidden shadow-xl bg-white border border-gray-100">
-          {/* Banner Gradient */}
-          <div className={`relative h-48 sm:h-56 bg-gradient-to-r ${badge.banner} overflow-hidden`}>
-            <div className="absolute -top-12 -left-12 w-48 h-48 bg-white/10 rounded-full blur-2xl" />
-            <div className="absolute -bottom-12 right-12 w-48 h-48 bg-white/10 rounded-full blur-xl" />
+          {/* Role Cover Photo Banner */}
+          <div className="relative h-52 sm:h-64 md:h-72 w-full overflow-hidden bg-gray-900">
+            <img
+              src={coverPhotoUrl}
+              alt={`${badge.label} Cover`}
+              className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
+            />
+            {/* Dark Gradient Overlay for high readability & aesthetic polish */}
+            <div className={`absolute inset-0 bg-gradient-to-t ${badge.bannerGradient}`} />
+            <div className="absolute inset-0 bg-black/20" />
+
+            {/* Top Right Cover Tagline Badge */}
+            <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center gap-2">
+              <span className="bg-white/20 backdrop-blur-md text-white text-xs font-semibold px-3.5 py-1.5 rounded-full border border-white/30 shadow-lg flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                {badge.tagline}
+              </span>
+            </div>
           </div>
 
           {/* User Profile Header Details */}
