@@ -14,7 +14,8 @@ const ManageEventReview = () => {
   }
 
   const handleVerifyClick = (event: any) => {
-    if (!event._id) {
+    const reviewId = event.id || event._id;
+    if (!reviewId) {
       Swal.fire("Error", "Invalid review selected.", "error");
       return;
     }
@@ -22,15 +23,16 @@ const ManageEventReview = () => {
     (document.getElementById("verify_modal") as HTMLDialogElement).showModal();
   };
   const handleVerifySubmit = () => {
-    if (!selectedEvent || !selectedEvent._id) {
+    const reviewId = selectedEvent?.id || selectedEvent?._id;
+    if (!selectedEvent || !reviewId) {
       Swal.fire("Error", "No review selected for verification.", "error");
       return;
     }
 
-    console.log("Verifying review with ID:", selectedEvent._id); // Log review ID
+    console.log("Verifying review with ID:", reviewId); // Log review ID
 
     axiosSecure
-      .patch(`/verifyEvent/${selectedEvent._id}`, { status: "verified" })
+      .patch(`/verifyEvent/${reviewId}`, { status: "verified" })
       .then((res) => {
         console.log(res); // Log the response for debugging
 
@@ -41,7 +43,7 @@ const ManageEventReview = () => {
             "success",
           ).then(() => {
             const updatedReviews = eventReviews.map((review: any) => {
-              if (review._id === selectedEvent._id) {
+              if ((review.id || review._id) === reviewId) {
                 return { ...review, status: "verified" };
               }
               return review;
@@ -118,7 +120,7 @@ const ManageEventReview = () => {
                 </tr>
               ) : (
                 eventReviews.map((review: any, index: number) => (
-                  <tr key={review._id} className="hover:bg-gray-50">
+                  <tr key={review.id || review._id} className="hover:bg-gray-50">
                     <td className="p-2">{index + 1}</td>
                     <td className="p-2">{review.eventName}</td>
                     <td className="p-2">{review.customerName}</td>
@@ -149,7 +151,7 @@ const ManageEventReview = () => {
                       )}
                       <button
                         className="btn btn-sm btn-outline btn-error"
-                        onClick={() => handleDelete(review._id)}
+                        onClick={() => handleDelete(review.id || review._id)}
                         title="Delete"
                       >
                         🗑️

@@ -107,7 +107,7 @@ const ManageEvents = () => {
                 </tr>
               ) : (
                 allEvents.map((event: any) => (
-                  <tr key={event._id || event.id} className="hover:bg-gray-50">
+                  <tr key={event.id || event._id} className="hover:bg-gray-50">
                     <td className="p-2">
                       <img
                         src={event?.image ? event.image : noImage}
@@ -195,13 +195,13 @@ const ManageEvents = () => {
             <div className="flex justify-end gap-2 md:gap-4 mt-4">
               <button
                 className="ezy-button-primary-sm"
-                onClick={() => handleApprove(selectedEvent._id || selectedEvent.id)}
+                onClick={() => handleApprove(selectedEvent.id || selectedEvent._id)}
               >
                 Approve
               </button>
               <button
                 className="ezy-button-secondary-sm"
-                onClick={() => handleReject(selectedEvent._id || selectedEvent.id)}
+                onClick={() => handleReject(selectedEvent.id || selectedEvent._id)}
               >
                 Reject
               </button>

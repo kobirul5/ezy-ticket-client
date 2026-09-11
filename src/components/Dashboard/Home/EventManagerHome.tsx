@@ -51,7 +51,7 @@ const EventManagerHome = () => {
                     {myEvents.length > 0 ? (
                         <div className="space-y-4">
                             {myEvents.slice(0, 3).map((event: any) => (
-                                <div key={event._id} className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
+                                <div key={event.id || event._id} className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
                                     <div className="flex items-center gap-4">
                                         <img src={event.image} alt="" className="w-12 h-12 rounded-xl object-cover" />
                                         <div>

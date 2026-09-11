@@ -64,7 +64,7 @@ const AllEvents = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {displayedEvents.map((event: any) => {
             return (
-              <Link to={`/eventdetailspublic/${event._id}`} key={event._id}>
+              <Link to={`/eventdetailspublic/${event.id || event._id}`} key={event.id || event._id}>
                 <div
                   className={`${darkMode
                     ? "bg-dark-surface text-dark-primary"

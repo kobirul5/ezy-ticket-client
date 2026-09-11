@@ -115,16 +115,17 @@ const EventDetails = () => {
 
   useEffect(() => {
     const checkIfSaved = async () => {
-      if (!user?.email || !eventData?._id) return;
+      const eventIdVal = eventData?.id || eventData?._id;
+      if (!user?.email || !eventIdVal) return;
       try {
         const res = await axiosPublic.get(`/wishlist/${user.email}`);
-        setIsSaved((res.data as any[]).some((item) => item.eventId === eventData._id));
+        setIsSaved((res.data as any[]).some((item) => item.eventId === eventIdVal));
       } catch (error) {
         console.error("Error fetching wishlist:", error);
       }
     };
     checkIfSaved();
-  }, [user?.email, axiosPublic, eventData?._id]);
+  }, [user?.email, axiosPublic, eventData?.id, eventData?._id]);
 
   // Handlers
   const handleSaveEvent = async () => {
@@ -134,12 +135,13 @@ const EventDetails = () => {
     }
 
     try {
+      const eventIdVal = eventData?.id || eventData?._id;
       if (isSaved) {
-        await axiosPublic.delete(`/wishlist/${user.email}/${eventData?._id}`);
+        await axiosPublic.delete(`/wishlist/${user.email}/${eventIdVal}`);
         Swal.fire("Removed", "Event removed from wishlist!", "info");
       } else {
         await axiosPublic.post("/wishlist", {
-          eventId: eventData?._id,
+          eventId: eventIdVal,
           title: eventData?.title,
           eventDate: eventData?.eventDate,
           location: eventData?.location,
@@ -176,7 +178,7 @@ const EventDetails = () => {
       unitPrice: eventData?.price,
       charge: parseFloat((eventData?.price * ticketQuantity * 0.05).toFixed(2)),
       productCategory: eventData?.category,
-      eventId: eventData?._id || eventData?.id,
+      eventId: eventData?.id || eventData?._id,
       quantity: ticketQuantity,
       organizerPayment: "pending",
       organizer: eventData?.organizer,
@@ -206,7 +208,7 @@ const EventDetails = () => {
 
       // Ensure customerName and customerPhoto are correctly set
       await axiosPublic.post("/event-reviews", {
-        eventId: eventData._id,
+        eventId: eventData?.id || eventData?._id,
         eventName: eventData.title,
         comment: comment,
         customerEmail: user?.email,
@@ -378,7 +380,7 @@ const EventDetails = () => {
   );
 
   const SuggestedEventCard = ({ event }: { event: any }) => (
-    <Link to={`/eventdetailspublic/${event._id}`}>
+    <Link to={`/eventdetailspublic/${event.id || event._id}`}>
       <motion.div
         className={`${
           darkMode ? "bg-dark-surface text-dark-primary" : "bg-white text-black"
@@ -530,7 +532,7 @@ const EventDetails = () => {
               {comments?.length > 0 ? (
                 <div className="space-y-4">
                   {comments
-                    .filter((comment) => comment.eventId === eventData._id)
+                    .filter((comment) => comment.eventId === (eventData?.id || eventData?._id))
                     .map((comment, index) => (
                       <div
                         key={index}
@@ -842,7 +844,7 @@ const EventDetails = () => {
               <div
                 data-aos="fade-up" // Apply fade-up animation
                 data-aos-delay={`${index * 200}`} // Optional delay for staggering effect
-                key={event._id}
+                key={event.id || event._id}
               >
                 <SuggestedEventCard event={event} />
               </div>

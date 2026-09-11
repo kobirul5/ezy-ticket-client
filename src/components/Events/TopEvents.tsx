@@ -46,7 +46,7 @@ const TopEvents = () => {
                             viewport={{ once: true, margin: "0px 0px -100px 0px" }}
                         >
                             <Link
-                                to={`/eventdetailspublic/${event._id || event.id}`}
+                                to={`/eventdetailspublic/${event.id}`}
                                 className="block h-full"
                             >
                                 <motion.img
@@ -101,7 +101,7 @@ const TopEvents = () => {
                             transition={{ duration: 0.5 + index * 0.2, ease: "easeInOut" }}
                             viewport={{ once: true }}
                         >
-                            <Link to={`/eventdetailspublic/${event._id || event.id}`}
+                            <Link to={`/eventdetailspublic/${event.id}`}
                                 className="block h-full"
                             >
                                 {/* Image with hover scale */}

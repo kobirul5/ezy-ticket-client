@@ -48,7 +48,7 @@ const MyWishList = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           {wishlist.map((item: any) => (
             <div
-              key={item._id}
+              key={item.id || item._id}
               className={`${
                 darkMode ? "bg-gray-800" : "bg-white"
               } border rounded-xl p-5 shadow-md transition duration-300 transform hover:scale-105 hover:shadow-2xl`}

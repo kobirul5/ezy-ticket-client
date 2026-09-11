@@ -70,7 +70,7 @@ const ManageReviews = () => {
             </thead>
             <tbody>
               {reviews.map((review: any) => (
-                <tr key={review._id} className="hover:bg-green-100 transition">
+                <tr key={review.id || review._id} className="hover:bg-green-100 transition">
                   <td className="font-medium">{review.userName}</td>
                   <td>{review.userEmail}</td>
                   <td>

@@ -43,12 +43,12 @@ const EventCards = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mx-auto w-11/12">
         {events.slice(0, 3).map((event: any) => (
           <div
-            key={event._id}
+            key={event.id || event._id}
             className={`${
               darkMode ? "bg-dark-surface text-white" : "bg-white text-black"
             } rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-all duration-300 h-full flex flex-col group`}
           >
-            <Link to={`/eventdetailspublic/${event._id}`}>
+            <Link to={`/eventdetailspublic/${event.id || event._id}`}>
               <div className="overflow-hidden">
                 <img
                   src={event.image}

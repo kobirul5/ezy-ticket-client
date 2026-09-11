@@ -92,7 +92,7 @@ const MyAddedEvents = () => {
             </thead>
             <tbody>
               {myEvents.map((event: any) => (
-                <tr key={event._id || event.id} className="hover:bg-gray-50">
+                <tr key={event.id || event._id} className="hover:bg-gray-50">
                   <td>
                     <img
                       src={event.image || noImage}
@@ -120,14 +120,14 @@ const MyAddedEvents = () => {
                   <td>
                     <div className="flex gap-2 items-center justify-center">
                       <Link
-                        to={`/dashboard/updateEvent/${event._id || event.id}`}
+                        to={`/dashboard/updateEvent/${event.id || event._id}`}
                         state={{ event }}
                         className="btn btn-sm btn-outline btn-primary"
                       >
                         <FaEdit />
                       </Link>
                       <button
-                        onClick={() => handleDeleteEvent(event._id || event.id)}
+                        onClick={() => handleDeleteEvent(event.id || event._id)}
                         className="btn btn-sm btn-outline btn-error"
                       >
                         <FaTrash />

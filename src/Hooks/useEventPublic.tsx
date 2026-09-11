@@ -5,7 +5,7 @@ import axios from "axios";
 const axiosInstance = axios.create({
   baseURL: [
     {
-      _id: "ai-future-tech-summit",
+      id: "ai-future-tech-summit",
       title: "AI & Future Tech Summit",
       description:
         "Join top industry experts and researchers for an in-depth discussion on the future of artificial intelligence, machine learning, and emerging technologies. This event will feature keynote speeches, panel discussions, and hands-on demonstrations of cutting-edge innovations.",
@@ -19,7 +19,7 @@ const axiosInstance = axios.create({
       remainingTickets: 4,
     },
     {
-      _id: "startup-pitch-night",
+      id: "startup-pitch-night",
       title: "StartUp Pitch Night",
       description:
         "Aspiring entrepreneurs will have the opportunity to present their business ideas to a panel of investors and industry leaders. Gain valuable feedback, networking opportunities, and a chance to secure funding for your startup. The event includes interactive Q&A sessions and expert mentorship.",
@@ -33,10 +33,10 @@ const axiosInstance = axios.create({
       remainingTickets: 6,
     },
     {
-      _id: "gaming-fiesta-2025",
+      id: "gaming-fiesta-2025",
       title: "Gaming Fiesta 2025",
       description:
-        "A paradise for gamers! Join thrilling gaming tournaments, participate in workshops by professional gamers, and get an exclusive first look at upcoming games. Whether you"re a casual player or a hardcore esports fan, this event is packed with excitement and fun.",
+        "A paradise for gamers! Join thrilling gaming tournaments, participate in workshops by professional gamers, and get an exclusive first look at upcoming games. Whether you're a casual player or a hardcore esports fan, this event is packed with excitement and fun.",
       organizedBy: "Gamers Unite Bangladesh",
       dateTime: "2025-05-05T12:00:00",
       duration: "8 hours",
@@ -47,7 +47,7 @@ const axiosInstance = axios.create({
       remainingTickets: 2,
     },
     {
-      _id: "photography-masterclass",
+      id: "photography-masterclass",
       title: "Photography Masterclass",
       description:
         "Enhance your photography skills with this exclusive masterclass led by renowned photographers. Learn advanced techniques, composition strategies, and post-processing secrets. Perfect for hobbyists and professionals looking to take their craft to the next level.",
@@ -61,7 +61,7 @@ const axiosInstance = axios.create({
       remainingTickets: 5,
     },
     {
-      _id: "green-future-expo",
+      id: "green-future-expo",
       title: "Green Future Expo",
       description:
         "Discover the latest in sustainability and eco-friendly innovations at the Green Future Expo. This exhibition will feature green energy solutions, sustainable products, and panel discussions on environmental conservation. Join us in shaping a greener future.",
@@ -75,10 +75,10 @@ const axiosInstance = axios.create({
       remainingTickets: 0,
     },
     {
-      _id: "blockchain-crypto-conference",
+      id: "blockchain-crypto-conference",
       title: "Blockchain & Crypto Conference",
       description:
-        "Explore the impact of blockchain technology and cryptocurrency in today"s financial ecosystem. This conference brings together blockchain experts, fintech leaders, and investors to discuss innovations, regulations, and the future of decentralized finance.",
+        "Explore the impact of blockchain technology and cryptocurrency in today's financial ecosystem. This conference brings together blockchain experts, fintech leaders, and investors to discuss innovations, regulations, and the future of decentralized finance.",
       organizedBy: "Crypto Enthusiasts Bangladesh",
       dateTime: "2025-07-20T14:00:00",
       duration: "5 hours",
@@ -89,7 +89,7 @@ const axiosInstance = axios.create({
       remainingTickets: 3,
     },
     {
-      _id: "music-fest-dhaka",
+      id: "music-fest-dhaka",
       title: "Music Fest Dhaka",
       description:
         "Experience an electrifying night of music with performances by top local and international artists. From rock to EDM, this festival promises an unforgettable live music experience, featuring dazzling stage production and an incredible atmosphere.",

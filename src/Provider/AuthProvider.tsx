@@ -4,6 +4,7 @@ import { useLoginUserMutation, useLogoutUserMutation } from "../app/features/aut
 import { useGetMyProfileQuery } from "../app/features/user/userApi";
 
 interface UserInfo {
+  id?: string;
   _id?: string;
   name?: string;
   email?: string;

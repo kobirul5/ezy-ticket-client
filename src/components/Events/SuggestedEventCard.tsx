@@ -14,7 +14,7 @@ interface SuggestedEventCardProps {
 }
 
 const SuggestedEventCard: React.FC<SuggestedEventCardProps> = ({ event, darkMode }) => (
-  <Link to={`/eventdetailspublic/${event._id}`}>
+  <Link to={`/eventdetailspublic/${event.id || event._id}`}>
     <motion.div
       className={`${
         darkMode ? "bg-dark-surface text-dark-primary" : "bg-white text-black"
