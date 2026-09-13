@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const TopEvents = () => {
     const { darkMode } = useAuth() as any;
     const { data: responseData, isLoading, error } = useGetAllEventsQuery({});
-    
+
     // Fallback safely and grab the actual events array
     const eventsArray = Array.isArray(responseData?.data) ? responseData.data : (responseData?.data?.data || []);
     const events = [...eventsArray].sort(
@@ -64,13 +64,14 @@ const TopEvents = () => {
                                     {/* Ticket and Date Info - Animated with Framer */}
                                     <motion.div
                                         initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{opacity: 1, y: 0,
-                                                transition: {
-                                                    duration: 0.4,
-                                                    ease: "easeOut"
-                                                }
-                                                
+                                        whileInView={{
+                                            opacity: 1, y: 0,
+                                            transition: {
+                                                duration: 0.4,
+                                                ease: "easeOut"
                                             }
+
+                                        }
                                         }
                                         viewport={{ once: true, margin: "0px 0px -100px 0px" }}
 

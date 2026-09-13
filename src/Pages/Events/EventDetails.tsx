@@ -453,12 +453,23 @@ const EventDetails = () => {
   };
 
   // Loading and error states
-  if (isLoading || isSuggestionsLoading) return <Loading />;
-  if (error) return <p className="text-red-500 text-center">{(error as Error).message}</p>;
+  if (isLoading || isSuggestionsLoading)
+    return (
+      <div className={`min-h-[80vh] flex flex-col items-center justify-center py-24 ${darkMode ? "bg-dark-background text-dark-primary" : "bg-background text-black"}`}>
+        <Loading />
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className={`min-h-[80vh] flex flex-col items-center justify-center py-24 ${darkMode ? "bg-dark-background text-dark-primary" : "bg-background text-black"}`}>
+        <p className="text-red-500 font-semibold text-center text-lg">{(error as Error).message}</p>
+      </div>
+    );
 
   return (
     <div
-      className={`py-24 ${
+      className={`py-24 min-h-[85vh] sm:min-h-screen ${
         darkMode ? "bg-dark-background text-dark-primary" : "bg-background"
       }`}
     >

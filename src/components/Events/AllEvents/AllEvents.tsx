@@ -26,7 +26,7 @@ const AllEvents = () => {
 
   const eventsArray = Array.isArray(responseData?.data) ? responseData.data : (responseData?.data?.data || []);
   const events = [...eventsArray].sort(
-      (a: any, b: any) => new Date(b.dateTime || b.eventDate || 0).getTime() - new Date(a.dateTime || a.eventDate || 0).getTime()
+    (a: any, b: any) => new Date(b.dateTime || b.eventDate || 0).getTime() - new Date(a.dateTime || a.eventDate || 0).getTime()
   );
 
   if (error)
@@ -55,7 +55,7 @@ const AllEvents = () => {
         }`}
     >
       <EventOffer></EventOffer>
-      
+
       {/* Events Grid */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8" id="allEvents">
         <div className="mb-8 mt-16 flex items-center justify-between">
@@ -69,7 +69,7 @@ const AllEvents = () => {
         </div>
 
         {/* Responsive Grid with Stagger Animation */}
-        <motion.div 
+        <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
           key={currentPage}
           initial="hidden"
@@ -94,11 +94,10 @@ const AllEvents = () => {
               >
                 <Link to={`/eventdetailspublic/${event.id || event._id}`}>
                   <div
-                    className={`${
-                      darkMode
+                    className={`${darkMode
                         ? "bg-dark-surface border-gray-800 text-white hover:border-emerald-500/50"
                         : "bg-white border-gray-100 text-gray-900 hover:border-emerald-400"
-                    } rounded-2xl overflow-hidden border shadow-md hover:shadow-xl hover:shadow-emerald-500/10 transform hover:-translate-y-1.5 transition-all duration-300 h-full flex flex-col group relative`}
+                      } rounded-2xl overflow-hidden border shadow-md hover:shadow-xl hover:shadow-emerald-500/10 transform hover:-translate-y-1.5 transition-all duration-300 h-full flex flex-col group relative`}
                   >
                     {/* Image Container with Badges */}
                     <div className="relative overflow-hidden h-52 sm:h-56">
@@ -188,11 +187,10 @@ const AllEvents = () => {
               }, 100);
             }}
             disabled={currentPage === 1}
-            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 ${
-              currentPage === 1
+            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 ${currentPage === 1
                 ? "bg-gray-300 dark:bg-gray-800 text-gray-500 cursor-not-allowed"
                 : "ezy-button-primary"
-            }`}
+              }`}
           >
             Previous
           </button>
@@ -206,11 +204,10 @@ const AllEvents = () => {
                   scrollToAllEvents();
                 }, 100);
               }}
-              className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 ${
-                currentPage === index + 1
+              className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 ${currentPage === index + 1
                   ? "bg-main text-white shadow-md shadow-emerald-600/30"
                   : "bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700"
-              }`}
+                }`}
             >
               {index + 1}
             </button>
@@ -224,11 +221,10 @@ const AllEvents = () => {
               }, 100);
             }}
             disabled={currentPage === totalPages || totalPages === 0}
-            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 ${
-              currentPage === totalPages || totalPages === 0
+            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-300 ${currentPage === totalPages || totalPages === 0
                 ? "bg-gray-300 dark:bg-gray-800 text-gray-500 cursor-not-allowed"
                 : "ezy-button-primary"
-            }`}
+              }`}
           >
             Next
           </button>
