@@ -379,44 +379,78 @@ const EventDetails = () => {
     </div>
   );
 
-  const SuggestedEventCard = ({ event }: { event: any }) => (
-    <Link to={`/eventdetailspublic/${event.id || event._id}`}>
-      <motion.div
-        className={`${
-          darkMode ? "bg-dark-surface text-dark-primary" : "bg-white text-black"
-        } rounded-md overflow-hidden shadow-lg transform hover:scale-105 transition-all duration-300 h-full flex flex-col group`}
-      >
-        <div className="overflow-hidden">
-          <img
-            src={event.image}
-            alt={event.title}
-            className="w-full h-56 object-cover rounded-t-md group-hover:scale-110 transition-transform duration-300"
-          />
-        </div>
-        <div className="p-5 flex flex-col flex-grow">
-          <h2 className="text-xl font-bold flex-grow">{event.title}</h2>
-          <div className="mt-auto pt-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1 text-supporting font-semibold">
-                <FaBangladeshiTakaSign /> {event.price}
+  const SuggestedEventCard = ({ event }: { event: any }) => {
+    const ticketsLeft = (event.totalTickets || 0) - (event.soldTickets || 0);
+    return (
+      <Link to={`/eventdetailspublic/${event.id || event._id}`}>
+        <motion.div
+          className={`${
+            darkMode
+              ? "bg-dark-surface border-gray-800 text-white hover:border-emerald-500/50"
+              : "bg-white border-gray-100 text-gray-900 hover:border-emerald-400"
+          } rounded-2xl overflow-hidden border shadow-md hover:shadow-xl hover:shadow-emerald-500/10 transform hover:-translate-y-1.5 transition-all duration-300 h-full flex flex-col group relative`}
+        >
+          <div className="relative overflow-hidden h-52 sm:h-56">
+            <img
+              src={event.image || "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80"}
+              alt={event.title}
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
+            
+            {event.category && (
+              <div className="absolute top-3 left-3">
+                <span className="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-black/60 backdrop-blur-md border border-white/20 text-emerald-300">
+                  {event.category}
+                </span>
               </div>
-              <div className="flex items-center gap-1 text-gray-500">
-                <GiTicket /> {event.totalTickets - event.soldTickets} Remaining
-              </div>
-            </div>
-            <div className="flex items-center justify-between mt-2">
-              <div className="flex items-center justify-center gap-2 text-gray-500">
-                <MdDateRange /> <span>{event.eventDate}</span>
-              </div>
-              <div className="flex items-center justify-center gap-2 text-gray-500">
-                <FaRegClock /> <span>{event.duration}</span>
-              </div>
+            )}
+
+            <div className="absolute top-3 right-3">
+              <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/90 text-white backdrop-blur-md shadow-md flex items-center gap-0.5">
+                <FaBangladeshiTakaSign className="text-[11px]" />
+                {event.price}
+              </span>
             </div>
           </div>
-        </div>
-      </motion.div>
-    </Link>
-  );
+
+          <div className="p-5 flex flex-col flex-grow justify-between">
+            <div>
+              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 font-medium mb-2.5">
+                <div className="flex items-center gap-1.5">
+                  <MdDateRange className="text-emerald-500 text-sm" />
+                  <span>{event.eventDate || "Upcoming"}</span>
+                </div>
+                {event.duration && (
+                  <div className="flex items-center gap-1.5">
+                    <FaRegClock className="text-amber-500 text-xs" />
+                    <span>{event.duration}</span>
+                  </div>
+                )}
+              </div>
+
+              <h3 className="text-base font-bold group-hover:text-emerald-500 transition-colors duration-200 line-clamp-2 mb-3">
+                {event.title}
+              </h3>
+            </div>
+
+            <div className="pt-3 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between mt-auto">
+              <div className="flex items-center gap-1.5 text-xs font-semibold">
+                <GiTicket className="text-emerald-500 text-base" />
+                <span className={ticketsLeft <= 10 ? "text-amber-500" : "text-gray-600 dark:text-gray-300"}>
+                  {ticketsLeft > 0 ? `${ticketsLeft} Remaining` : "Sold Out"}
+                </span>
+              </div>
+
+              <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-500 group-hover:translate-x-1 transition-transform duration-200">
+                View Details
+              </span>
+            </div>
+          </div>
+        </motion.div>
+      </Link>
+    );
+  };
 
   // Loading and error states
   if (isLoading || isSuggestionsLoading) return <Loading />;
