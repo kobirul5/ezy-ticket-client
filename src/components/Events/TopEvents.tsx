@@ -30,7 +30,7 @@ const TopEvents = () => {
             className={`mb-8 md:mb-16 lg:mb-20 ${darkMode ? "bg-dark-background text-dark-primary" : "bg-background"}`}
             id="eventsCard"
         >
-            <div className="mx-auto w-11/12">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="">
                     <Heading title={"Only the Best, Just for You"} subtitle={"EzyTicket Top Events"} />
                 </div>

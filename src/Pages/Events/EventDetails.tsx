@@ -428,7 +428,7 @@ const EventDetails = () => {
         darkMode ? "bg-dark-background text-dark-primary" : "bg-background"
       }`}
     >
-      <div className="mx-auto w-11/12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Event Header */}
         <div className="flex items-start gap-4">
           <DateDisplay />

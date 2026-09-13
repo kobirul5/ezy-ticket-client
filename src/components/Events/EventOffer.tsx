@@ -84,7 +84,7 @@ const EventOffer = () => {
         whileInView="visible"
         variants={containerVariants}
         viewport={{ once: true, margin: "-50px" }}
-        className="w-11/12 mx-auto "
+        className="container mx-auto px-4 sm:px-6 lg:px-8"
       >
         <div className="">
           {/* Main Offers Slider */}
@@ -112,7 +112,7 @@ const EventOffer = () => {
                 dynamicMainBullets: 3,
               }}
               modules={[EffectCreative, Autoplay, Pagination]}
-              className="h-[500px] overflow-hidden shadow-2xl rounded-md"
+              className="h-[360px] sm:h-[440px] md:h-[500px] overflow-hidden shadow-2xl rounded-md"
             >
               {eventDeals.map((deal, idx) => (
                 <SwiperSlide key={idx}>

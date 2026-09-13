@@ -56,7 +56,7 @@ const AllEvents = () => {
     >
       <EventOffer></EventOffer>
       {/* Events Grid */}
-      <div className="w-11/12 mx-auto" id="allEvents">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8" id="allEvents">
         <div className="mb-4 mt-16 w-fit">
           <h3 className="text-lg md:text-xl font-semibold text-main ">All Events</h3>
         </div>

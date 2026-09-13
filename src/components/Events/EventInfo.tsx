@@ -67,7 +67,7 @@ const EventInfo = () => {
   ];
 
   return (
-    <div className={`w-11/12 mx-auto text-center mb-8 md:mb-16 lg:mb-20`}>
+    <div className={`container mx-auto px-4 sm:px-6 lg:px-8 text-center mb-8 md:mb-16 lg:mb-20`}>
       <Heading
       subtitle={"Explore Your Options"}
       title={"From Concerts to Conferences"}
