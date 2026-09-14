@@ -1,6 +1,7 @@
 import { IoIosArrowForward, IoIosTimer } from "react-icons/io";
 import useAuth from "@/Hooks/useAuth";
 import AboutCounter from "@/components/About/AboutCounter";
+import TravelEventServices from "@/components/About/TravelEventServices";
 import { MdMoreTime } from "react-icons/md";
 import { CiCreditCard1, CiMedicalClipboard } from "react-icons/ci";
 import { FaBus, FaFacebookF, FaLinkedinIn, FaRegHandshake, FaTicketAlt } from "react-icons/fa";
@@ -187,7 +188,10 @@ const About = () => {
             transparency, and trust at every step.
           </p>
         </div>
-         </div>
+      </div>
+
+      {/* Travel & Event Services Section */}
+      <TravelEventServices />
 
       {/* Features Section */}
       <div className="mt-20 container mx-auto px-4">
